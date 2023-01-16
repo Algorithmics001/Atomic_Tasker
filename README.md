@@ -22,3 +22,54 @@ This repo is for algorithmics hackathon project
   ```
   npm install react-scripts --save
   ```
+
+# How to use git
+1. Create a 'fork' of Algorithmics/Hackthon.
+![alt text](./ImagesForREADME/fork.png?raw=true)
+Or use gh for forking
+```
+gh repo fork Algorithmics/Hackthon --clone
+```
+2. You will see a repository like: YourUserName/Hackathon
+
+3. Check your current branch using:
+```
+git branch
+```
+
+4. Create a new branch (of your forked repository)
+```
+git branch <username>
+git checkout <username>
+```
+5. Now you are on username branch of your cloned repository.
+
+6. Open README.md (outside the 'main' folder) and add your name to this list: [RaghavJit, ]
+
+7. Now you can commit changes (you can also use GitHub Desktop)
+```
+git status
+git add .
+git commit -m "I have added my name in the list"
+git push
+```
+This will push changes to the username branch of your forked repo.
+
+8. Create a Pull Request using the following code (you can also use GitHub Desktop):
+```
+gh pr create -w
+```
+This will open you browser, you can also remove -w flag and then you will need to manually specify the title and body of yuor merge.
+
+9. Once you merge the branch username and main you will see your changes on main.
+
+10. Now go to your repository username/Hackathon and sync changes with Algorithmics/Hackathon. (This will bring all the changes on source to your fork.)
+
+11. After sync you can create a pull request to pull changes in upstream. (This will replicate all the changes on your personal fork into Algorithmics/Hackathon)
+
+![alt text](./ImagesForREADME/sync%26pull.png?raw=true)
+
+
+### Refer to the following for more instructions.
+1. [GitHub CLI](https://cli.github.com/manual/gh_repo_sync)
+1. [Git Bash](https://git-scm.com/docs)
