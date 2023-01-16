@@ -56,10 +56,19 @@ git push
 This will push changes to the username branch of your forked repo.
 
 8. Create a Pull Request using the following code (you can also use GitHub Desktop):
+
+This will open you browser, you can also remove -w flag and then you will need to manually specify the title and body of yuor merge.
 ```
 gh pr create -w
 ```
-This will open you browser, you can also remove -w flag and then you will need to manually specify the title and body of yuor merge.
+To create a merge requst using command line (make sure you are on username branch):
+```
+gh merge username
+git checkout main
+git merge username
+git push -u origin main
+```
+
 
 9. Once you merge the branch username and main you will see your changes on main.
 
@@ -73,3 +82,8 @@ This will open you browser, you can also remove -w flag and then you will need t
 ### Refer to the following for more instructions.
 1. [GitHub CLI](https://cli.github.com/manual/gh_repo_sync)
 1. [Git Bash](https://git-scm.com/docs)
+
+## PRECAUTIONS
+1. Never push or commit changes directly in main branch.
+1. Never push or commit changes without checking status and fetching origin.
+1. Check your branch before push or commit. (use git reset * command if commited in wrong branch).
