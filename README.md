@@ -12,6 +12,5 @@ This repo is for algorithmics hackathon project
 1. FireBase (data base)
 1. React (frame work)
 1. Android Studio
-1. vs code
 1. Github desktop
-1. 
+1. Visual Studio code
