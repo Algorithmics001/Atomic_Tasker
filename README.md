@@ -17,6 +17,7 @@ This repo is for algorithmics hackathon project
 
 ## Requirements
 1. node
+1. Git CLI & Git Bash
 1. run this command if error about react-scripts occur 
   ```
   npm install react-scripts --save
