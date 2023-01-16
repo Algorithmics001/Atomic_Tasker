@@ -14,4 +14,3 @@ This repo is for algorithmics hackathon project
 1. Android Studio
 1. Github desktop
 1. Visual Studio code
-1. mata pita ka ashirvad
