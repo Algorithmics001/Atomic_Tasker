@@ -14,3 +14,10 @@ This repo is for algorithmics hackathon project
 1. Android Studio
 1. Github desktop
 1. Visual Studio code
+
+## Requirements
+1. node
+1. run this command if error about react-scripts occur 
+  ```
+  npm install react-scripts --save
+  ```
