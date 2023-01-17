@@ -86,4 +86,4 @@ git push -u origin main
 ## PRECAUTIONS
 1. Never push or commit changes directly in main branch.
 1. Never push or commit changes without checking status and fetching origin.
-1. Check your branch before push or commit. (use git reset * command if commited in wrong branch).
+1. Check your branch before push or commit. (use git reset * command if commited in wrong branch, this will undo the git add .).
