@@ -44,7 +44,7 @@ git checkout <username>
 ```
 5. Now you are on username branch of your cloned repository.
 
-6. Open README.md (outside the 'main' folder) and add your name to this list: [RaghavJit,Sangam ]
+6. Open README.md (outside the 'main' folder) and add your name to this list:[Rajveer Singh]
 
 7. Now you can commit changes (you can also use GitHub Desktop)
 ```
