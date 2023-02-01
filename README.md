@@ -44,7 +44,7 @@ git checkout <username>
 ```
 5. Now you are on username branch of your cloned repository.
 
-6. Open README.md (outside the 'main' folder) and add your name to this list: [RaghavJit, ]
+6. Open README.md (outside the 'main' folder) and add your name to this list:[Raghavjit,Sangam,Rajveer Singh]
 
 7. Now you can commit changes (you can also use GitHub Desktop)
 ```
@@ -125,3 +125,4 @@ The user, after downloading the application will first answer a questionaire. An
 ## Version - 5
 1. A screen monitor will be added to monitor user's screen time and alert him if he is spending more time than the set limit.
 1. App will be made cross-platform and will be automatically synronised on all devices.
+
