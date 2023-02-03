@@ -8,6 +8,7 @@ const Header = () => {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.headerText}>ToDo List</Text>
+      <Text>heeeiii</Text>
     </View>
   );
 };
