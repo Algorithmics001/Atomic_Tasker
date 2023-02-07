@@ -4,11 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./MyComp/Home";
 import AddTask from "./MyComp/AddTask";
 
+import SharedPreferences from 'react-native-shared-preferences';
+
 function App() {
   const Stack = createNativeStackNavigator();
   return ( 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" >
+        <Stack.Navigator initialRouteName="AddTask" >
         <Stack.Screen
           name="Home"
           component={Home}
