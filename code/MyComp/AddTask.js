@@ -35,11 +35,30 @@ const AddTask = () => {
                     Done
                     </Text>
             </TouchableOpacity>
+
+            {/* temporary button */}
+            <TouchableOpacity onPress={ GetFromDB } style={styles.DoneButton}>
+                <Text 
+                    style={styles.DoneButtonText }>
+                    put
+                    </Text>
+            </TouchableOpacity>
             
         </View>
     )
     function UpdateDataBase(){
         SharedPreferences.setItem(title, desc)
+    }
+    function GetFromDB(){
+        SharedPreferences.getItem("read", function(value){
+            console.log(value);
+          });
+          SharedPreferences.getAllKeys(function(keys){
+            console.log(keys);
+          });
+          SharedPreferences.getAll(function(values){
+            console.log(values);
+          });
     }
 }
 const styles = StyleSheet.create({
