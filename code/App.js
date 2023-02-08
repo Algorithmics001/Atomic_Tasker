@@ -3,9 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./MyComp/Home";
 import AddTask from "./MyComp/AddTask";
-import TaskView from "./MyComp/TaskView"
-
-import SharedPreferences from 'react-native-shared-preferences';
+import ViewTask from "./MyComp/ViewTask";
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -21,8 +19,8 @@ function App() {
           component={AddTask}
         />
         <Stack.Screen
-          name="TaskView"
-          component={TaskView}
+          name="ViewTask"
+          component={ViewTask}
         />
 
       </Stack.Navigator>
