@@ -1,6 +1,8 @@
 import { View, Text, Button, Touchable, TouchableOpacity, StyleSheet, Dimensions, Modal, ScrollView } from 'react-native'
 import React from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
+import AddTask from './AddTask';
+import ViewTask from './ViewTask';
 
 
 const {scale} = Dimensions.get("screen")
@@ -54,7 +56,10 @@ const Home = ({navigation}) => {
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacity4}>
+      <TouchableOpacity 
+      style={styles.TouchableOpacity4}
+      onPress={()=>{navigation.navigate(ViewTask)}}
+      >
 
       <View style={styles.TouchableOpacityView}>
       <FontAwesome5 name='list' size={iconSize} color={colors[3]}/>
