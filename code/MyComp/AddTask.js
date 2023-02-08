@@ -1,17 +1,24 @@
-import { DatePickerIOSBase, Dimensions, TouchableOpacity, StyleSheet, Text, TextInput, View, modal, Button } from "react-native"
+import { DatePickerIOSBase, Dimensions, TouchableOpacity, StyleSheet, Text, TextInput, View, modal, Button, Alert } from "react-native"
 
 import DatePicker from 'react-native-date-picker'
 import React from "react"
 import { useState } from "react"
 
-import SharedPreferences from '../node_modules/react-native-shared-preferences';
+var SharedPreferences = require('react-native-shared-preferences');
+SharedPreferences.setName("TODO_DB")
 
 const {scale} = Dimensions.get("window")
 const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e']
 
 const AddTask = () => {
-    const [title, setTitle] = useState('');
-    const [desc, setDesc] = useState('');
+    const [id, setID] = useState('');
+    var [desc, setDesc] = useState([
+      {
+        title:'read',
+        desc:'book name',
+        time:'this is the time'
+      }
+    ]);
     return(
         <View>
             <TextInput 
@@ -19,6 +26,7 @@ const AddTask = () => {
             allowFontScaling={false}
             style={{ margin:scale*5, backgroundColor:'#E0DFE3', fontSize: scale*6, padding:scale*5, paddingLeft:scale*7, borderRadius:scale*5, borderColor:colors[3]}}
             onChangeText={(e)=>setTitle(e)}
+            maxLength={20}
             ></TextInput>
 
             <TextInput
@@ -27,6 +35,7 @@ const AddTask = () => {
             allowFontScaling={false}
             style={{ margin:scale*5, backgroundColor:'#E0DFE3', fontSize: scale*6, padding:scale*5, paddingLeft:scale*7, borderRadius:scale*5, borderColor:colors[3]}}
             onChangeText={(e)=>setDesc(e)}
+            maxLength={150}
             ></TextInput>
 
             <TouchableOpacity onPress={ UpdateDataBase } style={styles.DoneButton}>
@@ -47,11 +56,12 @@ const AddTask = () => {
         </View>
     )
     function UpdateDataBase(){
-        SharedPreferences.setItem(title, desc)
+        console.log("ok")
+        SharedPreferences.setItem(id, desc)
     }
     function GetFromDB(){
         SharedPreferences.getItem("read", function(value){
-            console.log(value);
+            alert(value);
           });
           SharedPreferences.getAllKeys(function(keys){
             console.log(keys);
