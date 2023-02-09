@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./MyComp/Home";
 import AddTask from "./MyComp/AddTask";
 import ViewTask from "./MyComp/ViewTask";
-
 function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -22,7 +21,6 @@ function App() {
           name="ViewTask"
           component={ViewTask}
         />
-
       </Stack.Navigator>
     </NavigationContainer>
   );

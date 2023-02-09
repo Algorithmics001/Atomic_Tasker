@@ -6,6 +6,7 @@ import ViewTask from './ViewTask';
 
 
 const {scale} = Dimensions.get("screen")
+const {width, height} = Dimensions.get("screen")
 const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e']
 const iconSize = scale*9
 const Home = ({navigation}) => {
@@ -19,7 +20,7 @@ const Home = ({navigation}) => {
       <View style={{flex:1, flexWrap:'wrap'}}>
      <TouchableOpacity 
      style={styles.TouchableOpacity1}
-     onPress={()=>navigation.navigate("AddTask")}
+     onPress={()=>{navigation.navigate(AddTask)}}
      >
 
       <View style={styles.TouchableOpacityView}>
