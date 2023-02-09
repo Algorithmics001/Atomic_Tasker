@@ -1,6 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// this is for brain
+import {addTask, removeTask, editTask, getPath} from '../brain/logic'
+
 const {scale} = Dimensions.get("window")
 const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e']
 var temp = {
@@ -63,6 +67,9 @@ class AddTask extends React.Component {
       this.setState({title:''}) 
 
       this.showTodo()
+
+      console.log(getPath())
+      
     } catch (error) {
       console.log(error);
     }
