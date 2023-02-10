@@ -6,43 +6,31 @@ import DatePicker from 'react-native-date-picker'
 
 // this is for brain
 import {addTask, removeTask, editTask, getPath} from '../brain/logic'
-import DurationBtn from './DurationBtn';
 
 const {scale} = Dimensions.get("window")
 const {width, height} = Dimensions.get("window")
 
-let x = 3.5/scale
-Scale = scale*x
-
-let y  = 411.42857142857144/width
-Width = width*y
-
-let z = 804.5714285714286/height
-
-Height = height*z
-
 const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3']
 
-
 const input={
-  Bg:colors[4],
-  padding:Scale*5,
-  margin:Scale*2,
-  marginTop:Scale*4,
-  borderRadius: Scale*5,
-  fontSize: Scale*6,
-
-  modal:{
-    Btpurple: 'purple',
-    Btgreen: 'green',
-    Btyellow: '#7B5800',
-    optionMargin:Scale*3,
-    optionPad: Scale*4,
-    fontSize: Scale*50,
+    Bg:colors[4],
+    padding:scale*5,
+    margin:scale*2,
+    marginTop:scale*4,
+    borderRadius: scale*5,
+    fontSize: scale*6,
+  
+    modal:{
+      Btpurple: 'purple',
+      Btgreen: 'green',
+      Btyellow: '#7B5800',
+      optionMargin:scale*3,
+      optionPad: scale*4,
+      fontSize: scale*50,
+    }
   }
-}
 
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
   title:{
     backgroundColor: input.Bg,
     padding: input.padding,
@@ -61,18 +49,20 @@ const styles = StyleSheet.create({
     fontSize: input.fontSize,
   },
   dateBtn:{
+    width: width*0.1,
     backgroundColor:colors[3],
-    width: Width*0.285,
-    height:Height*0.07,
-    borderRadius: Scale*6,
-    margin:Scale*2
+    width: width*0.3,
+    height:height*0.07,
+    borderRadius: scale*6,
+    margin:scale*2
   },
   priorityBtn:{
+    width: width*0.1,
     backgroundColor:colors[3],
-    width: Width*0.285,
-    height:Height*0.07,
-    borderRadius: Scale*6,
-    margin:Scale*2
+    width: width*0.3,
+    height:height*0.07,
+    borderRadius: scale*6,
+    margin:scale*2
   },
 
   ModalOuter:{
@@ -83,92 +73,56 @@ const styles = StyleSheet.create({
   ModalIner:{
     flex:1,
     backgroundColor: '#fff',
-    margin:Scale*40,
-    marginHorizontal: Width*0.1,
-    marginVertical: Height*0.3,
-    borderRadius: Scale*6,
-    padding: Scale*5
+    margin:scale*40,
+    marginHorizontal: width*0.1,
+    marginVertical: height*0.3,
+    borderRadius: scale*6,
+    padding: scale*8
   },
   modalOption1:{
     backgroundColor: input.modal.Btpurple,
-    borderRadius: Scale*5,
+    borderRadius: scale*5,
     margin:input.modal.optionMargin,
     padding:input.modal.optionPad,
     alignItems:'center'
   },
   modalOption2:{
     backgroundColor: input.modal.Btgreen,
-    borderRadius: Scale*5,
+    borderRadius: scale*5,
     margin:input.modal.optionMargin,
     padding:input.modal.optionPad,
     alignItems:'center'
   },
   modalOption3:{
     backgroundColor: input.modal.Btyellow,
-    borderRadius: Scale*5,
+    borderRadius: scale*5,
     margin:input.modal.optionMargin,
     padding:input.modal.optionPad,
     alignItems:'center'
   },
   optionText:{
-    fontSize:Scale*8,
+    fontSize:scale*8,
     fontWeight:'bold',
     color: 'white'
   }
 
 });
 
-function AddTask() {
-  const [date, setDate] = useState(new Date())
-  const [dateVisible, setDateVisible] = useState(false)
-  const [title, setTitle] = useState('Title')
-  const [desc, setDesc] = useState('Desc')
-  const [priorVisible, setPriorVisible] = useState(false);
-  const [priority, setPrior] = useState("");
-  const [durationVisible, setDurationVisible] = useState(false);
-  const [duration, setDuration] = useState(0);
-
-  return ( 
-    
-    <View>
-      <TextInput
-        style={styles.title}
-
-      >{title}</TextInput>
-
-      <TextInput
-        style={styles.desc}
-      >{desc}</TextInput>
 
 
-<View style={{flex:1, flexDirection:'row', width:Width}}>
-      <TouchableOpacity 
-      style={styles.dateBtn}
-      onPress={() => setDateVisible(true)}
-      ></TouchableOpacity>
-      <DatePicker
-        modal
-        open={dateVisible}
-        date={date}
-        onConfirm={(date) => {
-          setDateVisible(false)
-          setDate(date)
-          console.log(date)
-        }}
-        onCancel={() => {
-          setDateVisible(false)
-        }}
-      />
-
+function DurationBtn() {
+    const [durationVisible, setDurationVisible] = useState(false);
+    const [duration, setDuration] = useState(0);
+    return ( 
+        <View>
+            {/* duration btn  */}
         <TouchableOpacity
-        style={styles.priorityBtn}
-        onPress={()=>{setPriorVisible(true)}}
-        >
-        {/* priorityBtn */}
-        <Modal 
+          style={styles.dateBtn}
+          onPress={setDurationVisible(true)}
+        ><Modal 
         animationType='fade'
         transparent={true}
-        visible={priorVisible}
+        visible={durationVisible}
         >
           <View
           style={styles.ModalOuter}
@@ -180,39 +134,30 @@ function AddTask() {
               style={styles.modalOption1}
               title="Option 1"
               onPress={() => {
-                setPrior("High");
-                setPriorVisible(false);
+                setDuration(1);
+                setDurationVisible(false);
               }}
             ><Text style={styles.optionText}>High</Text></TouchableOpacity>
             <TouchableOpacity
               style={styles.modalOption2}
               title="Option 2"
               onPress={() => {
-                setPrior("Moderate");
-                setPriorVisible(false);
+                setDuration(2);
+                setDurationVisible(false);
               }}
             ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
             <TouchableOpacity
               style={styles.modalOption3}
               onPress={() => {
-                setPrior("Low");
-                setPriorVisible(false);
+                setDuration(3);
+                setDurationVisible(false);
               }}
             ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
             </View>
           </View>
-        </Modal>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.dateBtn}
-        >
-          </TouchableOpacity>      
+        </Modal></TouchableOpacity>
         </View>
-    </View>
-
-
-   );
+     );
 }
 
-export default AddTask;
+export default DurationBtn;
