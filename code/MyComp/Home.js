@@ -3,19 +3,33 @@ import React from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import AddTask from './AddTask';
 import ViewTask from './ViewTask';
+import {Appearance} from 'react-native';
 
 
-const {scale} = Dimensions.get("screen")
+const {scale} = Dimensions.get("window")
 const {width, height} = Dimensions.get("screen")
-const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e']
-const iconSize = scale*9
+let colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#69666F']
+
+let temps = scale
+
+let x = 3.5/scale
+Scale = scale*x
+
+const iconSize = Scale*9
+
+const colorscheme = Appearance.getColorScheme()
+
+if(colorscheme === 'dark'){
+  colors[3] = 'black'
+  colors[4] = 'black'
+}
+
 const Home = ({navigation}) => {
-
+  console.log(scale)
   return (
-    
-    <View style={{backgroundColor:'#2d414e', flex:1, alignItems:'center'}}>
+    <View style={{backgroundColor:colors[3], flex:1, alignItems:'center'}}>
 
-      {/* <View style={{backgroundColor:'#fff',height:scale*200}}>
+      {/* <View style={{backgroundColor:'#fff',height:Scale*200}}>
       </View> */}
       <View style={{flex:1, flexWrap:'wrap'}}>
      <TouchableOpacity 
@@ -104,73 +118,74 @@ const Home = ({navigation}) => {
 const styles = StyleSheet.create({
   TouchableOpacity1:{
     backgroundColor:'#e4def2',
-    width:scale*45,
-    height:scale*53,
-    margin:scale*3,
-    marginVertical:scale*9,
-    borderRadius:scale*8,
-    marginBottom:scale*1,
+    width:Scale*45,
+    height:Scale*53,
+    margin:Scale*3,
+    marginVertical:Scale*9,
+    borderRadius:Scale*8,
+    marginBottom:Scale*1,
   },
   TouchableOpacity2:{
     backgroundColor:colors[1],
-    width:scale*45,
-    height:scale*53,
-    margin:scale*3,
-    marginVertical:scale*9,
-    borderRadius:scale*8,
-    marginBottom:scale*1,
+    width:Scale*45,
+    height:Scale*53,
+    margin:Scale*3,
+    marginVertical:Scale*9,
+    borderRadius:Scale*8,
+    marginBottom:Scale*1,
   },
   TouchableOpacity3:{
     backgroundColor:colors[2],
-    width:scale*45,
-    height:scale*53,
-    margin:scale*3,
-    marginVertical:scale*9,
-    borderRadius:scale*8,
-    marginBottom:scale*1,
+    width:Scale*45,
+    height:Scale*53,
+    margin:Scale*3,
+    marginVertical:Scale*9,
+    borderRadius:Scale*8,
+    marginBottom:Scale*1,
   },
   TouchableOpacity4:{
     backgroundColor:colors[1],
-    width:scale*45,
-    height:scale*53,
-    margin:scale*3,
-    marginVertical:scale*9,
-    borderRadius:scale*8,
-    marginBottom:scale*1,
+    width:Scale*45,
+    height:Scale*53,
+    margin:Scale*3,
+    marginVertical:Scale*9,
+    borderRadius:Scale*8,
+    marginBottom:Scale*1,
   },
   TouchableOpacity5:{
     backgroundColor:colors[2],
-    width:scale*45,
-    height:scale*53,
-    margin:scale*3,
-    marginVertical:scale*9,
-    borderRadius:scale*8,
-    marginBottom:scale*1,
+    width:Scale*45,
+    height:Scale*53,
+    margin:Scale*3,
+    marginVertical:Scale*9,
+    borderRadius:Scale*8,
+    marginBottom:Scale*1,
   },
   TouchableOpacity6:{
     backgroundColor:'#e4def2',
-    width:scale*45,
-    height:scale*53,
-    margin:scale*3,
-    marginVertical:scale*9,
-    borderRadius:scale*8,
-    marginBottom:scale*1,
+    width:Scale*45,
+    height:Scale*53,
+    margin:Scale*3,
+    marginVertical:Scale*9,
+    borderRadius:Scale*8,
+    marginBottom:Scale*1,
   },
   
 
   TouchableOpacityView:{
-    height:scale*15,
-    width:scale*15, 
+    height:Scale*15,
+    width:Scale*15, 
     backgroundColor:'#fff', 
-    margin:scale*5, 
-    borderRadius:scale*5,
+    margin:Scale*5, 
+    borderRadius:Scale*5,
     alignItems:'center',
-    padding:scale*3,
+    padding:Scale*3,
   },
   TouchableOpacityText1:{
-    marginHorizontal:scale*7, 
-    fontSize:scale*6,
+    marginHorizontal:Scale*7, 
+    fontSize:Scale*6,
     fontWeight:'bold',
+    color: colors[4],
   },
 })
 
