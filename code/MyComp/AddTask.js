@@ -1,61 +1,65 @@
 
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput,Button, Alert, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput, Button, Alert, Modal } from 'react-native';
 
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import DatePicker from 'react-native-date-picker'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 
+// following line includes database functions 
+import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray } from '../brain/testing';
 
-const {scale} = Dimensions.get("window")
-const {width, height} = Dimensions.get("window")
+import DurationBtn from './DurationBtn';
 
-let x = 3.5/scale
-Scale = scale*x
+const { scale } = Dimensions.get("window")
+const { width, height } = Dimensions.get("window")
 
-let y  = 411.42857142857144/width
-Width = width*y
+let x = 3.5 / scale
+Scale = scale * x
 
-let z = 804.5714285714286/height
+let y = 411.42857142857144 / width
+Width = width * y
 
-Height = height*z
+let z = 804.5714285714286 / height
 
-const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3', '#fff']
+Height = height * z
+
+const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff']
 const iconSize = Scale * 9
 
 
-const input={
-  Bg:colors[4],
-  padding:Scale*5,
-  margin:Scale*2,
-  marginTop:Scale*4,
-  borderRadius: Scale*5,
-  fontSize: Scale*6,
+const input = {
+  Bg: colors[4],
+  padding: Scale * 5,
+  margin: Scale * 2,
+  marginTop: Scale * 4,
+  borderRadius: Scale * 5,
+  fontSize: Scale * 6,
 
-  modal:{
+  modal: {
     Btpurple: 'purple',
     Btgreen: 'green',
     Btyellow: '#7B5800',
-    optionMargin:Scale*3,
-    optionPad: Scale*4,
-    fontSize: Scale*50,
+    optionMargin: Scale * 3,
+    optionPad: Scale * 4,
+    fontSize: Scale * 50,
   }
 }
 
 const styles = StyleSheet.create({
-  title:{
+  title: {
     backgroundColor: input.Bg,
     padding: input.padding,
     margin: input.margin,
-    marginTop:input.marginTop,
+    marginTop: input.marginTop,
     borderRadius: input.borderRadius,
     fontSize: input.fontSize,
-    
+
   },
-  desc:{
+  desc: {
     backgroundColor: input.Bg,
     padding: input.padding,
     margin: input.margin,
-    marginTop:input.marginTop-4,
+    marginTop: input.marginTop - 4,
     borderRadius: input.borderRadius,
     fontSize: input.fontSize,
   },
@@ -67,44 +71,44 @@ const styles = StyleSheet.create({
     margin:Scale*2
   },
 
-  ModalOuter:{
-    flex:1,
-    backgroundColor:'#000000aa'
+  ModalOuter: {
+    flex: 1,
+    backgroundColor: '#000000aa'
   },
 
-  ModalIner:{
-    flex:1,
+  ModalIner: {
+    flex: 1,
     backgroundColor: '#fff',
-    margin:Scale*40,
-    marginHorizontal: Width*0.1,
-    marginVertical: Height*0.3,
-    borderRadius: Scale*6,
-    padding: Scale*5
+    margin: Scale * 40,
+    marginHorizontal: Width * 0.1,
+    marginVertical: Height * 0.3,
+    borderRadius: Scale * 6,
+    padding: Scale * 5
   },
-  modalOption1:{
+  modalOption1: {
     backgroundColor: input.modal.Btpurple,
-    borderRadius: Scale*5,
-    margin:input.modal.optionMargin,
-    padding:input.modal.optionPad,
-    alignItems:'center'
+    borderRadius: Scale * 5,
+    margin: input.modal.optionMargin,
+    padding: input.modal.optionPad,
+    alignItems: 'center'
   },
-  modalOption2:{
+  modalOption2: {
     backgroundColor: input.modal.Btgreen,
-    borderRadius: Scale*5,
-    margin:input.modal.optionMargin,
-    padding:input.modal.optionPad,
-    alignItems:'center'
+    borderRadius: Scale * 5,
+    margin: input.modal.optionMargin,
+    padding: input.modal.optionPad,
+    alignItems: 'center'
   },
-  modalOption3:{
+  modalOption3: {
     backgroundColor: input.modal.Btyellow,
-    borderRadius: Scale*5,
-    margin:input.modal.optionMargin,
-    padding:input.modal.optionPad,
-    alignItems:'center'
+    borderRadius: Scale * 5,
+    margin: input.modal.optionMargin,
+    padding: input.modal.optionPad,
+    alignItems: 'center'
   },
-  optionText:{
-    fontSize:Scale*8,
-    fontWeight:'bold',
+  optionText: {
+    fontSize: Scale * 8,
+    fontWeight: 'bold',
     color: 'white'
   }
 
@@ -128,8 +132,71 @@ function push(){
 
 }
 
-  return ( 
-    
+
+
+  const RNFS = require('react-native-fs')
+  // const filePath = `${RNFS.DocumentDirectoryPath}/Avalible_ID.json`;
+  let [data, setData] = useState([
+    {
+      id: 1,
+      title: 'Todo 1',
+      date: '2022-01-01',
+      description: 'This is the first todo item',
+      prior: 'High',
+      duration: '2 hours'
+    },
+    {
+      id: 2,
+      title: 'Todo 2',
+      date: '2022-02-01',
+      description: 'This is the second todo item',
+      prior: 'Low',
+      duration: '1 hour'
+    },
+    {
+      id: 3,
+      title: 'Todo 3',
+      date: '2022-03-01',
+      description: 'This is the third todo item',
+      prior: 'Medium',
+      duration: '3 hours'
+    },
+    {
+      id: 4,
+      title: 'Todo 3',
+      date: '2022-03-01',
+      description: 'This is the third todo item',
+      prior: 'Medium',
+      duration: '3 hours'
+    },
+    {
+      id: 5,
+      title: 'Todo 3',
+      date: '2022-03-01',
+      description: 'This is the third todo item',
+      prior: 'Medium',
+      duration: '3 hours'
+    },
+    {
+      id: 6,
+      title: 'Todo 3',
+      date: '2022-03-01',
+      description: 'This is the third todo item',
+      prior: 'Medium',
+      duration: '3 hours'
+    },
+    {
+      id: 7,
+      title: 'Todo 3',
+      date: '2022-03-01',
+      description: 'This is the third todo item',
+      prior: 'Medium',
+      duration: '3 hours'
+    },
+  ])
+
+  return (
+
     <View>
       <TextInput
         style={styles.title}
@@ -266,7 +333,7 @@ function push(){
     </View>
 
 
-   );
+  );
 }
 
 export default AddTask;

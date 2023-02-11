@@ -32,7 +32,7 @@ const Home = ({navigation}) => {
 
       {/* <View style={{backgroundColor:'#fff',height:Scale*200}}>
       </View> */}
-      <View style={{flex:1, flexWrap:'wrap'}}>
+      <View style={{flex:1,flexWrap:'wrap'}}>
      <TouchableOpacity 
      style={styles.TouchableOpacity1}
      onPress={()=>{navigation.navigate(AddTask)}}
@@ -108,7 +108,7 @@ const Home = ({navigation}) => {
       </View>
 
       <Text style={styles.TouchableOpacityText1}>
-        Settings
+        Set ToDo List as WallPaper
       </Text>
 
       </TouchableOpacity>
