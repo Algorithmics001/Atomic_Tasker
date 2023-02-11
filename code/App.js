@@ -5,6 +5,7 @@ import Home from "./MyComp/Home";
 import AddTask from "./MyComp/AddTask";
 import ViewTask from "./MyComp/ViewTask";
 import Settings from "./MyComp/Settings";
+import SetWallpaper from "./MyComp/SetWallpaper"
 const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3']
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
           name="Settings"
           component={Settings}
         />
+        <Stack.Screen
+          name="SetWallpaper"
+          component={SetWallpaper}
+          />
         </Stack.Navigator>
     </NavigationContainer>
   );
