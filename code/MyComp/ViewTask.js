@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const{width, height} = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
@@ -33,67 +34,18 @@ if(colorscheme === 'dark'){
 
 const ViewTask = (navigation) => {
   console.log(scale, width, height)
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: 'Todo 1',
-      date: '2022-01-01',
-      description: 'This is the first todo item',
-      prior: 'High',
-      duration: '2 hours'
-    },
-    {
-      id: 2,
-      title: 'Todo 2',
-      date: '2022-02-01',
-      description: 'This is the second todo item',
-      prior: 'Low',
-      duration: '1 hour'
-    },
-    {
-      id: 3,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 4,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 5,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 6,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 7,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-  ]);
+const todos = [
+  {
+    id:1,
+    title:"tdod1",
+    date:'any',
+    prior:'',
+    desc: '',
+    duration: '',
 
+  }
+]
   const iconSize = Scale * 7;
-
   return (
     <>
       <ScrollView style={{backgroundColor:colors[7]}}>

@@ -3,10 +3,11 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput,Button,
 
 import React, {useState} from 'react'
 import DatePicker from 'react-native-date-picker'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // this is for brain
 import {addTask, removeTask, editTask, getPath} from '../brain/logic'
 import DurationBtn from './DurationBtn';
+// Define values for title, desc, date, priority, and duration
 
 const {scale} = Dimensions.get("window")
 const {width, height} = Dimensions.get("window")
@@ -128,16 +129,27 @@ function AddTask() {
   const [durationVisible, setDurationVisible] = useState(false);
   const [duration, setDuration] = useState(0);
 
+
+
+
+
+function push(){
+
+}
+
   return ( 
     
     <View>
       <TextInput
         style={styles.title}
+        onChangeText={(e)=>{setTitle(e)}}
 
       >{title}</TextInput>
 
       <TextInput
         style={styles.desc}
+        onChangeText={(e)=>{setDesc(e)}}
+
       >{desc}</TextInput>
 
 
@@ -206,6 +218,7 @@ function AddTask() {
 
         <TouchableOpacity
           style={styles.dateBtn}
+          onPress={()=>{push()}}
         >
           </TouchableOpacity>      
         </View>
