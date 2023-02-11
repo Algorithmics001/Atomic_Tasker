@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import DatePicker from 'react-native-date-picker'
 
 // following line includes database functions 
-import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray } from '../brain/testing';
+import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray, organiseTask } from '../brain/testing';
 
 import DurationBtn from './DurationBtn';
 
@@ -270,7 +270,7 @@ function AddTask() {
 
         <TouchableOpacity
           style={styles.dateBtn}
-          onPress={() => { }}
+          onPress={() => { organiseTask() }}
         >
         </TouchableOpacity>
       </View>

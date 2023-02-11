@@ -146,20 +146,21 @@ exports.editTaskByID = (TaskID, attrib, newValue) => {
         });
 }
 
-// list task
-
-exports.TaskArray = (callback) => {
+exports.organiseTask = () => {
     RNFS.readFile(path)
-        .then(value => {
-            // Parse the JSON data
-            const jsonData = JSON.parse(value);
+    .then(value => {
+        // Parse the JSON data
+        const jsonData = JSON.parse(value);
 
-            // Use the JSON data as needed
-            let result = jsonData.Task_List.slice(1)
-            
-            callback(result, null);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        // Use the JSON data as needed
+        jsonData.Task_List[1]
+
+        RNFS.writeFile(path, JSON.stringify(jsonData));
+
+        console.log(jsonData.Task_List[0])
+    })
+    .catch(error => {
+        console.error(error);
+    });   
 }
+
