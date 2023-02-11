@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput, Button
 
 import React, { useState } from 'react'
 import DatePicker from 'react-native-date-picker'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 
 // following line includes database functions 
 import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray, organiseTask } from '../brain/testing';
@@ -22,7 +23,8 @@ let z = 804.5714285714286 / height
 
 Height = height * z
 
-const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3']
+const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff']
+const iconSize = Scale * 9
 
 
 const input = {
@@ -61,19 +63,12 @@ const styles = StyleSheet.create({
     borderRadius: input.borderRadius,
     fontSize: input.fontSize,
   },
-  dateBtn: {
-    backgroundColor: colors[3],
-    width: Width * 0.285,
-    height: Height * 0.07,
-    borderRadius: Scale * 6,
-    margin: Scale * 2
-  },
-  priorityBtn: {
-    backgroundColor: colors[3],
-    width: Width * 0.285,
-    height: Height * 0.07,
-    borderRadius: Scale * 6,
-    margin: Scale * 2
+  inputBtns:{
+    backgroundColor:colors[3],
+    width: Width*0.97,
+    height:Height*0.07,
+    borderRadius: Scale*6,
+    margin:Scale*2
   },
 
   ModalOuter: {
@@ -126,154 +121,149 @@ function AddTask() {
   const [desc, setDesc] = useState('Desc')
   const [priorVisible, setPriorVisible] = useState(false);
   const [priority, setPrior] = useState("");
-  const [durationVisible, setDurationVisible] = useState(false);
-  const [duration, setDuration] = useState(0);
+  
 
 
 
   const RNFS = require('react-native-fs')
   // const filePath = `${RNFS.DocumentDirectoryPath}/Avalible_ID.json`;
-  let [data, setData] = useState([
-    {
-      id: 1,
-      title: 'Todo 1',
-      date: '2022-01-01',
-      description: 'This is the first todo item',
-      prior: 'High',
-      duration: '2 hours'
-    },
-    {
-      id: 2,
-      title: 'Todo 2',
-      date: '2022-02-01',
-      description: 'This is the second todo item',
-      prior: 'Low',
-      duration: '1 hour'
-    },
-    {
-      id: 3,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 4,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 5,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 6,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 7,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-  ])
 
   return (
 
     <View>
       <TextInput
         style={styles.title}
+        onChangeText={(e)=>{setTitle(e)}}
 
       >{title}</TextInput>
 
       <TextInput
         style={styles.desc}
+        onChangeText={(e)=>{setDesc(e)}}
+
       >{desc}</TextInput>
 
 
-      <View style={{ flex: 1, flexDirection: 'row', width: Width }}>
-        <TouchableOpacity
-          style={styles.dateBtn}
-          onPress={() => setDateVisible(true)}
-        ></TouchableOpacity>
-        <DatePicker
-          modal
-          open={dateVisible}
-          date={date}
-          onConfirm={(date) => {
-            setDateVisible(false)
-            setDate(date)
-            console.log(date)
-          }}
-          onCancel={() => {
-            setDateVisible(false)
-          }}
-        />
+<View style={{flex:1,flexWrap:'wrap' ,flexDirection:'row'}}>
 
-        <TouchableOpacity
-          style={styles.priorityBtn}
-          onPress={() => { setPriorVisible(true) }}
+  {/* datebtn  */}
+      <TouchableOpacity 
+      style={styles.inputBtns}
+      onPress={() => setDateVisible(true)}
+      >
+        <View
+        style={{flexDirection:'row', padding:scale*3}}
         >
-          {/* priorityBtn */}
-          <Modal
-            animationType='fade'
-            transparent={true}
-            visible={priorVisible}
+        <View style={{paddingHorizontal: Width*0.03}}>
+          
+        <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]}/>
+        </View>
+        <Text
+          style={{
+            color: colors[5],
+            fontWeight:'bold',
+            fontSize: Scale*7,
+            paddingHorizontal: Width*0.04
+          }}
+        >Choose Date and Time</Text>
+        </View>
+      </TouchableOpacity>
+      <DatePicker
+        modal
+        open={dateVisible}
+        date={date}
+        onConfirm={(date) => {
+          setDateVisible(false)
+          setDate(date)
+          console.log(date)
+        }}
+        onCancel={() => {
+          setDateVisible(false)
+        }}
+      />
+{/* priorityBtn */}
+        <TouchableOpacity
+        style={styles.inputBtns}
+        onPress={()=>{setPriorVisible(true)}}
+        >
+           <View
+        style={{flexDirection:'row', padding:scale*3}}
+        >
+        <View style={{paddingHorizontal: Width*0.03}}>
+        <FontAwesome5 name={'star'} size={iconSize} color={colors[5]}/>
+        </View>
+        <Text
+          style={{
+            color: colors[5],
+            fontWeight:'bold',
+            fontSize: Scale*7,
+            paddingHorizontal: Width*0.12
+          }}
+        >Choose Priority</Text>
+        </View>
+        {/* priority modal  */}
+        <Modal 
+        animationType='fade'
+        transparent={true}
+        visible={priorVisible}
+        >
+          <View
+          style={styles.ModalOuter}
           >
             <View
-              style={styles.ModalOuter}
+            style={styles.ModalIner}
             >
-              <View
-                style={styles.ModalIner}
-              >
-                <TouchableOpacity
-                  style={styles.modalOption1}
-                  title="Option 1"
-                  onPress={() => {
-                    setPrior("High");
-                    setPriorVisible(false);
-                  }}
-                ><Text style={styles.optionText}>High</Text></TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.modalOption2}
-                  title="Option 2"
-                  onPress={() => {
-                    setPrior("Moderate");
-                    setPriorVisible(false);
-                  }}
-                ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.modalOption3}
-                  onPress={() => {
-                    setPrior("Low");
-                    setPriorVisible(false);
-                  }}
-                ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
-              </View>
+            <TouchableOpacity
+              style={styles.modalOption1}
+              title="Option 1"
+              onPress={() => {
+                setPrior("High");
+                setPriorVisible(false);
+              }}
+            ><Text style={styles.optionText}>High</Text></TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalOption2}
+              title="Option 2"
+              onPress={() => {
+                setPrior("Moderate");
+                setPriorVisible(false);
+              }}
+            ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalOption3}
+              onPress={() => {
+                setPrior("Low");
+                setPriorVisible(false);
+              }}
+            ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
             </View>
-          </Modal>
+          </View>
+        </Modal>
         </TouchableOpacity>
 
+
+{/* save task btn */}
         <TouchableOpacity
-          style={styles.dateBtn}
-          onPress={() => { organiseTask() }}
+
+          style={styles.inputBtns}
+          onPress={()=>{addNewTask(title, desc, date, priority, 0)}}
+        ><View
+        style={{flexDirection:'row' ,padding:scale*3}}
         >
-        </TouchableOpacity>
-      </View>
+        <View style={{paddingHorizontal: Width*0.03}}>
+        <FontAwesome5 name={'check'} size={iconSize} color={colors[5]}/>
+        </View>
+        <Text
+          style={{
+            color: colors[5],
+            fontWeight:'bold',
+            fontSize: Scale*7,
+            paddingHorizontal: Width*0.25
+          }}
+        >Save</Text>
+        </View>
+        </TouchableOpacity>      
+        </View>
     </View>
 
 

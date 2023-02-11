@@ -4,7 +4,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import AddTask from './AddTask';
 import ViewTask from './ViewTask';
 import {Appearance} from 'react-native';
-
+import Settings from './Settings';
+import SetWallpaper from './SetWallpaper';
 
 const {scale} = Dimensions.get("window")
 const {width, height} = Dimensions.get("screen")
@@ -31,7 +32,7 @@ const Home = ({navigation}) => {
 
       {/* <View style={{backgroundColor:'#fff',height:Scale*200}}>
       </View> */}
-      <View style={{flex:1, flexWrap:'wrap'}}>
+      <View style={{flex:1,flexWrap:'wrap'}}>
      <TouchableOpacity 
      style={styles.TouchableOpacity1}
      onPress={()=>{navigation.navigate(AddTask)}}
@@ -86,7 +87,9 @@ const Home = ({navigation}) => {
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacity5}>
+      <TouchableOpacity style={styles.TouchableOpacity5}
+        onPress={()=>{navigation.navigate(Settings)}}
+      >
 
       <View style={styles.TouchableOpacityView}>
       <FontAwesome5 name='gear' size={iconSize} color={colors[3]}/>
@@ -98,14 +101,16 @@ const Home = ({navigation}) => {
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacity6}>
+      <TouchableOpacity style={styles.TouchableOpacity6}
+            onPress={()=>{navigation.navigate(SetWallpaper)}}
+      >
 
       <View style={styles.TouchableOpacityView}>
       <FontAwesome5 name='exclamation' size={iconSize} color={colors[3]}/>
       </View>
 
       <Text style={styles.TouchableOpacityText1}>
-        Settings
+        Set Wallpaper
       </Text>
 
       </TouchableOpacity>

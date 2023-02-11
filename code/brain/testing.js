@@ -24,8 +24,10 @@ exports.resetHIjson = () => {
             id: 'sample',
             title: 'sample',
             desc: 'sample',
-            date: 'sample',
-            priority: 'sample'
+            deadline: 'sample',
+            priority: 'sample',
+            duration: 'sample',
+            curDate: 'sample'
         }
         ]
     }
@@ -36,7 +38,7 @@ exports.resetHIjson = () => {
 
 // add task
 
-exports.addNewTask = (taskTitle, taskDesp, TaskPrty, taskDurtn) => {
+exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
 
     TaskID = 0;
     Utility.GetAvalibleID((result, error) => {
@@ -49,8 +51,10 @@ exports.addNewTask = (taskTitle, taskDesp, TaskPrty, taskDurtn) => {
                 id: TaskID,
                 title: taskTitle,
                 desp: taskDesp,
-                priority: TaskPrty,
-                duration: taskDurtn
+                deadline: taskDead,
+                priority: taskPrio,
+                duration: taskDurtn,
+                curDate: new Date()
             }
 
             RNFS.readFile(path)
@@ -127,11 +131,11 @@ exports.editTaskByID = (TaskID, attrib, newValue) => {
                 else if (attrib == 'description') {
                     task.description = newValue
                 }
+                else if (attrib == 'deadline') {
+                    task.date = newValue
+                }
                 else if (attrib == 'priority') {
                     task.priority = newValue
-                }
-                else if (attrib == 'date') {
-                    task.date = newValue
                 }
                 else if (attrib == 'duration') {
                     task.duration = newValue
@@ -163,4 +167,3 @@ exports.organiseTask = () => {
         console.error(error);
     });   
 }
-
