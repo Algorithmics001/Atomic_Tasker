@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const{width, height} = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
@@ -33,18 +33,29 @@ if(colorscheme === 'dark'){
 }
 
 const ViewTask = (navigation) => {
-  console.log(scale, width, height)
-const todos = [
-  {
-    id:1,
-    title:"tdod1",
-    date:'any',
-    prior:'',
-    desc: '',
-    duration: '',
+  const [todos, setTodos] = useState([])
 
+  const RNFS = require('react-native-fs')
+
+const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
+  
+
+useEffect(() => {
+  async function readTasks() {
+    const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
+    try {
+      const value = await RNFS.readFile(path);
+      const jsonData = JSON.parse(value);
+      const result = jsonData.Task_List.slice(1);
+      setTodos(result);
+    } catch (error) {
+      console.error(error);
+    }
   }
-]
+  readTasks();
+}, []);
+console.log(todos)
+// console.log(todos)
   const iconSize = Scale * 7;
   return (
     <>
@@ -58,12 +69,12 @@ const todos = [
 
               <Text style={styles.titleText}>{todo.title}</Text>
               <View style={{flex:1, alignItems:'flex-end'}}>
-              <Text style={styles.dateText}>{todo.date}</Text>
+              <Text style={styles.dateText}>{todo.deadline.substring(0, 10)}</Text>
               </View>
             </View>
 
-            <Text style={styles.priorText}>Priority: {todo.prior}</Text>
-            <Text style={styles.descText}>Description: {todo.description}</Text>
+            <Text style={styles.priorText}>Priority: {todo.desp}</Text>
+            <Text style={styles.descText}>Description: {todo.priority}</Text>
             <Text style={styles.durationText}>Duration: {todo.duration}</Text>
           </View>
         ))}

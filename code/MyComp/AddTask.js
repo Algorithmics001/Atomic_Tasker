@@ -121,79 +121,12 @@ function AddTask() {
   const [desc, setDesc] = useState('Desc')
   const [priorVisible, setPriorVisible] = useState(false);
   const [priority, setPrior] = useState("");
-  const [durationVisible, setDurationVisible] = useState(false);
-  const [duration, setDuration] = useState(0);
-
-
-
-
-
-function push(){
-
-}
+  
 
 
 
   const RNFS = require('react-native-fs')
   // const filePath = `${RNFS.DocumentDirectoryPath}/Avalible_ID.json`;
-  let [data, setData] = useState([
-    {
-      id: 1,
-      title: 'Todo 1',
-      date: '2022-01-01',
-      description: 'This is the first todo item',
-      prior: 'High',
-      duration: '2 hours'
-    },
-    {
-      id: 2,
-      title: 'Todo 2',
-      date: '2022-02-01',
-      description: 'This is the second todo item',
-      prior: 'Low',
-      duration: '1 hour'
-    },
-    {
-      id: 3,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 4,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 5,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 6,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-    {
-      id: 7,
-      title: 'Todo 3',
-      date: '2022-03-01',
-      description: 'This is the third todo item',
-      prior: 'Medium',
-      duration: '3 hours'
-    },
-  ])
 
   return (
 
@@ -312,7 +245,7 @@ function push(){
 {/* save task btn */}
         <TouchableOpacity
           style={styles.inputBtns}
-          onPress={()=>{push()}}
+          onPress={()=>{addNewTask(title, desc, date, priority, 0)}}
         ><View
         style={{flexDirection:'row' ,padding:scale*3}}
         >
