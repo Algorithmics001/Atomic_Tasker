@@ -105,7 +105,7 @@ const Home = ({navigation}) => {
       </View>
 
       <Text style={styles.TouchableOpacityText1}>
-        Set ToDo List
+        Set ToDo List as WallPaper
       </Text>
 
       </TouchableOpacity>

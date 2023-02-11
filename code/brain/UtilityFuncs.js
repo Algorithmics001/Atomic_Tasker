@@ -11,7 +11,7 @@ exports.GetAvalibleID = (callback) => {
         else{
             const data = JSON.parse(jsonString);
             if (parseInt(data.AvalibleID.length) < 0){
-                return NULL
+                return null
             }
             else {
                 var result = parseInt(data.AvalibleID[0]);
