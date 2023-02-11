@@ -4,8 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput, Button
 import React, { useState } from 'react'
 import DatePicker from 'react-native-date-picker'
 
-// this is for brain
-// import {addTask, removeTask, editTask, getPath} from '../brain/logic'
+// following line includes database functions 
 import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray } from '../brain/testing';
 
 import DurationBtn from './DurationBtn';
@@ -193,39 +192,6 @@ function AddTask() {
     },
   ])
 
-  // const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
-  // RNFS.writeFile(path, JSON.stringify(data));
-  // const test = RNFS.readFile(path);
-  // RNFS.readFile(path)
-  // .then(value => {
-  //   // Parse the JSON data
-  //   const jsonData = JSON.parse(value);
-
-  //   // Use the JSON data as needed
-  //   console.log(jsonData);
-  // })
-  // .catch(error => {
-  //   console.error(error);
-  // });
-
-  // console.log(pri);
-  // console.log(path);
-  let arr = [0]
-  const testF = () => {
-
-    TaskArray((result, error) => {
-      if (error) {
-        console.error(error);
-      }
-      else {
-        arr = result
-
-      }
-    })
-  }
-  testF()
-  console.log(arr)
-
   return (
 
     <View>
@@ -304,7 +270,7 @@ function AddTask() {
 
         <TouchableOpacity
           style={styles.dateBtn}
-          onPress={() => { testF() }}
+          onPress={() => { }}
         >
         </TouchableOpacity>
       </View>
