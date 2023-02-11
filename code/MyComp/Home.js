@@ -105,7 +105,7 @@ const Home = ({navigation}) => {
       </View>
 
       <Text style={styles.TouchableOpacityText1}>
-        Settings
+        Set ToDo List
       </Text>
 
       </TouchableOpacity>
