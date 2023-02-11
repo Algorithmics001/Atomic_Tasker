@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./MyComp/Home";
 import AddTask from "./MyComp/AddTask";
 import ViewTask from "./MyComp/ViewTask";
+import Settings from "./MyComp/Settings";
 const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3']
 
 function App() {
@@ -24,7 +25,12 @@ function App() {
           name="ViewTask"
           component={ViewTask}
         />
-      </Stack.Navigator>
+      <Stack.Screen
+          options={{title:"Settings", statusBarColor:colors[3]}}
+          name="Settings"
+          component={Settings}
+        />
+        </Stack.Navigator>
     </NavigationContainer>
   );
 }

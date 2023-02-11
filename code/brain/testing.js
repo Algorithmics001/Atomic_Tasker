@@ -24,8 +24,10 @@ exports.resetHIjson = () => {
             id: 'sample',
             title: 'sample',
             desc: 'sample',
-            date: 'sample',
-            priority: 'sample'
+            deadline: 'sample',
+            priority: 'sample',
+            duration: 'sample',
+            curDate: 'sample'
         }
         ]
     }
@@ -36,7 +38,7 @@ exports.resetHIjson = () => {
 
 // add task
 
-exports.addNewTask = (taskTitle, taskDesp, TaskPrty, taskDurtn) => {
+exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
 
     TaskID = 0;
     Utility.GetAvalibleID((result, error) => {
@@ -49,8 +51,10 @@ exports.addNewTask = (taskTitle, taskDesp, TaskPrty, taskDurtn) => {
                 id: TaskID,
                 title: taskTitle,
                 desp: taskDesp,
-                priority: TaskPrty,
-                duration: taskDurtn
+                deadline: taskDead,
+                priority: taskPrio,
+                duration: taskDurtn,
+                curDate: new Date()
             }
 
             RNFS.readFile(path)
@@ -127,11 +131,11 @@ exports.editTaskByID = (TaskID, attrib, newValue) => {
                 else if (attrib == 'description') {
                     task.description = newValue
                 }
+                else if (attrib == 'deadline') {
+                    task.date = newValue
+                }
                 else if (attrib == 'priority') {
                     task.priority = newValue
-                }
-                else if (attrib == 'date') {
-                    task.date = newValue
                 }
                 else if (attrib == 'duration') {
                     task.duration = newValue
@@ -140,24 +144,6 @@ exports.editTaskByID = (TaskID, attrib, newValue) => {
                 RNFS.writeFile(path, JSON.stringify(jsonData));
             }
 
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
-
-// list task
-
-exports.TaskArray = (callback) => {
-    RNFS.readFile(path)
-        .then(value => {
-            // Parse the JSON data
-            const jsonData = JSON.parse(value);
-
-            // Use the JSON data as needed
-            let result = jsonData.Task_List.slice(1)
-            
-            callback(result, null);
         })
         .catch(error => {
             console.error(error);
