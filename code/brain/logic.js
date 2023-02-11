@@ -53,9 +53,14 @@ exports.removeTask = (TaskID) => {
                 return updatedData;
             }
 
-            const updatedJsonData = removeObject(data, TaskID);
-            jsonString = JSON.stringify(updatedJsonData)
-            fs.writeFileSync(path, jsonString, 'utf-8');
+            if(TaskID != 0){
+                const updatedJsonData = removeObject(data, TaskID);
+                jsonString = JSON.stringify(updatedJsonData)
+                fs.writeFileSync(path, jsonString, 'utf-8');
+            }
+            else{
+                console.log("INVALID ID")
+            }
         }
     })
 }
