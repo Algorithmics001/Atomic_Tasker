@@ -76,9 +76,10 @@ const styles = StyleSheet.create({
   viewStyle: {
     marginTop: Height*0.004 * 3,
     marginHorizontal: Width*0.009 * 5,
-    marginBottom: Scale * 1,
+    marginBottom: Scale * 3,
     backgroundColor: colors[2],
-    borderTopRightRadius: Scale*5
+    borderTopRightRadius: Scale*5,
+    paddingBottom : Height*0.02
   },
   titleText: {
     fontSize: Scale * 6,

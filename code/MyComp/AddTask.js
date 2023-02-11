@@ -3,11 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput,Button,
 
 import React, {useState} from 'react'
 import DatePicker from 'react-native-date-picker'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-// this is for brain
-import {addTask, removeTask, editTask, getPath} from '../brain/logic'
-import DurationBtn from './DurationBtn';
-// Define values for title, desc, date, priority, and duration
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
+
 
 const {scale} = Dimensions.get("window")
 const {width, height} = Dimensions.get("window")
@@ -22,7 +19,8 @@ let z = 804.5714285714286/height
 
 Height = height*z
 
-const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3']
+const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3', '#fff']
+const iconSize = Scale * 9
 
 
 const input={
@@ -61,16 +59,9 @@ const styles = StyleSheet.create({
     borderRadius: input.borderRadius,
     fontSize: input.fontSize,
   },
-  dateBtn:{
+  inputBtns:{
     backgroundColor:colors[3],
-    width: Width*0.285,
-    height:Height*0.07,
-    borderRadius: Scale*6,
-    margin:Scale*2
-  },
-  priorityBtn:{
-    backgroundColor:colors[3],
-    width: Width*0.285,
+    width: Width*0.97,
     height:Height*0.07,
     borderRadius: Scale*6,
     margin:Scale*2
@@ -153,11 +144,30 @@ function push(){
       >{desc}</TextInput>
 
 
-<View style={{flex:1, flexDirection:'row', width:Width}}>
+<View style={{flex:1,flexWrap:'wrap' ,flexDirection:'row'}}>
+
+  {/* datebtn  */}
       <TouchableOpacity 
-      style={styles.dateBtn}
+      style={styles.inputBtns}
       onPress={() => setDateVisible(true)}
-      ></TouchableOpacity>
+      >
+        <View
+        style={{flexDirection:'row', padding:scale*3}}
+        >
+        <View style={{paddingHorizontal: Width*0.03}}>
+          
+        <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]}/>
+        </View>
+        <Text
+          style={{
+            color: colors[5],
+            fontWeight:'bold',
+            fontSize: Scale*7,
+            paddingHorizontal: Width*0.04
+          }}
+        >Choose Date and Time</Text>
+        </View>
+      </TouchableOpacity>
       <DatePicker
         modal
         open={dateVisible}
@@ -171,12 +181,27 @@ function push(){
           setDateVisible(false)
         }}
       />
-
+{/* priorityBtn */}
         <TouchableOpacity
-        style={styles.priorityBtn}
+        style={styles.inputBtns}
         onPress={()=>{setPriorVisible(true)}}
         >
-        {/* priorityBtn */}
+           <View
+        style={{flexDirection:'row', padding:scale*3}}
+        >
+        <View style={{paddingHorizontal: Width*0.03}}>
+        <FontAwesome5 name={'star'} size={iconSize} color={colors[5]}/>
+        </View>
+        <Text
+          style={{
+            color: colors[5],
+            fontWeight:'bold',
+            fontSize: Scale*7,
+            paddingHorizontal: Width*0.12
+          }}
+        >Choose Priority</Text>
+        </View>
+        {/* priority modal  */}
         <Modal 
         animationType='fade'
         transparent={true}
@@ -216,11 +241,27 @@ function push(){
         </Modal>
         </TouchableOpacity>
 
+
+{/* save task btn */}
         <TouchableOpacity
-          style={styles.dateBtn}
+          style={styles.inputBtns}
           onPress={()=>{push()}}
+        ><View
+        style={{flexDirection:'row' ,padding:scale*3}}
         >
-          </TouchableOpacity>      
+        <View style={{paddingHorizontal: Width*0.03}}>
+        <FontAwesome5 name={'check'} size={iconSize} color={colors[5]}/>
+        </View>
+        <Text
+          style={{
+            color: colors[5],
+            fontWeight:'bold',
+            fontSize: Scale*7,
+            paddingHorizontal: Width*0.25
+          }}
+        >Save</Text>
+        </View>
+        </TouchableOpacity>      
         </View>
     </View>
 

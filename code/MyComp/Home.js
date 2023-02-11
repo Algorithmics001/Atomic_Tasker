@@ -4,6 +4,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import AddTask from './AddTask';
 import ViewTask from './ViewTask';
 import {Appearance} from 'react-native';
+import Settings from './Settings';
 
 
 const {scale} = Dimensions.get("window")
@@ -86,7 +87,9 @@ const Home = ({navigation}) => {
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacity5}>
+      <TouchableOpacity style={styles.TouchableOpacity5}
+        onPress={()=>{navigation.navigate(Settings)}}
+      >
 
       <View style={styles.TouchableOpacityView}>
       <FontAwesome5 name='gear' size={iconSize} color={colors[3]}/>
