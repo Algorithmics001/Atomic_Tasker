@@ -9,7 +9,8 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
-import com.rnfs.RNFSPackage; 
+// added along with line 66+
+import com.rnfs.RNFSPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -61,6 +62,7 @@ public class MainApplication extends Application implements ReactApplication {
     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
+  // THIS IS FOR RNFS 
   // @Override
   //   protected List<ReactPackage> getPackages() {
   //     return Arrays.<ReactPackage>asList(
@@ -68,4 +70,5 @@ public class MainApplication extends Application implements ReactApplication {
   //       new RNFSPackage() // <---------- add package
   //     );
   //   }
+  //  THE ABOVE COMMENTED SHIT IS A FACADE
 }
