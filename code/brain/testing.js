@@ -27,7 +27,8 @@ exports.resetHIjson = () => {
             deadline: 'sample',
             priority: 'sample',
             duration: 'sample',
-            curDate: 'sample'
+            curDate: 'sample',
+            weight: 'sample'
         }
         ]
     }
@@ -54,7 +55,8 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
                 deadline: taskDead,
                 priority: taskPrio,
                 duration: taskDurtn,
-                curDate: new Date()
+                curDate: new Date(),
+                weight: parseInt(taskPrio) * parseInt(taskDurtn)
             }
 
             RNFS.readFile(path)
@@ -141,6 +143,7 @@ exports.editTaskByID = (TaskID, attrib, newValue) => {
                     task.duration = newValue
                 }
 
+                task.weight = parseInt(task.priority) * parseInt(task.duration)
                 RNFS.writeFile(path, JSON.stringify(jsonData));
             }
 
@@ -157,11 +160,9 @@ exports.organiseTask = () => {
         const jsonData = JSON.parse(value);
 
         // Use the JSON data as needed
-        jsonData.Task_List[1]
+        jsonData.Task_List.sort((a, b) => b.weight - a.weight);
 
-        RNFS.writeFile(path, JSON.stringify(jsonData));
-
-        console.log(jsonData.Task_List[0])
+        console.log(jsonData.Task_List)
     })
     .catch(error => {
         console.error(error);
