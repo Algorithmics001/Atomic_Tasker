@@ -6,6 +6,8 @@ import AddTask from "./MyComp/AddTask";
 import ViewTask from "./MyComp/ViewTask";
 import Settings from "./MyComp/Settings";
 import SetWallpaper from "./MyComp/SetWallpaper"
+import MyProfile from "./MyComp/MyProfile";
+import QuickTasker from "./MyComp/QuickTasker";
 const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3']
 
 function App() {
@@ -35,6 +37,16 @@ function App() {
           name="SetWallpaper"
           component={SetWallpaper}
           />
+            <Stack.Screen
+          options={{title:"All Tasks", statusBarColor:colors[3]}}
+          name="MyProfile"
+          component={MyProfile}
+        />
+        <Stack.Screen
+          options={{title:"All Tasks", statusBarColor:colors[3]}}
+          name="QuickTasker"
+          component={QuickTasker}
+        />
         </Stack.Navigator>
     </NavigationContainer>
   );

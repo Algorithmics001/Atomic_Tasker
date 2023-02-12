@@ -6,7 +6,7 @@ import DatePicker from 'react-native-date-picker'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 
 // following line includes database functions 
-import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray } from '../brain/testing';
+import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray, organiseTask } from '../brain/testing';
 
 import DurationBtn from './DurationBtn';
 
@@ -63,12 +63,12 @@ const styles = StyleSheet.create({
     borderRadius: input.borderRadius,
     fontSize: input.fontSize,
   },
-  inputBtns:{
-    backgroundColor:colors[3],
-    width: Width*0.97,
-    height:Height*0.07,
-    borderRadius: Scale*6,
-    margin:Scale*2
+  inputBtns: {
+    backgroundColor: colors[3],
+    width: Width * 0.97,
+    height: Height * 0.07,
+    borderRadius: Scale * 6,
+    margin: Scale * 2
   },
 
   ModalOuter: {
@@ -121,148 +121,157 @@ function AddTask() {
   const [desc, setDesc] = useState('Desc')
   const [priorVisible, setPriorVisible] = useState(false);
   const [priority, setPrior] = useState("");
-  
+
 
 
 
   const RNFS = require('react-native-fs')
   // const filePath = `${RNFS.DocumentDirectoryPath}/Avalible_ID.json`;
 
+  function testing() {
+    const date1 = new Date('2023-02-11');
+    const date2 = new Date('2023-02-01');
+
+    const diffInMs = date1.getTime() - date2.getTime();
+    console.log(diffInMs)
+  }
+
   return (
 
     <View>
       <TextInput
         style={styles.title}
-        onChangeText={(e)=>{setTitle(e)}}
+        onChangeText={(e) => { setTitle(e) }}
 
       >{title}</TextInput>
 
       <TextInput
         style={styles.desc}
-        onChangeText={(e)=>{setDesc(e)}}
+        onChangeText={(e) => { setDesc(e) }}
 
       >{desc}</TextInput>
 
 
-<View style={{flex:1,flexWrap:'wrap' ,flexDirection:'row'}}>
+      <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
 
-  {/* datebtn  */}
-      <TouchableOpacity 
-      style={styles.inputBtns}
-      onPress={() => setDateVisible(true)}
-      >
-        <View
-        style={{flexDirection:'row', padding:scale*3}}
-        >
-        <View style={{paddingHorizontal: Width*0.03}}>
-          
-        <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]}/>
-        </View>
-        <Text
-          style={{
-            color: colors[5],
-            fontWeight:'bold',
-            fontSize: Scale*7,
-            paddingHorizontal: Width*0.04
-          }}
-        >Choose Date and Time</Text>
-        </View>
-      </TouchableOpacity>
-      <DatePicker
-        modal
-        open={dateVisible}
-        date={date}
-        onConfirm={(date) => {
-          setDateVisible(false)
-          setDate(date)
-          console.log(date)
-        }}
-        onCancel={() => {
-          setDateVisible(false)
-        }}
-      />
-{/* priorityBtn */}
+        {/* datebtn  */}
         <TouchableOpacity
-        style={styles.inputBtns}
-        onPress={()=>{setPriorVisible(true)}}
-        >
-           <View
-        style={{flexDirection:'row', padding:scale*3}}
-        >
-        <View style={{paddingHorizontal: Width*0.03}}>
-        <FontAwesome5 name={'star'} size={iconSize} color={colors[5]}/>
-        </View>
-        <Text
-          style={{
-            color: colors[5],
-            fontWeight:'bold',
-            fontSize: Scale*7,
-            paddingHorizontal: Width*0.12
-          }}
-        >Choose Priority</Text>
-        </View>
-        {/* priority modal  */}
-        <Modal 
-        animationType='fade'
-        transparent={true}
-        visible={priorVisible}
+          style={styles.inputBtns}
+          onPress={() => setDateVisible(true)}
         >
           <View
-          style={styles.ModalOuter}
+            style={{ flexDirection: 'row', padding: scale * 3 }}
+          >
+            <View style={{ paddingHorizontal: Width * 0.03 }}>
+
+              <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]} />
+            </View>
+            <Text
+              style={{
+                color: colors[5],
+                fontWeight: 'bold',
+                fontSize: Scale * 7,
+                paddingHorizontal: Width * 0.04
+              }}
+            >Choose Date and Time</Text>
+          </View>
+        </TouchableOpacity>
+        <DatePicker
+          modal
+          open={dateVisible}
+          date={date}
+          onConfirm={(date) => {
+            setDateVisible(false)
+            setDate(date)
+            console.log(date)
+          }}
+          onCancel={() => {
+            setDateVisible(false)
+          }}
+        />
+        {/* priorityBtn */}
+        <TouchableOpacity
+          style={styles.inputBtns}
+          onPress={() => { setPriorVisible(true) }}
+        >
+          <View
+            style={{ flexDirection: 'row', padding: scale * 3 }}
+          >
+            <View style={{ paddingHorizontal: Width * 0.03 }}>
+              <FontAwesome5 name={'star'} size={iconSize} color={colors[5]} />
+            </View>
+            <Text
+              style={{
+                color: colors[5],
+                fontWeight: 'bold',
+                fontSize: Scale * 7,
+                paddingHorizontal: Width * 0.12
+              }}
+            >Choose Priority</Text>
+          </View>
+          {/* priority modal  */}
+          <Modal
+            animationType='fade'
+            transparent={true}
+            visible={priorVisible}
           >
             <View
-            style={styles.ModalIner}
+              style={styles.ModalOuter}
             >
-            <TouchableOpacity
-              style={styles.modalOption1}
-              title="Option 1"
-              onPress={() => {
-                setPrior("High");
-                setPriorVisible(false);
-              }}
-            ><Text style={styles.optionText}>High</Text></TouchableOpacity>
-            <TouchableOpacity
-              style={styles.modalOption2}
-              title="Option 2"
-              onPress={() => {
-                setPrior("Moderate");
-                setPriorVisible(false);
-              }}
-            ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
-            <TouchableOpacity
-              style={styles.modalOption3}
-              onPress={() => {
-                setPrior("Low");
-                setPriorVisible(false);
-              }}
-            ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
+              <View
+                style={styles.ModalIner}
+              >
+                <TouchableOpacity
+                  style={styles.modalOption1}
+                  title="Option 1"
+                  onPress={() => {
+                    setPrior("High");
+                    setPriorVisible(false);
+                  }}
+                ><Text style={styles.optionText}>High</Text></TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.modalOption2}
+                  title="Option 2"
+                  onPress={() => {
+                    setPrior("Moderate");
+                    setPriorVisible(false);
+                  }}
+                ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.modalOption3}
+                  onPress={() => {
+                    setPrior("Low");
+                    setPriorVisible(false);
+                  }}
+                ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Modal>
+          </Modal>
         </TouchableOpacity>
 
 
-{/* save task btn */}
+        {/* save task btn */}
         <TouchableOpacity
+
           style={styles.inputBtns}
-          onPress={()=>{addNewTask(title, desc, date, priority, 0)}}
+          onPress={() => { addNewTask(title, desc, '00', priority, '0') }}
         ><View
-        style={{flexDirection:'row' ,padding:scale*3}}
+          style={{ flexDirection: 'row', padding: scale * 3 }}
         >
-        <View style={{paddingHorizontal: Width*0.03}}>
-        <FontAwesome5 name={'check'} size={iconSize} color={colors[5]}/>
-        </View>
-        <Text
-          style={{
-            color: colors[5],
-            fontWeight:'bold',
-            fontSize: Scale*7,
-            paddingHorizontal: Width*0.25
-          }}
-        >Save</Text>
-        </View>
-        </TouchableOpacity>      
-        </View>
+            <View style={{ paddingHorizontal: Width * 0.03 }}>
+              <FontAwesome5 name={'check'} size={iconSize} color={colors[5]} />
+            </View>
+            <Text
+              style={{
+                color: colors[5],
+                fontWeight: 'bold',
+                fontSize: Scale * 7,
+                paddingHorizontal: Width * 0.25
+              }}
+            >Save</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
 
 

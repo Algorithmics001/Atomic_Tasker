@@ -6,6 +6,8 @@ import ViewTask from './ViewTask';
 import {Appearance} from 'react-native';
 import Settings from './Settings';
 import SetWallpaper from './SetWallpaper';
+import QuickTasker from './QuickTasker';
+import MyProfile from './MyProfile';
 
 const {scale} = Dimensions.get("window")
 const {width, height} = Dimensions.get("screen")
@@ -48,19 +50,24 @@ const Home = ({navigation}) => {
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacity2}>
+      <TouchableOpacity style={styles.TouchableOpacity2}
+      onPress={() => {navigation.navigate(QuickTasker)}}
+      >
 
       <View style={styles.TouchableOpacityView}>
       <FontAwesome5 name={'question'} size={iconSize} color={colors[3]}/>
       </View>
 
-      <Text style={styles.TouchableOpacityText1}>
-        How To Use
+      <Text style={styles.TouchableOpacityText1}
+      >
+        Zap Tasker
       </Text>
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacity3}>
+      <TouchableOpacity style={styles.TouchableOpacity3}
+      onPress={()=>{navigation.navigate(MyProfile)}}
+      >
 
       <View style={styles.TouchableOpacityView}>
       <FontAwesome5 name='user' size={iconSize} color={colors[3]}/>
