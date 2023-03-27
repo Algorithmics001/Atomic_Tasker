@@ -1,5 +1,5 @@
-import { View, Text, Button, Touchable, TouchableOpacity, StyleSheet, Dimensions, Modal, ScrollView } from 'react-native'
-import React from 'react'
+import { NativeModules, PermissionsAndroid, Platform, View, Text, Button, Touchable, TouchableOpacity, StyleSheet, Dimensions, Modal, ScrollView } from 'react-native'
+import {useState, useEffect, React} from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import AddTask from './AddTask';
 import ViewTask from './ViewTask';
@@ -8,6 +8,10 @@ import Settings from './Settings';
 import SetWallpaper from './SetWallpaper';
 import QuickTasker from './QuickTasker';
 import MyProfile from './MyProfile';
+import {resetAIjson} from '../brain/testing'
+import {resetHIjson} from '../brain/testing'
+const RNFS = require('react-native-fs')
+
 
 const {scale} = Dimensions.get("window")
 const {width, height} = Dimensions.get("screen")
@@ -28,7 +32,45 @@ if(colorscheme === 'dark'){
 }
 
 const Home = ({navigation}) => {
-  console.log(scale)
+
+  async function checkIfFileExists() {
+    const packageName = NativeModules?.AppInfo?.packageName ?? '';
+    const filePath = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
+    const fileExists = await RNFS.exists(filePath);
+    if (!fileExists) {
+      console.log('This is the first time the app is opened after installation.');
+      async function requestFilePermissions() {
+        try {
+          const granted = await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          ]);
+      
+          if (
+            granted['android.permission.READ_EXTERNAL_STORAGE'] ===
+              PermissionsAndroid.RESULTS.GRANTED &&
+            granted['android.permission.WRITE_EXTERNAL_STORAGE'] ===
+              PermissionsAndroid.RESULTS.GRANTED
+          ) {
+            resetAIjson()
+            resetHIjson()
+          } else {
+            console.log('File permissions denied.');
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+        requestFilePermissions();
+    } else {
+      console.log('The app has been opened before.');
+    }
+  }
+  
+  
+
+  checkIfFileExists()
+  
   return (
     <View style={{backgroundColor:colors[3], flex:1, alignItems:'center'}}>
 

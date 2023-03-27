@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { NativeModules, View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+
 import { useState, useEffect } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
+
+const packageName = NativeModules?.AppInfo?.packageName ?? '';
 
 
 const{width, height} = Dimensions.get("window");
@@ -42,7 +45,8 @@ const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
 
 useEffect(() => {
   async function readTasks() {
-    const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
+    // const path = `${RNFS.ExternalStorageDirectoryPath}/hi.json`;
+    const path = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
     try {
       const value = await RNFS.readFile(path);
       const jsonData = JSON.parse(value);
@@ -61,7 +65,7 @@ console.log(todos)
     <>
       <ScrollView style={{backgroundColor:colors[7]}}>
         {todos.map(todo => (
-          <View style={styles.viewStyle}>
+          <View key={todos.index} style={styles.viewStyle}>
             <View style={{backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row'}}>
               <View style={{backgroundColor: colors[1], Width: Scale * 12, Height: Scale * 12, alignItems: 'center', padding: Scale * 2}}>
                 <FontAwesome5 name={'check'} size={iconSize} color={colors[3]} />

@@ -1,7 +1,10 @@
 // contains periferal functions for logic.js
 
 const RNFS = require('react-native-fs')
-const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/Avalible_ID.json`;
+import { NativeModules } from 'react-native';
+// const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/Avalible_ID.json`;
+const packageName = NativeModules?.AppInfo?.packageName ?? '';
+const path = `${RNFS.DocumentDirectoryPath}/${packageName}/Avalible_ID.json`;
 
 exports.GetAvalibleID = (callback) => {
 
