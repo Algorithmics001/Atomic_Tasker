@@ -135,9 +135,9 @@ function AddTask() {
     const diffInMs = date1.getTime() - date2.getTime();
     console.log(diffInMs)
   }
-
+  
   return (
-
+    
     <View>
       <TextInput
         style={styles.title}
@@ -252,7 +252,7 @@ function AddTask() {
 
         {/* save task btn */}
         <TouchableOpacity
-
+          
           style={styles.inputBtns}
           onPress={() => { addNewTask(title, desc, '00', priority, '0') }}
         ><View
