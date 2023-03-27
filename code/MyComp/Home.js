@@ -1,5 +1,6 @@
-import { View, Text, Button, Touchable, TouchableOpacity, StyleSheet, Dimensions, Modal, ScrollView } from 'react-native'
+import { View, Text, Button, Touchable, TouchableOpacity, StyleSheet, Dimensions, Modal, ScrollView,  PermissionsAndroid, Platform } from 'react-native'
 import React from 'react'
+import {useState, useEffect} from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import AddTask from './AddTask';
 import ViewTask from './ViewTask';
@@ -8,6 +9,7 @@ import Settings from './Settings';
 import SetWallpaper from './SetWallpaper';
 import QuickTasker from './QuickTasker';
 import MyProfile from './MyProfile';
+import { resetAIjson, resetHIjson } from '../brain/testing';
 
 const {scale} = Dimensions.get("window")
 const {width, height} = Dimensions.get("screen")
@@ -28,7 +30,50 @@ if(colorscheme === 'dark'){
 }
 
 const Home = ({navigation}) => {
+
+  const [filePermissionGranted, setFilePermissionGranted] = useState(false);
+
+  useEffect(() => {
+    const requestFilePermission = async () => {
+      if (Platform.OS === 'android') {
+        // Request file permission
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'Storage Permission',
+            message: 'This app needs permission to access your storage',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          setFilePermissionGranted(true);
+        }
+      }
+    };
+
+    requestFilePermission();
+  }, []);
+
+  useEffect(() => {
+    const createJsonFile = async () => {
+      if (filePermissionGranted) {
+        // Create the JSON file in phone
+        resetAIjson()
+        resetHIjson()
+      
+      }
+    };
+
+    createJsonFile();
+  }, [filePermissionGranted]);
   console.log(scale)
+
+  //when opening app for first time
+
+
   return (
     <View style={{backgroundColor:colors[3], flex:1, alignItems:'center'}}>
 

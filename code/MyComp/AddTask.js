@@ -10,6 +10,8 @@ import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, Tas
 
 import DurationBtn from './DurationBtn';
 
+// import {resetAIjson} from "../brain/testing"
+
 const { scale } = Dimensions.get("window")
 const { width, height } = Dimensions.get("window")
 
@@ -135,6 +137,7 @@ function AddTask() {
     const diffInMs = date1.getTime() - date2.getTime();
     console.log(diffInMs)
   }
+  resetAIjson()
 
   return (
 

@@ -1,7 +1,7 @@
 const RNFS = require('react-native-fs')
 
-const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
-const idpath = `${RNFS.ExternalStorageDirectoryPath}/Documents/Avalible_ID.json`;
+const path = RNFS.ExternalStorageDirectoryPath + '/hi.json';
+const idpath = `${RNFS.ExternalStorageDirectoryPath}emulated/0/Avalible_ID.json`;
 
 const Utility = require('./UtilityFuncs')
 
@@ -19,6 +19,7 @@ exports.resetAIjson = () => {
 }
 
 exports.resetHIjson = () => {
+    console.log("resethijson called")
     let NewList = {
         Task_List: [{
             id: 'sample',
