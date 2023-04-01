@@ -24,6 +24,7 @@ exports.resetAIjson = () => {
 }
 
 exports.resetHIjson = () => {
+    console.log("resethijson called")
     let NewList = {
         Task_List: [{
             id: 'sample',

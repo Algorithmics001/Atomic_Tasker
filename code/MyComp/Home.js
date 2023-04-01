@@ -35,15 +35,18 @@ const filePath = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
 
 const Home = ({navigation}) => {
 
-  const requestCameraPermission = async () => {
+
+  //this functions asks for file permissions when app is opened for very first time
+  //also writes file hijson and availableidjson
+  const requestStoragePermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Atomic-Tasker App needs storage permission ',
           message:
-            'Cool Photo App needs access to your camera ' +
-            'so you can take awesome pictures.',
+            'Atomic-Tasker App needs access to your storage ' +
+            'to save the data',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
           buttonPositive: 'OK',
@@ -51,8 +54,20 @@ const Home = ({navigation}) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log('You can use the storage');
-        resetAIjson()
-        resetHIjson()
+
+        RNFS.exists(filePath)
+          .then((exists) => {
+            if (exists) {
+              console.log('File exists');
+            } else {
+              resetAIjson()
+              resetHIjson()
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+        });
+
       } else {
         console.log('Camera permission denied');
       }
@@ -60,7 +75,7 @@ const Home = ({navigation}) => {
       console.warn(err);
     }
   };
-  requestCameraPermission()  
+  requestStoragePermission()  
   return (
     <View style={{backgroundColor:colors[3], flex:1, alignItems:'center'}}>
 
@@ -87,7 +102,7 @@ const Home = ({navigation}) => {
       >
 
       <View style={styles.TouchableOpacityView}>
-      <FontAwesome5 name={'question'} size={iconSize} color={colors[3]}/>
+      <FontAwesome5 name={'bolt'} size={iconSize} color={colors[3]}/>
       </View>
 
       <Text style={styles.TouchableOpacityText1}

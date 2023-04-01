@@ -8,10 +8,9 @@ import { Appearance } from 'react-native';
 
 const packageName = NativeModules?.AppInfo?.packageName ?? '';
 
-
+//for handling responsiveness
 const{width, height} = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
-
 
 let x = 3.5/scale
 Scale = scale*x
@@ -23,6 +22,9 @@ let z = 804.5714285714286/height
 
 Height = height*z
 
+const iconSize = Scale * 7;
+
+//for handling all the colors and dark mde
 var colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3', '#fff','#6D726E', '#fff'];
 
 const colorscheme = Appearance.getColorScheme()
@@ -35,32 +37,31 @@ if(colorscheme === 'dark'){
   colors[7] = '#A38EBE'
 }
 
+//main function starts
 const ViewTask = (navigation) => {
+
+  //hook for storing the data after getting from file stored locally
   const [todos, setTodos] = useState([])
 
   const RNFS = require('react-native-fs')
 
-const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
-  
-
-useEffect(() => {
-  async function readTasks() {
-    // const path = `${RNFS.ExternalStorageDirectoryPath}/hi.json`;
-    const path = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
-    try {
-      const value = await RNFS.readFile(path);
-      const jsonData = JSON.parse(value);
-      const result = jsonData.Task_List.slice(1);
-      setTodos(result);
-    } catch (error) {
-      console.error(error);
+  //hook for reading the data from local hi.json file and storing in todos hook
+  useEffect(() => {
+    async function readTasks() {
+      const path = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
+      try {
+        const value = await RNFS.readFile(path);
+        const jsonData = JSON.parse(value);
+        const result = jsonData.Task_List.slice(1);
+        setTodos(result);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }
-  readTasks();
-}, []);
-console.log(todos)
-// console.log(todos)
-  const iconSize = Scale * 7;
+    readTasks();
+  }, []);
+
+  //renders all the tasks that are stored in todos hook
   return (
     <>
       <ScrollView style={{backgroundColor:colors[7]}}>
@@ -87,6 +88,7 @@ console.log(todos)
   );
 };
 
+//styling for every element
 const styles = StyleSheet.create({
   viewStyle: {
     marginTop: Height*0.004 * 3,
