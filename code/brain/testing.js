@@ -1,7 +1,12 @@
 const RNFS = require('react-native-fs')
+import { NativeModules } from 'react-native';
 
-const path = RNFS.ExternalStorageDirectoryPath + '/hi.json';
-const idpath = `${RNFS.ExternalStorageDirectoryPath}emulated/0/Avalible_ID.json`;
+// const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
+// const idpath = `${RNFS.ExternalStorageDirectoryPath}/Documents/Avalible_ID.json`;
+
+const packageName = NativeModules?.AppInfo?.packageName ?? '';
+const path = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
+const idpath = `${RNFS.DocumentDirectoryPath}/${packageName}/Avalible_ID.json`;
 
 const Utility = require('./UtilityFuncs')
 
