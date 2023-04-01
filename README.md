@@ -1,20 +1,78 @@
-# Issues
+# Top Issues
 1. No delete button for tasks
 1. UI of settings page is overflowing
 1. Responsiveness is not proper
 1. My profile page is still incomplete
 1. Set wallpaper has dummy values for tasks
+1. Find more on [issues page](https://github.com/Algorithmics001/Hackathon/issues)
 
-# Rules for contributing in this repository:
-1. Create your own branch named after you, commit and push code to your own branch only.
-1. Create Pull Request for merging your branch when your work is done.
-1. Please write sensible commit messages also write commit description if changes made are crutial or large in number.
-1. Use Issues frature when suggesting any change or update.
+
+# Steps to contribute to this Project:
+## 1. Install Git & Github
+You can do it by following this [video tutorial](https://www.youtube.com/watch?v=MFtsLRphqDM)
+
+## 2. Fork this repositry to your own Github account by:
+-Create a 'fork' of Algorithmics/Hackthon.
+![alt text](./ImagesForREADME/fork.png?raw=true)
+Or use gh for forking
+```
+gh repo fork Algorithmics/Hackthon --clone
+```
+
+## 3. Clone your forked repositery
+- Goto your own github page and you will see repo named hackathon
+```
+github/YourUserName/Hackathon
+```
+- Copy the URL and run the following command on your cmd:
+```
+git clone URL
+```
+
+## 4. Set up development environment
+- Install choco, jdk11 and android studio+sdk by reading [this documentation](https://reactnative.dev/docs/environment-setup) with react native CLI ***not expo***
+
+- Change your directory to the directory where you have cloned the repo
+```
+cd /your-directory-path/Hackathon/code
+```
+
+- Now run the the follwing command to install the required modules for this react native app
+```
+npm install
+```
+
+## 5. Run this app on emulator or android device
+- Now run the command
+```
+npm start
+```
+- Now press a for running it on android emulator
+
+## 5. Make the required changes you want
+- **Always sync fork** on your cloud github repo and run git pull command if any changes are there in remote but not on system
+- It is suggested to create a new branch for new change 
+- If you are not comfertable with branching process you can do it directly
+- Just make the require changes and run the following commands
+```
+git add .
+git commit -m "Write about what changes you have made"
+git push
+```
+
+## 6. Pushing to the origin or original project repo
+- Goto you github hackathon repositry
+- Press contribute button
+- Write about the changes you have made or issue you have solved
+- and create pull request
+![alt text](./ImagesForREADME/sync%26pull.png?raw=true)
+- We will examine for any discrepensies or any conflicts before merging your pull request.
+
+## Congratulation!!! you have made up to so far if you are still reading
+
 
 # Tech-Stack 
-## All team members are required to set up the following in their PC's
-1. FireBase (data base)
-1. React (frame work)
+1. React Native(frame work)
 1. Android Studio
 1. Github desktop
 1. Visual Studio code
@@ -28,60 +86,7 @@
   npm install react-scripts --save
   ```
 
-# How to use git
-1. Create a 'fork' of Algorithmics/Hackthon.
-![alt text](./ImagesForREADME/fork.png?raw=true)
-Or use gh for forking
-```
-gh repo fork Algorithmics/Hackthon --clone
-```
-2. You will see a repository like: YourUserName/Hackathon
 
-3. Check your current branch using:
-```
-git branch
-```
-
-4. Create a new branch (of your forked repository)
-```
-git branch <username>
-git checkout <username>
-```
-5. Now you are on username branch of your cloned repository.
-
-6. Open README.md (outside the 'main' folder) and add your name to this list:[Raghavjit,Sangam,Rajveer Singh]
-
-7. Now you can commit changes (you can also use GitHub Desktop)
-```
-git status
-git add .
-git commit -m "I have added my name in the list"
-git push
-```
-This will push changes to the username branch of your forked repo.
-
-8. Create a Pull Request using the following code (you can also use GitHub Desktop):
-
-This will open you browser, you can also remove -w flag and then you will need to manually specify the title and body of yuor merge.
-```
-gh pr create -w
-```
-To create a merge requst using command line (make sure you are on username branch):
-```
-gh merge username
-git checkout main
-git merge username
-git push -u origin main
-```
-
-
-9. Once you merge the branch username and main you will see your changes on main.
-
-10. Now go to your repository username/Hackathon and sync changes with Algorithmics/Hackathon. (This will bring all the changes on source to your fork.)
-
-11. After sync you can create a pull request to pull changes in upstream. (This will replicate all the changes on your personal fork into Algorithmics/Hackathon)
-
-![alt text](./ImagesForREADME/sync%26pull.png?raw=true)
 
 
 ### Refer to the following for more instructions.
