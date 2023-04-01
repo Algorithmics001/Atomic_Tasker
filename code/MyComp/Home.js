@@ -30,47 +30,37 @@ if(colorscheme === 'dark'){
   colors[3] = 'black'
   colors[4] = 'black'
 }
+const packageName = NativeModules?.AppInfo?.packageName ?? '';
+const filePath = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
 
 const Home = ({navigation}) => {
 
-  async function checkIfFileExists() {
-    const packageName = NativeModules?.AppInfo?.packageName ?? '';
-    const filePath = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
-    const fileExists = await RNFS.exists(filePath);
-    if (!fileExists) {
-      console.log('This is the first time the app is opened after installation.');
-      async function requestFilePermissions() {
-        try {
-          const granted = await PermissionsAndroid.requestMultiple([
-            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-          ]);
-      
-          if (
-            granted['android.permission.READ_EXTERNAL_STORAGE'] ===
-              PermissionsAndroid.RESULTS.GRANTED &&
-            granted['android.permission.WRITE_EXTERNAL_STORAGE'] ===
-              PermissionsAndroid.RESULTS.GRANTED
-          ) {
-            resetAIjson()
-            resetHIjson()
-          } else {
-            console.log('File permissions denied.');
-          }
-        } catch (err) {
-          console.warn(err);
-        }
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Cool Photo App Camera Permission',
+          message:
+            'Cool Photo App needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the storage');
+        resetAIjson()
+        resetHIjson()
+      } else {
+        console.log('Camera permission denied');
       }
-        requestFilePermissions();
-    } else {
-      console.log('The app has been opened before.');
+    } catch (err) {
+      console.warn(err);
     }
-  }
-  
-  
-
-  checkIfFileExists()
-  
+  };
+  requestCameraPermission()  
   return (
     <View style={{backgroundColor:colors[3], flex:1, alignItems:'center'}}>
 
