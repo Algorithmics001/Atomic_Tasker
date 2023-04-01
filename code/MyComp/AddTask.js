@@ -1,5 +1,5 @@
 
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput, Button, Alert, Modal } from 'react-native';
+import { ToastAndroid, View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput, Button, Alert, Modal } from 'react-native';
 
 import React, { useState } from 'react'
 import DatePicker from 'react-native-date-picker'
@@ -8,10 +8,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 // following line includes database functions 
 import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray, organiseTask } from '../brain/testing';
 
-import DurationBtn from './DurationBtn';
 
-// import {resetAIjson} from "../brain/testing"
-
+//responsiveness
 const { scale } = Dimensions.get("window")
 const { width, height } = Dimensions.get("window")
 
@@ -24,9 +22,11 @@ Width = width * y
 let z = 804.5714285714286 / height
 
 Height = height * z
-
-const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff']
 const iconSize = Scale * 9
+
+
+//colors and modes
+const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff']
 
 
 const input = {
@@ -116,39 +116,36 @@ const styles = StyleSheet.create({
 
 });
 
+//main function starts here
+
 function AddTask() {
+  //hooks for storing input values
   const [date, setDate] = useState(new Date())
   const [dateVisible, setDateVisible] = useState(false)
-  const [title, setTitle] = useState('Title')
-  const [desc, setDesc] = useState('Desc')
+  const [title, setTitle] = useState('')
+  const [desc, setDesc] = useState('')
   const [priorVisible, setPriorVisible] = useState(false);
   const [priority, setPrior] = useState("");
 
 
 
-
-  const RNFS = require('react-native-fs')
-  // const filePath = `${RNFS.DocumentDirectoryPath}/Avalible_ID.json`;
-
-  function testing() {
-    const date1 = new Date('2023-02-11');
-    const date2 = new Date('2023-02-01');
-
-    const diffInMs = date1.getTime() - date2.getTime();
-    console.log(diffInMs)
-  }
+  
   
   return (
     
     <View>
       <TextInput
         style={styles.title}
+        maxLength={15}
+        placeholder='Enter Title for your task'
         onChangeText={(e) => { setTitle(e) }}
 
       >{title}</TextInput>
 
       <TextInput
         style={styles.desc}
+        placeholder='Enter Description for your task'
+        multiline={true}
         onChangeText={(e) => { setDesc(e) }}
 
       >{desc}</TextInput>
@@ -256,7 +253,12 @@ function AddTask() {
         <TouchableOpacity
           
           style={styles.inputBtns}
-          onPress={() => { addNewTask(title, desc, '00', priority, '0') }}
+          onPress={() => { 
+            addNewTask(title, desc, date , priority, '0') 
+            ToastAndroid.show('Task saved successfully', ToastAndroid.LONG);
+            setTitle('')
+            setDesc('')
+          }}
         ><View
           style={{ flexDirection: 'row', padding: scale * 3 }}
         >

@@ -1,5 +1,9 @@
-# Hackathon
-This repo is for algorithmics hackathon project
+# Issues
+1. No delete button for tasks
+1. UI of settings page is overflowing
+1. Responsiveness is not proper
+1. My profile page is still incomplete
+1. Set wallpaper has dummy values for tasks
 
 # Rules for contributing in this repository:
 1. Create your own branch named after you, commit and push code to your own branch only.
@@ -14,6 +18,7 @@ This repo is for algorithmics hackathon project
 1. Android Studio
 1. Github desktop
 1. Visual Studio code
+1. iconkitchen(for generating app icon)
 
 ## Requirements
 1. node
