@@ -4,7 +4,7 @@
 </a>
 
 
-@RaghavJit @whogurdevil
+[@RaghavJit](https://github.com/RaghavJit) [@whogurdevil](https://github.com/whogurdevil)
 
 # Top Issues
 1. No delete button for tasks
