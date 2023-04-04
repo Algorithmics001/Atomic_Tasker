@@ -78,8 +78,8 @@ const ViewTask = (navigation) => {
               </View>
             </View>
 
-            <Text style={styles.priorText}>Priority: {todo.priority}</Text>
-            <Text style={styles.descText}>Description: {todo.desp}</Text>
+            <Text style={styles.priorText}>Priority: {todo.desp}</Text>
+            <Text style={styles.descText}>Description: {todo.priority}</Text>
             <Text style={styles.durationText}>Duration: {todo.duration}</Text>
           </View>
         ))}
