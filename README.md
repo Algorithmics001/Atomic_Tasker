@@ -1,3 +1,11 @@
+# Maintainers
+<a href="https://github.com/Algorithmics001/Hackathon/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Algorithmics001/Hackathon&max=2" />
+</a>
+
+
+@RaghavJit @whogurdevil
+
 # Top Issues
 1. No delete button for tasks
 1. UI of settings page is overflowing
@@ -6,6 +14,10 @@
 1. Set wallpaper has dummy values for tasks
 1. Find more on [issues page](https://github.com/Algorithmics001/Hackathon/issues)
 
+# Contributers
+<a href="https://github.com/Algorithmics001/Hackathon/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Algorithmics001/Hackathon" />
+</a>
 
 # Steps to contribute to this Project:
 ## 1. Install Git & Github
