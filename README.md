@@ -1,10 +1,20 @@
-# Maintainers
-<a href="https://github.com/Algorithmics001/Hackathon/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Algorithmics001/Hackathon&max=2" />
-</a>
+<p align="center">
+<a href="https://github.com/Algorithmics001/Hackathon/stargazers"><img src="https://img.shields.io/github/stars/Algorithmics001/Hackathon" alt="GitHub stars"></a>
+<a href="https://github.com/Algorithmics001/Hackathon/network"><img src="https://img.shields.io/github/forks/Algorithmics001/Hackathon" alt="GitHub forks"></a>
+<a href="https://github.com/Algorithmics001/Hackathon/issues"><img src="https://img.shields.io/github/issues/Algorithmics001/Hackathon" alt="GitHub issues"></a>
+<a href="https://github.com/Algorithmics001/Hackathon/pulls"><img src="https://img.shields.io/github/issues-pr/Algorithmics001/Hackathon" alt="GitHub pull requests"></a>
+<img src="https://img.shields.io/github/last-commit/Algorithmics001/Hackathon" alt="GitHub last commit">
+</p>
 
+<h1 align="center"> Maintainers </h1>
+<p align="center">
+<a href="https://github.com/Algorithmics001/Hackathon/graphs/contributors"><img src="https://contrib.rocks/image?repo=Algorithmics001/Hackathon&max=2" alt="GitHub stars"></a>
+</p>
 
-[@RaghavJit](https://github.com/RaghavJit) [@whogurdevil](https://github.com/whogurdevil)
+<p align="center">
+<a href="https://github.com/RaghavJit">@RaghavJit</a>
+<a href="https://github.com/whogurdeil">@whogurdevil</a>
+</p>
 
 # Top Issues
 1. No delete button for tasks
