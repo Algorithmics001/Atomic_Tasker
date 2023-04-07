@@ -6,9 +6,6 @@
 <img src="https://img.shields.io/github/last-commit/Algorithmics001/Hackathon" alt="GitHub last commit">
 </p>
 
-![Discord Banner 4](https://discordapp.com/api/guilds/1093799889319776276/widget.png?style=banner4)
-
-
 <h1 align="center"> Maintainers </h1>
 <p align="center">
 <a href="https://github.com/Algorithmics001/Hackathon/graphs/contributors"><img src="https://contrib.rocks/image?repo=Algorithmics001/Hackathon&max=2" alt="GitHub stars"></a>
@@ -18,6 +15,8 @@
 <a href="https://github.com/RaghavJit">@RaghavJit</a>
 <a href="https://github.com/whogurdeil">@whogurdevil</a>
 </p>
+
+[Discord server](https://discord.gg/DkYHgN9wvW)
 
 # Top Issues
 1. No delete button for tasks
