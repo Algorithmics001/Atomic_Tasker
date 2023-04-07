@@ -161,16 +161,37 @@ exports.editTaskByID = (TaskID, attrib, newValue) => {
 
 exports.organiseTask = () => {
     RNFS.readFile(path)
-    .then(value => {
-        // Parse the JSON data
-        const jsonData = JSON.parse(value);
+        .then(value => {
+            // Parse the JSON data
+            const jsonData = JSON.parse(value);
 
-        // Use the JSON data as needed
-        jsonData.Task_List.sort((a, b) => b.weight - a.weight);
+            // Use the JSON data as needed
+            jsonData.Task_List.sort((a, b) => b.weight - a.weight);
 
-        console.log(jsonData.Task_List)
-    })
-    .catch(error => {
-        console.error(error);
-    });   
+            console.log(jsonData.Task_List)
+        })
+        .catch(error => {
+            console.error(error);
+        });
 }
+
+exports.WallpaperTaskList = () => {
+    return RNFS.readFile(path)
+        .then(value => {
+            // Parse the JSON data
+            const jsonData = JSON.parse(value);
+
+            // Use the JSON data as needed
+            let TaskString = ''
+            for(let i=0; i<5; i++){
+                TaskString = TaskString + jsonData.Task_List[i].title + '\n';
+            }
+        
+            return Promise.resolve(TaskString);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+
