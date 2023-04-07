@@ -53,18 +53,29 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
             console.error(error);
         } else {
             TaskID = result
-
+            let date1 = new Date()
+            let timeLeft = (taskDead.getTime() - date1.getTime()) / (86400000)
+            
+            if(taskPrio == 'High'){
+                prioValue = 3
+            }
+            else if(taskPrio == 'Moderate'){
+                prioValue = 2
+            }
+            else if(taskPrio == 'Low'){
+                prioValue = 1
+            }
             const newTask = {
                 id: TaskID,
                 title: taskTitle,
                 desp: taskDesp,
                 deadline: taskDead,
-                priority: taskPrio,
+                priority: prioValue,
                 duration: taskDurtn,
-                curDate: new Date(),
-                weight: parseInt(taskPrio) * parseInt(taskDurtn)
+                curDate: date1,
+                weight: (parseInt(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)
             }
-
+            
             RNFS.readFile(path)
                 .then(value => {
                     // Parse the JSON data
