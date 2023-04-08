@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
+import { resetJson, addQTask } from '../brain/QuickTasker'
 
 export default function QuickTasker() {
   const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
-  const [prevTaskList, setPrevTaskList] = useState([]);
+  // const [prevTaskList, setPrevTaskList] = useState([]);
 
   const checkValidation = () => {
     if (task === '') {
@@ -15,20 +16,23 @@ export default function QuickTasker() {
   };
 
   const addTask = () => {
-    setPrevTaskList(taskList);
+    // setPrevTaskList(taskList);
     setTaskList([...taskList, task]);
     setTask('');
+    addQTask([...taskList, task])
   };
 
   const deleteTask = (index) => {
-    setPrevTaskList(taskList);
+    // setPrevTaskList(taskList);
     const newTaskList = [...taskList];
     newTaskList.splice(index, 1);
     setTaskList(newTaskList);
+    addQTask(newTaskList)
   };
 
   const undo = () => {
-    setTaskList(prevTaskList);
+    console.log("huehue")
+    // setTaskList(prevTaskList);
   };
 
   return (

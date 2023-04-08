@@ -10,6 +10,7 @@ import QuickTasker from './QuickTasker';
 import MyProfile from './MyProfile';
 import {resetAIjson} from '../brain/testing'
 import {resetHIjson} from '../brain/testing'
+import {resetJson} from '../brain/QuickTasker'
 const RNFS = require('react-native-fs')
 
 
@@ -31,7 +32,9 @@ if(colorscheme === 'dark'){
   colors[4] = 'black'
 }
 const packageName = NativeModules?.AppInfo?.packageName ?? '';
-const filePath = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
+const filePath1 = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
+const filePath2 = `${RNFS.DocumentDirectoryPath}/${packageName}/Avalible_ID.json`;
+const filePath3 = `${RNFS.DocumentDirectoryPath}/${packageName}/QuickTasks.json`;
 
 const Home = ({navigation}) => {
 
@@ -53,15 +56,40 @@ const Home = ({navigation}) => {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the storage');
+        console.log('You can use the storage')
 
-        RNFS.exists(filePath)
+        RNFS.exists(filePath1)
+          .then((exists) => {
+            if (exists) {
+              console.log('File exists');
+            } else {
+              resetHIjson()
+              resetAIjson()
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+        });
+
+        RNFS.exists(filePath2)
           .then((exists) => {
             if (exists) {
               console.log('File exists');
             } else {
               resetAIjson()
               resetHIjson()
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+        });
+
+        RNFS.exists(filePath3)
+          .then((exists) => {
+            if (exists) {
+              console.log('File exists');
+            } else {
+              resetJson()
             }
           })
           .catch((error) => {
