@@ -22,7 +22,7 @@ let temps = scale
 let x = 3.5/scale
 Scale = scale*x
 
-const iconSize = Scale*9
+const iconSize = 39
 
 const colorscheme = Appearance.getColorScheme()
 
@@ -69,7 +69,7 @@ const Home = ({navigation}) => {
         });
 
       } else {
-        console.log('Camera permission denied');
+        console.log('Storage permission denied');
       }
     } catch (err) {
       console.warn(err);
@@ -77,11 +77,19 @@ const Home = ({navigation}) => {
   };
   requestStoragePermission()  
   return (
-    <View style={{backgroundColor:colors[3], flex:1, alignItems:'center'}}>
+    <View style={{
+      backgroundColor: colors[3], 
+      alignItems: 'center', 
+      padding: 10,
+      flexWrap:'wrap'
+      }}>
 
       {/* <View style={{backgroundColor:'#fff',height:Scale*200}}>
       </View> */}
-      <View style={{flex:1,flexWrap:'wrap'}}>
+      {/* <View style={{
+        
+        flex:1,flexWrap:'wrap',
+        }}> */}
      <TouchableOpacity 
      style={styles.TouchableOpacity1}
      onPress={()=>{navigation.navigate(AddTask)}}
@@ -170,82 +178,90 @@ const Home = ({navigation}) => {
       </TouchableOpacity>
 
       
-      </View>
+      {/* </View> */}
     </View>
   )
 }
 const styles = StyleSheet.create({
   TouchableOpacity1:{
     backgroundColor:'#e4def2',
-    width:Scale*45,
-    height:Scale*53,
-    margin:Scale*3,
-    marginVertical:Scale*9,
-    borderRadius:Scale*8,
-    marginBottom:Scale*1,
+    width: '45%',
+    height:'30%',
+    margin: 10,
+    borderRadius: 35,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   TouchableOpacity2:{
-    backgroundColor:colors[1],
-    width:Scale*45,
-    height:Scale*53,
-    margin:Scale*3,
-    marginVertical:Scale*9,
-    borderRadius:Scale*8,
-    marginBottom:Scale*1,
+    backgroundColor: colors[1],
+    width: '45%',
+    height:'30%',
+    margin: 10,
+    borderRadius: 35,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   TouchableOpacity3:{
-    backgroundColor:colors[2],
-    width:Scale*45,
-    height:Scale*53,
-    margin:Scale*3,
-    marginVertical:Scale*9,
-    borderRadius:Scale*8,
-    marginBottom:Scale*1,
+    backgroundColor: colors[2],
+    width: '45%',
+    height:'30%',
+    margin: 10,
+    borderRadius: 35,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   TouchableOpacity4:{
-    backgroundColor:colors[1],
-    width:Scale*45,
-    height:Scale*53,
-    margin:Scale*3,
-    marginVertical:Scale*9,
-    borderRadius:Scale*8,
-    marginBottom:Scale*1,
+    backgroundColor: colors[2],
+    width: '45%',
+    height:'30%',
+    margin: 10,
+    borderRadius: 35,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   TouchableOpacity5:{
-    backgroundColor:colors[2],
-    width:Scale*45,
-    height:Scale*53,
-    margin:Scale*3,
-    marginVertical:Scale*9,
-    borderRadius:Scale*8,
-    marginBottom:Scale*1,
+    backgroundColor: colors[0],
+    width: '45%',
+    height:'30%',
+    margin: 10,
+    borderRadius: 35,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   TouchableOpacity6:{
-    backgroundColor:'#e4def2',
-    width:Scale*45,
-    height:Scale*53,
-    margin:Scale*3,
-    marginVertical:Scale*9,
-    borderRadius:Scale*8,
-    marginBottom:Scale*1,
+    backgroundColor: colors[1],
+    width: '45%',
+    height:'30%',
+    margin: 10,
+    borderRadius: 35,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  
   
 
   TouchableOpacityView:{
-    height:Scale*15,
-    width:Scale*15, 
+    // height:Scale*15,
+    // width:Scale*15, 
     backgroundColor:'#fff', 
     margin:Scale*5, 
     borderRadius:Scale*5,
     alignItems:'center',
     padding:Scale*3,
+    aspectRatio: 1
   },
-  TouchableOpacityText1:{
-    marginHorizontal:Scale*7, 
-    fontSize:Scale*6,
-    fontWeight:'bold',
-    color: colors[4],
-  },
+  TouchableOpacityText1: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: colors[3],
+    marginTop: 10,
+  },  
 })
 
 export default Home
