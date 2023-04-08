@@ -7,11 +7,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 
 // following line includes database functions 
 import { addNewTask, resetAIjson, resetHIjson, removeTaskByID, editTaskByID, TaskArray, organiseTask } from '../brain/testing';
-
+import ViewTask from './ViewTask';
 
 //responsiveness
 const { scale } = Dimensions.get("window")
-const { width, height } = Dimensions.get("window")
+const { width, height } = Dimensions.get("screen")
 
 let x = 3.5 / scale
 Scale = scale * x
@@ -22,7 +22,7 @@ Width = width * y
 let z = 804.5714285714286 / height
 
 Height = height * z
-const iconSize = Scale * 9
+const iconSize = Scale * 8
 
 
 //colors and modes
@@ -112,13 +112,25 @@ const styles = StyleSheet.create({
     fontSize: Scale * 8,
     fontWeight: 'bold',
     color: 'white'
-  }
+  },
+  addBtnPos: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    zIndex: 999,
+  },
+  addBtn: {
+    width: Width*0.16,
+    height: Width*0.16,
+    borderRadius: scale*22,
+    backgroundColor: colors[3],
+  },
 
 });
 
 //main function starts here
 
-function AddTask() {
+function AddTask(props) {
   //hooks for storing input values
   const [date, setDate] = useState(new Date())
   const [dateVisible, setDateVisible] = useState(false)
@@ -126,13 +138,15 @@ function AddTask() {
   const [desc, setDesc] = useState('')
   const [priorVisible, setPriorVisible] = useState(false);
   const [priority, setPrior] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
 
 
-  
-  
+
+
   return (
-    
+    <>
+
     <View>
       <TextInput
         style={styles.title}
@@ -251,13 +265,19 @@ function AddTask() {
 
         {/* save task btn */}
         <TouchableOpacity
-          
+
           style={styles.inputBtns}
-          onPress={() => { 
-            addNewTask(title, desc, date , priority, '0') 
-            ToastAndroid.show('Task saved successfully', ToastAndroid.LONG);
-            setTitle('')
-            setDesc('')
+          onPress={() => {
+
+            if (title.length === 0 || desc.length === 0) {
+              ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
+            }
+            else {
+              addNewTask(title, desc, date, priority, '0')
+              ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
+              setTitle('')
+              setDesc('')
+            }
           }}
         ><View
           style={{ flexDirection: 'row', padding: scale * 3 }}
@@ -277,6 +297,22 @@ function AddTask() {
         </TouchableOpacity>
       </View>
     </View>
+    <View style={styles.addBtnPos}>
+      <TouchableOpacity 
+      style={styles.addBtn}
+      onPress={()=>{props.navigation.navigate(ViewTask)}}
+      >
+        <View
+          style={{
+            alignItems:'center',
+            marginVertical:height*0.028
+          }}
+        >
+      <FontAwesome5 name={'list'} size={iconSize*0.65} color={colors[4]} />
+      </View>
+      </TouchableOpacity>
+      </View>
+    </>
 
 
   );

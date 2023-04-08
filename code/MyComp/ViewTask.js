@@ -1,10 +1,14 @@
 import React from 'react';
-import { NativeModules, View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { ToastAndroid, TouchableOpacity, NativeModules, View, Text, StyleSheet, Dimensions, ScrollView, Image } from 'react-native';
 
 import { useState, useEffect } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
+import removeTask, { addTask } from '../brain/logic.js'
+const RNFS = require('react-native-fs')
+import AddTask from './AddTask.js';
+
 
 const packageName = NativeModules?.AppInfo?.packageName ?? '';
 
@@ -22,7 +26,7 @@ let z = 804.5714285714286/height
 
 Height = height*z
 
-const iconSize = Scale * 7;
+const iconSize = Scale * 5;
 
 //for handling all the colors and dark mde
 var colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3', '#fff','#6D726E', '#fff'];
@@ -38,14 +42,34 @@ if(colorscheme === 'dark'){
 }
 
 //main function starts
-const ViewTask = (navigation) => {
+// imports and other code here...
 
-  //hook for storing the data after getting from file stored locally
-  const [todos, setTodos] = useState([])
+const ViewTask = (props) => {
 
-  const RNFS = require('react-native-fs')
+  // hook for storing the data after getting from file stored locally
+  const [todos, setTodos] = useState([]);
 
-  //hook for reading the data from local hi.json file and storing in todos hook
+  // function to delete a task by its ID
+  const deleteTask = async (taskId) => {
+    try {
+      const path = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
+      const jsonData = await RNFS.readFile(path, 'utf8');
+      const data = JSON.parse(jsonData);
+
+      const updatedData = {
+        ...data,
+        Task_List: data.Task_List.filter((task) => task.id !== taskId),
+      };
+
+      await RNFS.writeFile(path, JSON.stringify(updatedData), 'utf8');
+      setTodos(updatedData.Task_List.slice(1));
+      ToastAndroid.show('Task removed!', ToastAndroid.SHORT);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // hook for reading the data from local hi.json file and storing in todos hook
   useEffect(() => {
     async function readTasks() {
       const path = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
@@ -60,33 +84,99 @@ const ViewTask = (navigation) => {
     }
     readTasks();
   }, []);
-
-  //renders all the tasks that are stored in todos hook
+  // renders all the tasks that are stored in todos hook
   return (
     <>
-      <ScrollView style={{backgroundColor:colors[7]}}>
-        {todos.map(todo => (
-          <View key={todos.index} style={styles.viewStyle}>
-            <View style={{backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row'}}>
-              <View style={{backgroundColor: colors[1], Width: Scale * 12, Height: Scale * 12, alignItems: 'center', padding: Scale * 2}}>
-                <FontAwesome5 name={'check'} size={iconSize} color={colors[3]} />
-              </View>
+    <View style={styles.addBtnPos}>
+      <TouchableOpacity 
+      style={styles.addBtn}
+      onPress={()=>{props.navigation.navigate(AddTask)}}
+      >
+        <View
+          style={{
+            alignItems:'center',
+            marginVertical:height*0.023
+          }}
+        >
+      <FontAwesome5 name={'plus'} size={iconSize*1.7} color={colors[4]} />
+      </View>
+      </TouchableOpacity>
+      </View>
+    {todos.length === 0 ? (
+        <View style={styles.noTasksContainer}>      
+        <View>
+          <Image
+            source={require('../Assets/images/no_tasks_clock.png')}
+            style={{
+              height:'90%'
+            }}
+            />
+        </View>
+      </View>
+    ) : (<>
+      <ScrollView style={{ backgroundColor: colors[7] }}>
+        {todos.map((todo) => (
+          <View key={todo.id} style={styles.viewStyle}>
+            <View style={{ backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row' }}>
+              <TouchableOpacity 
+              style={{ backgroundColor: colors[1], Width: Scale * 12, Height: Scale * 12, alignItems: 'center', padding: Scale * 2 
+              }}
+              onPress={() => deleteTask(todo.id)}
+              >  
+                <FontAwesome5 name={'trash'} size={iconSize} color={colors[3]} />
+              </TouchableOpacity>
 
               <Text style={styles.titleText}>{todo.title}</Text>
-              <View style={{flex:1, alignItems:'flex-end'}}>
-              <Text style={styles.dateText}>{todo.deadline.substring(0, 10)}</Text>
+              <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                <Text style={styles.dateText}>{todo.deadline.substring(0, 10)}</Text>
               </View>
             </View>
 
-            <Text style={styles.priorText}>Priority: {todo.desp}</Text>
-            <Text style={styles.descText}>Description: {todo.priority}</Text>
+            <Text style={styles.priorText}>Priority: {todo.priority}</Text>
+            <Text style={styles.descText}>Description: {todo.desp}</Text>
             <Text style={styles.durationText}>Duration: {todo.duration}</Text>
+
+            <TouchableOpacity
+              style={{
+                flex:1,
+                marginTop:height*0.02
+              }}
+              onPress={()=>deleteTask(todo.id)}
+            >
+              <View
+                style= {{
+                  backgroundColor:colors[3],
+                }}
+              >
+                <View style={{ backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row' }}>
+              <View 
+              style={{ 
+                
+                backgroundColor: colors[1],
+                Width: Scale * 12, 
+                Height: Scale * 12, 
+                alignItems: 'center', 
+                padding: Scale * 2 
+              }}
+              >  
+                <FontAwesome5 name={'check'} size={iconSize} color={colors[3]} />
+              </View>
+
+              <Text style={styles.doneText}>Mark as done</Text>
+            </View>
+              </View>
+            </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
+      
+      </>
+    )
+        }
     </>
   );
 };
+
 
 //styling for every element
 const styles = StyleSheet.create({
@@ -96,13 +186,19 @@ const styles = StyleSheet.create({
     marginBottom: Scale * 3,
     backgroundColor: colors[2],
     borderTopRightRadius: Scale*5,
-    paddingBottom : Height*0.02
+    paddingBottom : Height*0
   },
   titleText: {
     fontSize: Scale * 6,
     fontWeight: 'bold',
     paddingTop: Height*0.004 * 2,
     paddingLeft: Width*0.009 * 4,
+    color: colors[5]
+  },
+  doneText: {
+    fontSize: Scale * 6,
+    paddingVertical: Height*0.004 * 2,
+    paddingHorizontal: Width*0.22,
     color: colors[5]
   },
   dateText: {
@@ -133,6 +229,24 @@ const styles = StyleSheet.create({
     paddingTop: Height*0.004 * 2,
     paddingLeft: Width*0.009 * 4,
     color:colors[6]
+  },
+  addBtnPos: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    zIndex: 999,
+  },
+  addBtn: {
+    width: Width*0.16,
+    height: Width*0.16,
+    borderRadius: width*2,
+    backgroundColor: colors[3],
+  },
+  noTasksContainer: {
+    width: '100%',
+    height: '100%',
+    alignItems:'center',
+    alignContent:'center'
   }
 })
 
