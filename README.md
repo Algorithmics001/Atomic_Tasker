@@ -16,6 +16,8 @@
 <a href="https://github.com/whogurdeil">@whogurdevil</a>
 </p>
 
+[Discord server](https://discord.gg/DkYHgN9wvW)
+
 # Top Issues
 1. No delete button for tasks
 1. UI of settings page is overflowing

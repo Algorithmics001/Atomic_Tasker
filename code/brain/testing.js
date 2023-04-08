@@ -48,6 +48,7 @@ exports.resetHIjson = () => {
 exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
 
     TaskID = 0;
+    let prioValue = 0
     Utility.GetAvalibleID((result, error) => {
         if (error) {
             console.error(error);
