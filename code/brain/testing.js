@@ -195,11 +195,22 @@ exports.WallpaperTaskList = () => {
 
             // Use the JSON data as needed
             let TaskString = ''
-            for(let i=0; i<5; i++){
+            let limit = 5
+            if(jsonData.Task_List.length <= 5){
+                limit = jsonData.Task_List.length
+            }
+            
+            for(let i=1; i<limit; i++){
+                console.log(jsonData.Task_List[i])
                 TaskString = TaskString + jsonData.Task_List[i].title + '\n';
             }
-        
-            return Promise.resolve(TaskString);
+            
+            if(TaskString != ''){
+                return Promise.resolve(TaskString);
+            }
+            else{
+                return Promise.resolve('You are all set!')
+            }
         })
         .catch(error => {
             console.error(error);
