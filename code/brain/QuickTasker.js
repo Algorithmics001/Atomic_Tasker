@@ -35,4 +35,15 @@ exports.addQTask = (Tlist) => {
 
 }
 
-
+exports.getList = () => {
+    return RNFS.readFile(path)
+        .then(value => {
+            // Parse the JSON data
+            const jsonData = JSON.parse(value);
+            console.log(jsonData)
+            return Promise.resolve(jsonData.Tasks);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
