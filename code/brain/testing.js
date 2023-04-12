@@ -192,6 +192,21 @@ exports.organiseTask = () => {
         });
 }
 
+exports.returnTaskList = () => {
+    return RNFS.readFile(path)
+        .then(value => {
+            // Parse the JSON data
+            const jsonData = JSON.parse(value);
+
+            // Use the JSON data as needed
+            let tasklist = jsonData.Task_List.slice(1)
+            return Promise.resolve(tasklist);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
 exports.WallpaperTaskList = () => {
     return RNFS.readFile(path)
         .then(value => {
