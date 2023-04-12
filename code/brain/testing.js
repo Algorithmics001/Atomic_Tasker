@@ -71,7 +71,7 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
                 title: taskTitle,
                 desp: taskDesp,
                 deadline: taskDead,
-                priority: prioValue,
+                priority: taskPrio,
                 duration: taskDurtn,
                 curDate: date1,
                 weight: (parseInt(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)

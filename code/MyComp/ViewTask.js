@@ -109,9 +109,9 @@ const ViewTask = (props) => {
                   <Text style={styles.dateText}>{todo.deadline.substring(0, 10)}</Text>
                 </View>
               </View>
-
-              <Text style={styles.priorText}>Priority: {todo.priority}</Text>
+              
               <Text style={styles.descText}>Description: {todo.desp}</Text>
+              <Text style={styles.priorText}>Priority: {todo.priority}</Text>
               <Text style={styles.durationText}>Duration: {todo.duration}</Text>
 
               <TouchableOpacity
