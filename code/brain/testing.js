@@ -87,6 +87,7 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
 
                     RNFS.writeFile(path, JSON.stringify(jsonData));
 
+                    Utility.SetWallpaper();
                     console.log(JSON.stringify(jsonData))
                 })
                 .catch(error => {
@@ -118,6 +119,8 @@ exports.removeTaskByID = (TaskID) => {
                 Utility.PutAvalibleID(TaskID)
 
                 console.log(JSON.stringify(updatedJsonData))
+                
+                Utility.SetWallpaper();
             }
             else {
                 console.log("INVALID ID")
@@ -163,6 +166,8 @@ exports.editTaskByID = (TaskID, attrib, newValue) => {
 
                 task.weight = parseInt(task.priority) * parseInt(task.duration)
                 RNFS.writeFile(path, JSON.stringify(jsonData));
+
+                Utility.SetWallpaper();
             }
 
         })
