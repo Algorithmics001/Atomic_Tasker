@@ -120,9 +120,9 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   addBtn: {
-    width: Width*0.16,
-    height: Width*0.16,
-    borderRadius: scale*22,
+    width: Width * 0.16,
+    height: Width * 0.16,
+    borderRadius: scale * 22,
     backgroundColor: colors[3],
   },
 
@@ -132,185 +132,211 @@ const styles = StyleSheet.create({
 
 function AddTask(props) {
   //hooks for storing input values
-  const [date, setDate] = useState(new Date())
-  const [dateVisible, setDateVisible] = useState(false)
-  const [title, setTitle] = useState('')
-  const [desc, setDesc] = useState('')
-  const [priorVisible, setPriorVisible] = useState(false);
-  const [priority, setPrior] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-
-
-
+  
+  const [[date, dateVisible], setDate] = useState([new Date(), false])
+  
+  const [[title, desc], setTaskData] = useState(['', ''])
+  
+  const [[priorVisible, priority], setPrityData] = useState(['', false]);
+  
+  const [[duration, durationVisible], setDuration] = useState(['', false])
 
 
   return (
     <>
 
-    <View>
-      <TextInput
-        style={styles.title}
-        maxLength={15}
-        placeholder='Enter Title for your task'
-        onChangeText={(e) => { setTitle(e) }}
+      <View>
+        <TextInput
+          style={styles.title}
+          maxLength={15}
+          placeholder='Enter Title for your task'
+          onChangeText={(e) => { setTaskData([e, desc]) }}
+        >{title}</TextInput>
 
-      >{title}</TextInput>
+        <TextInput
+          style={styles.desc}
+          placeholder='Enter Description for your task'
+          multiline={true}
+          onChangeText={(e) => { setTaskData([title, e]) }}
 
-      <TextInput
-        style={styles.desc}
-        placeholder='Enter Description for your task'
-        multiline={true}
-        onChangeText={(e) => { setDesc(e) }}
-
-      >{desc}</TextInput>
+        >{desc}</TextInput>
 
 
-      <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
+        <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
 
-        {/* datebtn  */}
-        <TouchableOpacity
-          style={styles.inputBtns}
-          onPress={() => setDateVisible(true)}
-        >
-          <View
-            style={{ flexDirection: 'row', padding: scale * 3 }}
-          >
-            <View style={{ paddingHorizontal: Width * 0.03 }}>
-
-              <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]} />
-            </View>
-            <Text
-              style={{
-                color: colors[5],
-                fontWeight: 'bold',
-                fontSize: Scale * 7,
-                paddingHorizontal: Width * 0.04
-              }}
-            >Choose Date and Time</Text>
-          </View>
-        </TouchableOpacity>
-        <DatePicker
-          modal
-          open={dateVisible}
-          date={date}
-          onConfirm={(date) => {
-            setDateVisible(false)
-            setDate(date)
-            console.log(date)
-          }}
-          onCancel={() => {
-            setDateVisible(false)
-          }}
-        />
-        {/* priorityBtn */}
-        <TouchableOpacity
-          style={styles.inputBtns}
-          onPress={() => { setPriorVisible(true) }}
-        >
-          <View
-            style={{ flexDirection: 'row', padding: scale * 3 }}
-          >
-            <View style={{ paddingHorizontal: Width * 0.03 }}>
-              <FontAwesome5 name={'star'} size={iconSize} color={colors[5]} />
-            </View>
-            <Text
-              style={{
-                color: colors[5],
-                fontWeight: 'bold',
-                fontSize: Scale * 7,
-                paddingHorizontal: Width * 0.12
-              }}
-            >Choose Priority</Text>
-          </View>
-          {/* priority modal  */}
-          <Modal
-            animationType='fade'
-            transparent={true}
-            visible={priorVisible}
+          {/* datebtn  */}
+          <TouchableOpacity
+            style={styles.inputBtns}
+            onPress={() => setDate([date, true])}
           >
             <View
-              style={styles.ModalOuter}
+              style={{ flexDirection: 'row', padding: scale * 3 }}
+            >
+              <View style={{ paddingHorizontal: Width * 0.03 }}>
+
+                <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]} />
+              </View>
+              <Text
+                style={{
+                  color: colors[5],
+                  fontWeight: 'bold',
+                  fontSize: Scale * 7,
+                  paddingHorizontal: Width * 0.04
+                }}
+              >Choose Date and Time</Text>
+            </View>
+          </TouchableOpacity>
+          <DatePicker
+            modal
+            open={dateVisible}
+            date={date}
+            onConfirm={(date) => {
+              // setDateVisible(false)
+              setDate([date, false])
+              console.log(date)
+            }}
+            onCancel={() => {
+              setDate([date, false])
+            }}
+          />
+          {/* priorityBtn */}
+          <TouchableOpacity
+            style={styles.inputBtns}
+            onPress={() => { setPrityData([priority, true]) }}
+          >
+            <View
+              style={{ flexDirection: 'row', padding: scale * 3 }}
+            >
+              <View style={{ paddingHorizontal: Width * 0.03 }}>
+                <FontAwesome5 name={'star'} size={iconSize} color={colors[5]} />
+              </View>
+              <Text
+                style={{
+                  color: colors[5],
+                  fontWeight: 'bold',
+                  fontSize: Scale * 7,
+                  paddingHorizontal: Width * 0.12
+                }}
+              >Choose Priority</Text>
+            </View>
+            {/* priority modal  */}
+            <Modal
+              animationType='fade'
+              transparent={true}
+              visible={priorVisible}
             >
               <View
-                style={styles.ModalIner}
+                style={styles.ModalOuter}
               >
-                <TouchableOpacity
-                  style={styles.modalOption1}
-                  title="Option 1"
-                  onPress={() => {
-                    setPrior("High");
-                    setPriorVisible(false);
-                  }}
-                ><Text style={styles.optionText}>High</Text></TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.modalOption2}
-                  title="Option 2"
-                  onPress={() => {
-                    setPrior("Moderate");
-                    setPriorVisible(false);
-                  }}
-                ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.modalOption3}
-                  onPress={() => {
-                    setPrior("Low");
-                    setPriorVisible(false);
-                  }}
-                ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
+                <View
+                  style={styles.ModalIner}
+                >
+                  <TouchableOpacity
+                    style={styles.modalOption1}
+                    title="Option 1"
+                    onPress={() => {
+                      setPrityData(["High", false]);
+                    }}
+                  ><Text style={styles.optionText}>High</Text></TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.modalOption2}
+                    title="Option 2"
+                    onPress={() => {
+                      setPrityData(["Moderate", false]);
+                    }}
+                  ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.modalOption3}
+                    onPress={() => {
+                      setPrityData(["Low", false]);
+
+                    }}
+                  ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
+                </View>
               </View>
+            </Modal>
+          </TouchableOpacity>
+
+          {/* Duration button */}
+          <TouchableOpacity
+
+            style={styles.inputBtns}
+            onPress={() => {
+
+              // if (title.length === 0 || desc.length === 0) {
+              //   ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
+              // }
+              // else {
+              //   addNewTask(title, desc, date, priority, '0')
+              //   ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
+              //   setTaskData(['', ''])
+              // }
+            }}
+          ><View
+            style={{ flexDirection: 'row', padding: scale * 3 }}
+          >
+              <View style={{ paddingHorizontal: Width * 0.03 }}>
+                <FontAwesome5 name={'hourglass'} size={iconSize} color={colors[5]} />
+              </View>
+
+              <Text
+                style={{
+                  color: colors[5],
+                  fontWeight: 'bold',
+                  fontSize: Scale * 7,
+                  paddingHorizontal: Width * 0.25
+                }}
+              >Duration</Text>
             </View>
-          </Modal>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          
+          {/* save task btn */}
+          <TouchableOpacity
 
+            style={styles.inputBtns}
+            onPress={() => {
 
-        {/* save task btn */}
+              if (title.length === 0 || desc.length === 0) {
+                ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
+              }
+              else {
+                addNewTask(title, desc, date, priority, '0')
+                ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
+                setTaskData(['', ''])
+              }
+            }}
+          ><View
+            style={{ flexDirection: 'row', padding: scale * 3 }}
+          >
+              <View style={{ paddingHorizontal: Width * 0.03 }}>
+                <FontAwesome5 name={'check'} size={iconSize} color={colors[5]} />
+              </View>
+              <Text
+                style={{
+                  color: colors[5],
+                  fontWeight: 'bold',
+                  fontSize: Scale * 7,
+                  paddingHorizontal: Width * 0.25
+                }}
+              >Save</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.addBtnPos}>
         <TouchableOpacity
-
-          style={styles.inputBtns}
-          onPress={() => {
-
-            if (title.length === 0 || desc.length === 0) {
-              ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
-            }
-            else {
-              addNewTask(title, desc, date, priority, '0')
-              ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
-              setTitle('')
-              setDesc('')
-            }
-          }}
-        ><View
-          style={{ flexDirection: 'row', padding: scale * 3 }}
+          style={styles.addBtn}
+          onPress={() => { props.navigation.navigate(ViewTask) }}
         >
-            <View style={{ paddingHorizontal: Width * 0.03 }}>
-              <FontAwesome5 name={'check'} size={iconSize} color={colors[5]} />
-            </View>
-            <Text
-              style={{
-                color: colors[5],
-                fontWeight: 'bold',
-                fontSize: Scale * 7,
-                paddingHorizontal: Width * 0.25
-              }}
-            >Save</Text>
+          <View
+            style={{
+              alignItems: 'center',
+              marginVertical: height * 0.028
+            }}
+          >
+            <FontAwesome5 name={'list'} size={iconSize * 0.65} color={colors[4]} />
           </View>
         </TouchableOpacity>
-      </View>
-    </View>
-    <View style={styles.addBtnPos}>
-      <TouchableOpacity 
-      style={styles.addBtn}
-      onPress={()=>{props.navigation.navigate(ViewTask)}}
-      >
-        <View
-          style={{
-            alignItems:'center',
-            marginVertical:height*0.028
-          }}
-        >
-      <FontAwesome5 name={'list'} size={iconSize*0.65} color={colors[4]} />
-      </View>
-      </TouchableOpacity>
       </View>
     </>
 
