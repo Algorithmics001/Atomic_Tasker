@@ -1,148 +1,161 @@
-import {TouchableOpacity,View, ScrollTouchableOpacity, Text, StyleSheet, Dimensions, ScrollView, Modal, Button} from 'react-native'
-import { create } from 'react-test-renderer';
+import React, { Component } from "react";
+import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
+// import Svg, { Ellipse } from "react-native-svg";
 
-const colors = ['#e4def2', '#e2ddd8','#eef8ef','#2d414e','#E0DFE3', '#fff']
-const {scale} = Dimensions.get("window")
-const {width, height} = Dimensions.get("window")
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
-
-import * as appInfo from '../package.json'
-import { useState } from 'react';
-
-let x = 3.5/scale
-Scale = scale*x
-
-let y  = 411.42857142857144/width
-Width = width*y
-
-let z = 804.5714285714286/height
-
-Height = height*z
-
-function Settings() {
-    const [aboutVisible, setAboutVisible] = useState(false)
-
-    const styles = StyleSheet.create({
-        TouchableOpacityStyle:{
-            backgroundColor:colors[5],
-            paddingHorizontal: Width*0.04,
-            paddingVertical: height*0.02,
-            borderBottomWidth : scale*0.2,
-            borderBottomColor : 'grey'
-        },
-        text:{
-            fontSize: Scale*5,
-        },
-        ModalOuter:{
-            flex:1,
-            backgroundColor:'#000000aa'
-          },
-        
-          ModalIner:{
-            flex:1,
-            backgroundColor: '#fff',
-            margin:Scale*40,
-            marginHorizontal: Width*0.1,
-            marginVertical: Height*0.3,
-            borderRadius: Scale*6,
-            padding: Scale*5,
-            alignItems:'center'
-          },
-    })
-    
-
-    return ( 
-        <ScrollView>
-        
-
-        <TouchableOpacity
-        style={styles.TouchableOpacityStyle}
-        >
-        <Text
-        style={styles.text}
-        >
-            Version
-        </Text>
+function Settings(props) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.rectStack}>
+        <View style={styles.rect}>
+          {/* <Svg viewBox="0 0 167.61 167.61" style={styles.ellipse}>
+            <Ellipse
+              stroke="rgba(230, 230, 230,1)"
+              strokeWidth={0}
+              fill="rgba(255,255,255,1)"
+              cx={84}
+              cy={84}
+              rx={84}
+              ry={84}
+            ></Ellipse>
+          </Svg> */}
+          <View style={styles.rect2}></View>
+        </View>
+        <TouchableOpacity style={styles.rect3}>
+          <Text style={styles.myProfile}>My Profile</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-        style={styles.TouchableOpacityStyle}
-        >
-        <Text
-        style={styles.text}
-        >
-            Version
-        </Text>
+        <TouchableOpacity style={styles.rect4}>
+          <Text style={styles.howToUse}>How to use</Text>
         </TouchableOpacity>
-
-        
-        <TouchableOpacity
-        style={styles.TouchableOpacityStyle}
-        ><View style={{flexDirection:'row'}}>
-        <Text
-        style={styles.text}
-        >
-            Version
-        </Text>
-        <View style={{paddingLeft: Width*0.65}}><Text style={{paddingVertical:Height*0.004}}>{appInfo.version}</Text></View></View>
+        <TouchableOpacity style={styles.rect5}>
+          <TouchableOpacity style={styles.versionRow}>
+            <Text style={styles.version}>Version</Text>
+            <Text style={styles.howToUse1}>2.13.4.9</Text>
+          </TouchableOpacity>
         </TouchableOpacity>
-        <TouchableOpacity
-        style={styles.TouchableOpacityStyle}
-        onPress={()=>{setAboutVisible(true)}}
-        ><View style={{flexDirection:'row'}}>
-        <Text
-        style={styles.text}
-        >
-            About
-        </Text>
-        <Modal 
-        animationType='fade'
-        transparent={true}
-        visible={aboutVisible}
-        >
-          <View
-          style={styles.ModalOuter}
-          >
-            <View
-            style={styles.ModalIner}
-            >
-                <FontAwesome5 name='info-circle' size={scale*13} color={colors[3]}/>
-                <Text style={{fontSize: Scale*5, textAlign: 'center'}}>
-                This is a open-source gem sparkles with wealth of features, minimalist design, and dynamic wallpapers that will keep you motivated and organized.
-                    </Text>
-                    <Text style={{fontSize: Scale*5, textAlign: 'center', fontWeight:'bold'}}>
-                    First Collaborators:
-                    </Text>
-                    <Text style={{fontSize: Scale*5, textAlign: 'center', fontWeight:'bold'}}>
-                    Raghav Jit, Gurdev Singh, Amrinder Singh, Sangam Arora, Rajveer Singh
-                    </Text>
-                <TouchableOpacity
-                    style={{   
-                        backgroundColor: colors[3],
-                        padding: Scale*3,
-                        borderRadius: Scale*2,
-                        margin: Scale*4
-                    }}
-                    onPress={()=>(setAboutVisible(false))}
-                >
-                    
-                    <Text
-                    style={{color:colors[5], fontWeight:'bold', fontSize:Scale*5}}
-                    >OK</Text>
-                </TouchableOpacity>
-                
-            </View>
-          </View>
-        </Modal>
-
-
-        <View style={{paddingLeft: Width*0.72}}><FontAwesome5 name='info-circle' size={scale*6} color={colors[3]}/></View></View>
+        <TouchableOpacity style={styles.rect6}>
+          <Text style={styles.about}>About</Text>
         </TouchableOpacity>
-        
-        </ScrollView>
-    )
+      </View>
+    </View>
+  );
 }
 
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  rect: {
+    top: 0,
+    left: 7,
+    width: 360,
+    height: 687,
+    position: "absolute",
+    backgroundColor: "#E6E6E6"
+  },
+  ellipse: {
+    width: 168,
+    height: 168,
+    marginTop: 61,
+    marginLeft: 96
+  },
+  rect2: {
+    width: 360,
+    height: 50,
+    backgroundColor: "rgba(255,255,255,1)",
+    marginTop: 78
+  },
+  rect3: {
+    top: 307,
+    left: 0,
+    width: 375,
+    height: 50,
+    position: "absolute",
+    backgroundColor: "rgba(255,255,255,1)",
+    borderWidth: 1,
+    borderColor: "#000000"
+  },
+  myProfile: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 22,
+    width: 281,
+    marginTop: 15,
+    marginLeft: 27
+  },
+  rect4: {
+    top: 357,
+    left: 0,
+    width: 375,
+    height: 50,
+    position: "absolute",
+    backgroundColor: "rgba(255,255,255,1)",
+    borderWidth: 1,
+    borderColor: "#000000"
+  },
+  howToUse: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 22,
+    width: 281,
+    marginTop: 15,
+    marginLeft: 27
+  },
+  rect5: {
+    top: 407,
+    left: 0,
+    width: 375,
+    height: 50,
+    position: "absolute",
+    backgroundColor: "rgba(255,255,255,1)",
+    borderWidth: 1,
+    borderColor: "#000000",
+    flexDirection: "row"
+  },
+  version: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 22,
+    width: 200
+  },
+  howToUse1: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 22,
+    width: 72,
+    marginLeft: 49
+  },
+  versionRow: {
+    height: 22,
+    flexDirection: "row",
+    flex: 1,
+    marginRight: 27,
+    marginLeft: 27,
+    marginTop: 14
+  },
+  rect6: {
+    top: 458,
+    left: 0,
+    width: 375,
+    height: 50,
+    position: "absolute",
+    backgroundColor: "rgba(255,255,255,1)",
+    borderWidth: 1,
+    borderColor: "#000000"
+  },
+  about: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 22,
+    width: 281,
+    marginTop: 14,
+    marginLeft: 27
+  },
+  rectStack: {
+    width: 375,
+    height: 687,
+    marginTop: 73,
+    marginLeft: -7
+  }
+});
 
 export default Settings;
