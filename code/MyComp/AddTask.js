@@ -142,13 +142,19 @@ let minutes = 0;
 function AddTask(props) {
   //hooks for storing input values
 
-  const [[date, dateVisible], setDate] = useState([new Date(), false]);
+  const [TaskData, setTaskData] = useState({
+    TITLE: '',
+    DESC: '',
+    DURATION: 0,
+    PRIORITY: '',
+    DATE: new Date()
+  })
 
-  const [[title, desc], setTaskData] = useState(['', '']);
-
-  const [[priorVisible, priority], setPrityData] = useState(['', false]);
-
-  const [[duration, durationVisible], setDuration] = useState([0, false]);
+  const [ModalCtrl, setModalCtrl] = useState({
+    dateVisible: false,
+    priorVisible: false,
+    durationVisible: false
+  })
 
   return (
     <>
@@ -156,35 +162,35 @@ function AddTask(props) {
         <TextInput
           style={styles.title}
           maxLength={15}
-          placeholder="Enter Title for your task"
-          onChangeText={e => {
-            setTaskData([e, desc]);
-          }}>
-          {title}
-        </TextInput>
+          placeholder='Enter Title for your task'
+          onChangeText={(e) => { setTaskData(prevState => ({ ...prevState, TITLE: e })) }}
+        >{TaskData.TITLE}</TextInput>
 
         <TextInput
           style={styles.desc}
           placeholder="Enter Description for your task"
           multiline={true}
-          onChangeText={e => {
-            setTaskData([title, e]);
-          }}>
-          {desc}
-        </TextInput>
+          onChangeText={(e) => { setTaskData(prevState => ({ ...prevState, DESC: e })) }}
+
+        >{TaskData.DESC}</TextInput>
+
+
+        <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
 
         <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>
           {/* datebtn  */}
           <TouchableOpacity
             style={styles.inputBtns}
-            onPress={() => setDate([date, true])}>
-            <View style={{flexDirection: 'row', padding: scale * 3}}>
-              <View style={{paddingHorizontal: Width * 0.03}}>
-                <FontAwesome5
-                  name={'calendar'}
-                  size={iconSize}
-                  color={colors[5]}
-                />
+
+            onPress={() => setModalCtrl(prevState => ({ ...prevState, dateVisible: true })) } //I DONT KNWO WHAT IS HAPPENING HERE
+          >
+            <View
+              style={{ flexDirection: 'row', padding: scale * 3 }}
+            >
+              <View style={{ paddingHorizontal: Width * 0.03 }}>
+
+                <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]} />
+
               </View>
               <Text
                 style={{
@@ -199,25 +205,31 @@ function AddTask(props) {
           </TouchableOpacity>
           <DatePicker
             modal
-            open={dateVisible}
-            date={date}
-            onConfirm={date => {
+
+            open={ModalCtrl.dateVisible}
+            date={TaskData.DATE}
+            onConfirm={(date) => {
               // setDateVisible(false)
-              setDate([date, false]);
-              console.log(date);
+              setTaskData(prevState => ({ ...prevState, DATE: date })),
+              setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
             }}
             onCancel={() => {
-              setDate([date, false]);
+              setTaskData(prevState => ({ ...prevState, DATE: date })),
+              setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
+
             }}
           />
           {/* priorityBtn */}
           <TouchableOpacity
             style={styles.inputBtns}
-            onPress={() => {
-              setPrityData([priority, true]);
-            }}>
-            <View style={{flexDirection: 'row', padding: scale * 3}}>
-              <View style={{paddingHorizontal: Width * 0.03}}>
+
+            onPress={() => { setModalCtrl(prevState => ({ ...prevState, priorVisible: true })) }}
+          >
+            <View
+              style={{ flexDirection: 'row', padding: scale * 3 }}
+            >
+              <View style={{ paddingHorizontal: Width * 0.03 }}>
+
                 <FontAwesome5 name={'star'} size={iconSize} color={colors[5]} />
               </View>
               <Text
@@ -234,32 +246,44 @@ function AddTask(props) {
             <Modal
               animationType="fade"
               transparent={true}
-              visible={priorVisible}>
-              <View style={styles.ModalOuter}>
-                <View style={styles.ModalIner}>
+
+              visible={ModalCtrl.priorVisible}
+            >
+              <View
+                style={styles.ModalOuter}
+              >
+                <View
+                  style={styles.ModalIner}
+                >
+
                   <TouchableOpacity
                     style={styles.modalOption1}
                     title="Option 1"
                     onPress={() => {
-                      setPrityData(['High', false]);
-                    }}>
-                    <Text style={styles.optionText}>High</Text>
-                  </TouchableOpacity>
+
+                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'HIGH' })) 
+                      setModalCtrl(prevState => ({ ...prevState, priorVisible: false })) 
+                    }}
+                  ><Text style={styles.optionText}>High</Text></TouchableOpacity>
+
                   <TouchableOpacity
                     style={styles.modalOption2}
                     title="Option 2"
                     onPress={() => {
-                      setPrityData(['Moderate', false]);
-                    }}>
-                    <Text style={styles.optionText}>Moderate</Text>
-                  </TouchableOpacity>
+
+                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'MEDIUM' })) 
+                      setModalCtrl(prevState => ({ ...prevState, priorVisible: false })) 
+                    }}
+                  ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
                   <TouchableOpacity
                     style={styles.modalOption3}
                     onPress={() => {
-                      setPrityData(['Low', false]);
-                    }}>
-                    <Text style={styles.optionText}>Low</Text>
-                  </TouchableOpacity>
+                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'LOW' })) 
+                      setModalCtrl(prevState => ({ ...prevState, priorVisible: false })) 
+
+                    }}
+                  ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
+
                 </View>
               </View>
             </Modal>
@@ -363,28 +387,23 @@ function AddTask(props) {
           <TouchableOpacity
             style={styles.inputBtns}
             onPress={() => {
-              console.log(duration);
-              if (title.length === 0 || desc.length === 0) {
-                ToastAndroid.show(
-                  'Title and Description can not be empty',
-                  ToastAndroid.SHORT,
-                );
-              } else {
-                addNewTask(title, desc, date, priority, '0');
-                ToastAndroid.show(
-                  'Task saved successfully',
-                  ToastAndroid.SHORT,
-                );
-                setTaskData(['', '']);
+
+              if (TaskData.TITLE.length === 0 || TaskData.DESC.length === 0) {
+                ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
               }
-            }}>
-            <View style={{flexDirection: 'row', padding: scale * 3}}>
-              <View style={{paddingHorizontal: Width * 0.03}}>
-                <FontAwesome5
-                  name={'check'}
-                  size={iconSize}
-                  color={colors[5]}
-                />
+              else {
+                addNewTask(TaskData.TITLE, TaskData.DESC, TaskData.DATE, TaskData.PRIORITY, '0')
+                ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
+                setTaskData(prevState => ({ ...prevState, TITLE: '' })) 
+                setModalCtrl(prevState => ({ ...prevState, DESC: '' })) 
+              }
+            }}
+          ><View
+            style={{ flexDirection: 'row', padding: scale * 3 }}
+          >
+              <View style={{ paddingHorizontal: Width * 0.03 }}>
+                <FontAwesome5 name={'check'} size={iconSize} color={colors[5]} />
+
               </View>
               <Text
                 style={{
