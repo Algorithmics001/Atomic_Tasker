@@ -71,7 +71,7 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
                 title: taskTitle,
                 desp: taskDesp,
                 deadline: taskDead,
-                priority: prioValue,
+                priority: taskPrio,
                 duration: taskDurtn,
                 curDate: date1,
                 weight: (parseInt(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)
@@ -87,6 +87,7 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
 
                     RNFS.writeFile(path, JSON.stringify(jsonData));
 
+                    Utility.SetWallpaper();
                     console.log(JSON.stringify(jsonData))
                 })
                 .catch(error => {
@@ -118,6 +119,8 @@ exports.removeTaskByID = (TaskID) => {
                 Utility.PutAvalibleID(TaskID)
 
                 console.log(JSON.stringify(updatedJsonData))
+                
+                Utility.SetWallpaper();
             }
             else {
                 console.log("INVALID ID")
@@ -163,6 +166,8 @@ exports.editTaskByID = (TaskID, attrib, newValue) => {
 
                 task.weight = parseInt(task.priority) * parseInt(task.duration)
                 RNFS.writeFile(path, JSON.stringify(jsonData));
+
+                Utility.SetWallpaper();
             }
 
         })
@@ -187,6 +192,21 @@ exports.organiseTask = () => {
         });
 }
 
+exports.returnTaskList = () => {
+    return RNFS.readFile(path)
+        .then(value => {
+            // Parse the JSON data
+            const jsonData = JSON.parse(value);
+
+            // Use the JSON data as needed
+            let tasklist = jsonData.Task_List.slice(1)
+            return Promise.resolve(tasklist);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
 exports.WallpaperTaskList = () => {
     return RNFS.readFile(path)
         .then(value => {
@@ -195,11 +215,22 @@ exports.WallpaperTaskList = () => {
 
             // Use the JSON data as needed
             let TaskString = ''
-            for(let i=0; i<5; i++){
+            let limit = 5
+            if(jsonData.Task_List.length <= 5){
+                limit = jsonData.Task_List.length
+            }
+            
+            for(let i=1; i<limit; i++){
+                console.log(jsonData.Task_List[i])
                 TaskString = TaskString + jsonData.Task_List[i].title + '\n';
             }
-        
-            return Promise.resolve(TaskString);
+            
+            if(TaskString != ''){
+                return Promise.resolve(TaskString);
+            }
+            else{
+                return Promise.resolve('You are all set!')
+            }
         })
         .catch(error => {
             console.error(error);

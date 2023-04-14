@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
+import { addQTask, getList } from '../brain/QuickTasker'
 
 export default function QuickTasker() {
   const [task, setTask] = useState('');
@@ -14,10 +15,18 @@ export default function QuickTasker() {
     }
   };
 
+  useEffect(() => {
+    getList().then(data => {
+      setTaskList(data);
+      console.log(data)
+    })
+  }, []);
+
   const addTask = () => {
     setPrevTaskList(taskList);
     setTaskList([...taskList, task]);
     setTask('');
+    addQTask([...taskList, task])
   };
 
   const deleteTask = (index) => {
@@ -25,6 +34,7 @@ export default function QuickTasker() {
     const newTaskList = [...taskList];
     newTaskList.splice(index, 1);
     setTaskList(newTaskList);
+    addQTask(newTaskList)
   };
 
   const undo = () => {
