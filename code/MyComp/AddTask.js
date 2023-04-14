@@ -133,14 +133,27 @@ const styles = StyleSheet.create({
 function AddTask(props) {
   //hooks for storing input values
   
-  const [[date, dateVisible], setDate] = useState([new Date(), false])
+  // const [[date, dateVisible], setDate] = useState([new Date(), false])
   
-  const [[title, desc], setTaskData] = useState(['', ''])
+  // const [[title, desc], setTaskData] = useState(['', ''])
   
-  const [[priorVisible, priority], setPrityData] = useState(['', false]);
+  // const [[priorVisible, priority], setPrityData] = useState(['', false]);
   
-  const [[duration, durationVisible], setDuration] = useState(['', false])
+  // const [[duration, durationVisible], setDuration] = useState(['', false])
 
+  const [TaskData, setTaskData] = useState({
+    TITLE: '',
+    DESC: '',
+    DURATION: '',
+    PRIORITY: '',
+    DATE: new Date()
+  })
+
+  const [ModalCtrl, setModalCtrl] = useState({
+    dateVisible: false,
+    priorVisible: false,
+    durationVisible: false
+  })
 
   return (
     <>
@@ -150,16 +163,16 @@ function AddTask(props) {
           style={styles.title}
           maxLength={15}
           placeholder='Enter Title for your task'
-          onChangeText={(e) => { setTaskData([e, desc]) }}
-        >{title}</TextInput>
+          onChangeText={(e) => { setTaskData(prevState => ({ ...prevState, TITLE: e })) }}
+        >{TaskData.TITLE}</TextInput>
 
         <TextInput
           style={styles.desc}
           placeholder='Enter Description for your task'
           multiline={true}
-          onChangeText={(e) => { setTaskData([title, e]) }}
+          onChangeText={(e) => { setTaskData(prevState => ({ ...prevState, DESC: e })) }}
 
-        >{desc}</TextInput>
+        >{TaskData.DESC}</TextInput>
 
 
         <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
@@ -167,7 +180,7 @@ function AddTask(props) {
           {/* datebtn  */}
           <TouchableOpacity
             style={styles.inputBtns}
-            onPress={() => setDate([date, true])}
+            onPress={() => setModalCtrl(prevState => ({ ...prevState, dateVisible: true })) } //I DONT KNWO WHAT IS HAPPENING HERE
           >
             <View
               style={{ flexDirection: 'row', padding: scale * 3 }}
@@ -188,21 +201,22 @@ function AddTask(props) {
           </TouchableOpacity>
           <DatePicker
             modal
-            open={dateVisible}
-            date={date}
+            open={ModalCtrl.dateVisible}
+            date={TaskData.DATE}
             onConfirm={(date) => {
               // setDateVisible(false)
-              setDate([date, false])
-              console.log(date)
+              setTaskData(prevState => ({ ...prevState, DATE: date })),
+              setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
             }}
             onCancel={() => {
-              setDate([date, false])
+              setTaskData(prevState => ({ ...prevState, DATE: date })),
+              setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
             }}
           />
           {/* priorityBtn */}
           <TouchableOpacity
             style={styles.inputBtns}
-            onPress={() => { setPrityData([priority, true]) }}
+            onPress={() => { setModalCtrl(prevState => ({ ...prevState, priorVisible: true })) }}
           >
             <View
               style={{ flexDirection: 'row', padding: scale * 3 }}
@@ -223,7 +237,7 @@ function AddTask(props) {
             <Modal
               animationType='fade'
               transparent={true}
-              visible={priorVisible}
+              visible={ModalCtrl.priorVisible}
             >
               <View
                 style={styles.ModalOuter}
@@ -235,20 +249,23 @@ function AddTask(props) {
                     style={styles.modalOption1}
                     title="Option 1"
                     onPress={() => {
-                      setPrityData(["High", false]);
+                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'HIGH' })) 
+                      setModalCtrl(prevState => ({ ...prevState, priorVisible: false })) 
                     }}
                   ><Text style={styles.optionText}>High</Text></TouchableOpacity>
                   <TouchableOpacity
                     style={styles.modalOption2}
                     title="Option 2"
                     onPress={() => {
-                      setPrityData(["Moderate", false]);
+                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'MEDIUM' })) 
+                      setModalCtrl(prevState => ({ ...prevState, priorVisible: false })) 
                     }}
                   ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
                   <TouchableOpacity
                     style={styles.modalOption3}
                     onPress={() => {
-                      setPrityData(["Low", false]);
+                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'LOW' })) 
+                      setModalCtrl(prevState => ({ ...prevState, priorVisible: false })) 
 
                     }}
                   ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
@@ -296,13 +313,14 @@ function AddTask(props) {
             style={styles.inputBtns}
             onPress={() => {
 
-              if (title.length === 0 || desc.length === 0) {
+              if (TaskData.TITLE.length === 0 || TaskData.DESC.length === 0) {
                 ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
               }
               else {
-                addNewTask(title, desc, date, priority, '0')
+                addNewTask(TaskData.TITLE, TaskData.DESC, TaskData.DATE, TaskData.PRIORITY, '0')
                 ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
-                setTaskData(['', ''])
+                setTaskData(prevState => ({ ...prevState, TITLE: '' })) 
+                setModalCtrl(prevState => ({ ...prevState, DESC: '' })) 
               }
             }}
           ><View
