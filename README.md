@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-<img src="https://discordapp.com/api/guilds/1093799889319776276/widget.png?style=banner2" alt="Discord Banner 2"/>
+<a href="https://discord.gg/DkYHgN9wvW"><img src="https://discordapp.com/api/guilds/1093799889319776276/widget.png?style=banner2" alt="Discord Shield"/></a>
 </p>
 
 # Contributors
