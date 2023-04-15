@@ -16,15 +16,9 @@
 <a href="https://github.com/whogurdeil">@whogurdevil</a>
 </p>
 
-[Discord server](https://discord.gg/DkYHgN9wvW)
-
-# Top Issues
-1. No delete button for tasks
-1. UI of settings page is overflowing
-1. Responsiveness is not proper
-1. My profile page is still incomplete
-1. Set wallpaper has dummy values for tasks
-1. Find more on [issues page](https://github.com/Algorithmics001/Hackathon/issues)
+<p align="center">
+<img src="https://discordapp.com/api/guilds/1093799889319776276/widget.png?style=banner2" alt="Discord Banner 2"/>
+</p>
 
 # Contributors
 <a href="https://github.com/Algorithmics001/Hackathon/graphs/contributors">
