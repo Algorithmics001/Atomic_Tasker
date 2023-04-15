@@ -8,7 +8,7 @@
 
 <h1 align="center"> Maintainers </h1>
 <p align="center">
-<a href="https://github.com/Algorithmics001/Hackathon/graphs/contributors"><img src="https://contrib.rocks/image?repo=Algorithmics001/Hackathon&max=2" alt="GitHub stars"></a>
+<a href="https://github.com/Algorithmics001/Hackathon/graphs/contributors" target="_blank"><img src="https://contrib.rocks/image?repo=Algorithmics001/Hackathon&max=2" alt="GitHub stars"></a>
 </p>
 
 <p align="center">
