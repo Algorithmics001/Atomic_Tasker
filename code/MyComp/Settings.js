@@ -29,7 +29,7 @@ function Settings(props) {
         <TouchableOpacity style={styles.rect5}>
           <TouchableOpacity style={styles.versionRow}>
             <Text style={styles.version}>Version</Text>
-            <Text style={styles.howToUse1}>2.13.4.9</Text>
+            <Text style={styles.howToUse1}>3.13.4.9</Text>
           </TouchableOpacity>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rect6}>

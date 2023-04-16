@@ -175,7 +175,7 @@ function AddTask(props) {
         >{TaskData.DESC}</TextInput>
 
 
-        <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
+        {/* <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}> */}
 
         <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>
           {/* datebtn  */}
@@ -292,7 +292,7 @@ function AddTask(props) {
           {/* Duration button */}
           <TouchableOpacity
             style={styles.inputBtns}
-            onPress={() => setDuration([date, true])}>
+            onPress={() => setModalCtrl(prevState => ({ ...prevState, durationVisible: true }))}>
             <View style={{flexDirection: 'row', padding: scale * 3}}>
               <View style={{paddingHorizontal: Width * 0.03}}>
                 <FontAwesome5
@@ -315,7 +315,7 @@ function AddTask(props) {
             <Modal
               animationType="fade"
               transparent={true}
-              visible={durationVisible}>
+              visible={ModalCtrl.durationVisible}>
               <View style={styles.ModalOuter}>
                 <View style={styles.ModalIner}>
                   <View
@@ -359,16 +359,18 @@ function AddTask(props) {
                             fontSize: Scale * 6,
                           }}
                           onPress={() => {
-                            setDuration([
-                              parseInt(hour * 60 + parseInt(minutes, 10), 10),
-                              false,
-                            ]);
+                            setTaskData(prevState => ({ ...prevState, DURATION: parseInt(hour * 60 + parseInt(minutes, 10), 10) }))
+                            setModalCtrl(prevState => ({ ...prevState, durationVisible: false }))
+                            // setDuration([
+                            //   parseInt(hour * 60 + parseInt(minutes, 10), 10),
+                            //   false,
+                            // ]);
                           }}>
                           Ok
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => setDuration([duration, false])}>
+                        onPress={() => setModalCtrl(prevState => ({ ...prevState, durationVisible: false }))}>
                         <Text
                           style={{
                             marginHorizontal: Width * 0.05,
@@ -392,10 +394,10 @@ function AddTask(props) {
                 ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
               }
               else {
-                addNewTask(TaskData.TITLE, TaskData.DESC, TaskData.DATE, TaskData.PRIORITY, '0')
+                addNewTask(TaskData.TITLE, TaskData.DESC, TaskData.DATE, TaskData.PRIORITY, TaskData.DURATION)
                 ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
                 setTaskData(prevState => ({ ...prevState, TITLE: '' })) 
-                setModalCtrl(prevState => ({ ...prevState, DESC: '' })) 
+                setTaskData(prevState => ({ ...prevState, DESC: '' })) 
               }
             }}
           ><View

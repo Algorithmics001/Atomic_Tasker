@@ -84,39 +84,40 @@ exports.resetHIjson = () => {
 // add task
 
 exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
-  TaskID = 0;
-  let prioValue = 0;
-  Utility.GetAvalibleID((result, error) => {
-    if (error) {
-      console.error(error);
-    } else {
-      TaskID = result;
-      let date1 = new Date();
-      let timeLeft = (taskDead.getTime() - date1.getTime()) / 86400000;
 
-      if (taskPrio == 'High') {
-        prioValue = 3;
-      } else if (taskPrio == 'Moderate') {
-        prioValue = 2;
-      } else if (taskPrio == 'Low') {
-        prioValue = 1;
-      }
-      const newTask = {
-        id: TaskID,
-        title: taskTitle,
-        desp: taskDesp,
-        deadline: taskDead,
-        priority: taskPrio,
-        duration: taskDurtn,
-        curDate: date1,
-        weight:
-          (parseInt(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft),
-      };
-
-      RNFS.readFile(path)
-        .then(value => {
-          // Parse the JSON data
-          const jsonData = JSON.parse(value);
+    TaskID = 0;
+    let prioValue = 0
+    Utility.GetAvalibleID((result, error) => {
+        if (error) {
+            console.error(error);
+        } else {
+            TaskID = result
+            let date1 = new Date()
+            let timeLeft = (taskDead.getTime() - date1.getTime()) / (86400000)
+            if(taskPrio == 'HIGH'){
+                prioValue = 3
+            }
+            else if(taskPrio == 'MEDIUM'){
+                prioValue = 2
+            }
+            else if(taskPrio == 'LOW'){
+                prioValue = 1
+            }
+            const newTask = {
+                id: TaskID,
+                title: taskTitle,
+                desp: taskDesp,
+                deadline: taskDead,
+                priority: taskPrio,
+                duration: taskDurtn,
+                curDate: date1,
+                weight: (parseFloat(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)
+            }
+            
+            RNFS.readFile(path)
+                .then(value => {
+                    // Parse the JSON data
+                    const jsonData = JSON.parse(value);
 
           // Use the JSON data as needed
           jsonData.Task_List.push(newTask);

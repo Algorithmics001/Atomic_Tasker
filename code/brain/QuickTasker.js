@@ -8,7 +8,7 @@ exports.resetJson = () => {
     let QuickTasks = {
         "Tasks":
             [
-                "sample"
+                
             ]
     }
     RNFS.writeFile(path, JSON.stringify(QuickTasks));
