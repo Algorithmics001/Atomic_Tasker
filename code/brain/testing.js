@@ -75,8 +75,7 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
                 priority: taskPrio,
                 duration: taskDurtn,
                 curDate: date1,
-                weight: (parseFloat(prioValue))
-                //  * parseFloat(taskDurtn)) / parseFloat(timeLeft)
+                weight: (parseFloat(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)
             }
             
             RNFS.readFile(path)
