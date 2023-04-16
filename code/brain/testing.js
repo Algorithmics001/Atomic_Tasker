@@ -56,13 +56,11 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
             TaskID = result
             let date1 = new Date()
             let timeLeft = (taskDead.getTime() - date1.getTime()) / (86400000)
-            console.log(taskPrio)
             if(taskPrio == 'HIGH'){
                 prioValue = 3
             }
             else if(taskPrio == 'MEDIUM'){
                 prioValue = 2
-                console.log('jjjjjjjjjjjjjj')
             }
             else if(taskPrio == 'LOW'){
                 prioValue = 1
