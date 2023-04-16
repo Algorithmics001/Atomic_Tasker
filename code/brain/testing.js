@@ -56,14 +56,15 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
             TaskID = result
             let date1 = new Date()
             let timeLeft = (taskDead.getTime() - date1.getTime()) / (86400000)
-            
-            if(taskPrio == 'High'){
+            console.log(taskPrio)
+            if(taskPrio == 'HIGH'){
                 prioValue = 3
             }
-            else if(taskPrio == 'Moderate'){
+            else if(taskPrio == 'MEDIUM'){
                 prioValue = 2
+                console.log('jjjjjjjjjjjjjj')
             }
-            else if(taskPrio == 'Low'){
+            else if(taskPrio == 'LOW'){
                 prioValue = 1
             }
             const newTask = {
@@ -74,7 +75,7 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
                 priority: taskPrio,
                 duration: taskDurtn,
                 curDate: date1,
-                weight: (parseInt(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)
+                weight: (parseFloat(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)
             }
             
             RNFS.readFile(path)
