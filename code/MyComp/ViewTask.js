@@ -61,6 +61,12 @@ const ViewTask = (props) => {
     }
   };
 
+  const timeConvertion = (time) => {
+    hrs = parseInt(time)/60 
+    min = parseInt(time)%60
+    return (parseInt(hrs) + 'hrs ' + min + 'min')
+  }
+
   // renders all the tasks that are stored in todos hook
   return (
     <>
@@ -112,7 +118,7 @@ const ViewTask = (props) => {
               
               <Text style={styles.descText}>Description: {todo.desp}</Text>
               <Text style={styles.priorText}>Priority: {todo.priority}</Text>
-              <Text style={styles.durationText}>Duration: {todo.duration}</Text>
+              <Text style={styles.durationText}>Duration: {timeConvertion(todo.duration)}</Text>
 
               <TouchableOpacity
                 style={{

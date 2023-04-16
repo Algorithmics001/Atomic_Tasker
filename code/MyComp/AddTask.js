@@ -397,7 +397,7 @@ function AddTask(props) {
                 addNewTask(TaskData.TITLE, TaskData.DESC, TaskData.DATE, TaskData.PRIORITY, TaskData.DURATION)
                 ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
                 setTaskData(prevState => ({ ...prevState, TITLE: '' })) 
-                setModalCtrl(prevState => ({ ...prevState, DESC: '' })) 
+                setTaskData(prevState => ({ ...prevState, DESC: '' })) 
               }
             }}
           ><View

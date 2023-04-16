@@ -88,6 +88,7 @@ const Home = ({navigation}) => {
           .then((exists) => {
             if (exists) {
               console.log('File exists');
+              resetJson()
             } else {
               resetJson()
             }

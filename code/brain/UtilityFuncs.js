@@ -47,7 +47,7 @@ exports.PutAvalibleID = (TaskID) => {
 
             // Use the JSON data as needed
             jsonData.AvalibleID.push(TaskID)
-
+            console.log(jsonData)
             RNFS.writeFile(path, JSON.stringify(jsonData));
 
         })
