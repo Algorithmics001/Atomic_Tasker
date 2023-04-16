@@ -1,6 +1,6 @@
 {
-  "name": "ToDo",
-  "version": "2.13.9.0",
+  "name": "Atomic_Tasker",
+  "version": "3.13.9.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
