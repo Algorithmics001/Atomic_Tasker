@@ -73,7 +73,8 @@ const ViewTask = (props) => {
       <View style={styles.addBtnPos}>
         <TouchableOpacity
           style={styles.addBtn}
-          onPress={() => { props.navigation.navigate('AddTask', {ReturnedTaskData: {todo: {id:'' ,title:'', desc:'', curDate:'', deadline:'', duration:'', priority:'', weight:''}}}) }}
+
+          onPress={() => { props.navigation.navigate('New', {ReturnedTaskData: {todo: {id:'' ,title:'', desc:'', curDate:'', deadline:'', duration:'', priority:'', weight:''}}}) }}
         >
           <View
             style={{

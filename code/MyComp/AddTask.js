@@ -426,25 +426,6 @@ function AddTask(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.addBtnPos}>
-        <TouchableOpacity
-          style={styles.addBtn}
-          onPress={() => {
-            props.navigation.navigate(ViewTask);
-          }}>
-          <View
-            style={{
-              alignItems: 'center',
-              marginVertical: height * 0.028,
-            }}>
-            <FontAwesome5
-              name={'list'}
-              size={iconSize * 0.65}
-              color={colors[4]}
-            />
-          </View>
-        </TouchableOpacity>
-      </View>
     </>
   );
 }
