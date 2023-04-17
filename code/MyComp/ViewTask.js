@@ -73,7 +73,7 @@ const ViewTask = (props) => {
       <View style={styles.addBtnPos}>
         <TouchableOpacity
           style={styles.addBtn}
-          onPress={() => { props.navigation.navigate(AddTask) }}
+          onPress={() => { props.navigation.navigate('AddTask', {ReturnedTaskData: {todo: {id:'' ,title:'', desc:'', curDate:'', deadline:'', duration:'', priority:'', weight:''}}}) }}
         >
           <View
             style={{
@@ -105,9 +105,9 @@ const ViewTask = (props) => {
                   style={{
                     backgroundColor: colors[1], Width: Scale * 12, Height: Scale * 12, alignItems: 'center', padding: Scale * 2
                   }}
-                  onPress={() => deleteTask(todo.id)}
+                  onPress={() => props.navigation.navigate('AddTask', {ReturnedTaskData: {todo}})}
                 >
-                  <FontAwesome5 name={'trash'} size={iconSize} color={colors[3]} />
+                  <FontAwesome5 name={'pencil'} size={iconSize} color={colors[3]} />
                 </TouchableOpacity>
 
                 <Text style={styles.titleText}>{todo.title}</Text>
@@ -116,7 +116,7 @@ const ViewTask = (props) => {
                 </View>
               </View>
               
-              <Text style={styles.descText}>Description: {todo.desp}</Text>
+              <Text style={styles.descText}>Description: {todo.desc}</Text>
               <Text style={styles.priorText}>Priority: {todo.priority}</Text>
               <Text style={styles.durationText}>Duration: {timeConvertion(todo.duration)}</Text>
 
