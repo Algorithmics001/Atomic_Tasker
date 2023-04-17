@@ -11,7 +11,7 @@ import {
   Modal,
 } from 'react-native';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-native-date-picker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 
@@ -141,27 +141,46 @@ let minutes = 0;
 
 function AddTask(props) {
   //hooks for storing input values
-  try {
-    (props.route.params.ReturnedTaskData === null) ?(
-    const [TaskData, setTaskData] = useState({
-      TITLE: '',
-      DESC: '',
-      DURATION: '',
-      PRIORITY: '',
-      DATE: new Date()
-    })
-    )
-  }
-  catch {
-    ReturnedTaskData = props.route.params.ReturnedTaskData
-    const [TaskData, setTaskData] = useState({
-      TITLE: ReturnedTaskData.todo.title,
-      DESC: ReturnedTaskData.todo.desc,
-      DURATION: ReturnedTaskData.todo.duration,
-      PRIORITY: ReturnedTaskData.todo.priority,
-      DATE: new Date()
-    })
-  }
+  const [ReturnedData, setReturnedData] = useState({
+    todo: {
+      id: '',
+      title: '',
+      desc: '',
+      curDate: '',
+      deadline: '',
+      duration: '',
+      priority: '',
+      weight: ''
+    }
+  })
+
+  const [TaskData, setTaskData] = useState({
+    TITLE: '',
+    DESC: '',
+    DURATION: '',
+    PRIORITY: '',
+    DATE: new Date()
+  })
+
+  useEffect(() => {
+    if (props.route.params && props.route.params.ReturnedTaskData) {
+      setReturnedData(props.route.params.ReturnedTaskData)
+      console.log(ReturnedData)
+      console.log("passed")
+      setTaskData({
+        TaskData: {
+          TITLE: ReturnedData.title,
+          DESC: ReturnedData.desc,
+          DURATION: ReturnedData.duration,
+          PRIORITY: ReturnedData.priority,
+          DATE: ReturnedData.curDate
+        }
+      })
+    } else {
+      console.log("failed")
+    }
+  }, [props.route.params?.ReturnedTaskData]);
+
 
   const [ModalCtrl, setModalCtrl] = useState({
     dateVisible: false,
@@ -169,9 +188,9 @@ function AddTask(props) {
     durationVisible: false
   })
 
-  if (ReturnedTaskData.todo.id != '') {
-    removeTaskByID(ReturnedTaskData.todo.id)
-  }
+  // if (ReturnedData.todo.id != '') {
+  //   removeTaskByID(ReturnedData.todo.id)
+  // }
 
   return (
     <>
@@ -199,7 +218,7 @@ function AddTask(props) {
           <TouchableOpacity
             style={styles.inputBtns}
 
-            onPress={() => setModalCtrl(prevState => ({ ...prevState, dateVisible: true }))} //I DONT KNWO WHAT IS HAPPENING HERE
+            onPress={() => setModalCtrl(prevState => ({ ...prevState, dateVisible: true }))}
           >
             <View
               style={{ flexDirection: 'row', padding: scale * 3 }}
@@ -224,14 +243,14 @@ function AddTask(props) {
             modal
 
             open={ModalCtrl.dateVisible}
-            date={TaskData.DATE}
+            date={TaskData.DATE = new Date()}
             onConfirm={(date) => {
               // setDateVisible(false)
               setTaskData(prevState => ({ ...prevState, DATE: date })),
                 setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
             }}
             onCancel={() => {
-              // setTaskData(prevState => ({ ...prevState, DATE: date })),
+              setTaskData(prevState => ({ ...prevState, DATE: date })),
               setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
 
             }}
@@ -277,7 +296,6 @@ function AddTask(props) {
                     style={styles.modalOption1}
                     title="Option 1"
                     onPress={() => {
-
                       setTaskData(prevState => ({ ...prevState, PRIORITY: 'HIGH' }))
                       setModalCtrl(prevState => ({ ...prevState, priorVisible: false }))
                     }}
@@ -287,7 +305,6 @@ function AddTask(props) {
                     style={styles.modalOption2}
                     title="Option 2"
                     onPress={() => {
-
                       setTaskData(prevState => ({ ...prevState, PRIORITY: 'MEDIUM' }))
                       setModalCtrl(prevState => ({ ...prevState, priorVisible: false }))
                     }}
@@ -297,7 +314,6 @@ function AddTask(props) {
                     onPress={() => {
                       setTaskData(prevState => ({ ...prevState, PRIORITY: 'LOW' }))
                       setModalCtrl(prevState => ({ ...prevState, priorVisible: false }))
-
                     }}
                   ><Text style={styles.optionText}>Low</Text></TouchableOpacity>
 
