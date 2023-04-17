@@ -74,7 +74,7 @@ const ViewTask = (props) => {
         <TouchableOpacity
           style={styles.addBtn}
 
-          onPress={() => { props.navigation.navigate('New', {ReturnedTaskData: {todo: {id:'' ,title:'', desc:'', curDate:'', deadline:'', duration:'', priority:'', weight:''}}}) }}
+          onPress={() => { props.navigation.navigate('New', {ReturnedTaskData: {todo: {id:'' ,title:'', desc:'', curDate:new Date(), deadline:'', duration:'', priority:'', weight:''}}}) }}
         >
           <View
             style={{
@@ -106,7 +106,7 @@ const ViewTask = (props) => {
                   style={{
                     backgroundColor: colors[1], Width: Scale * 12, Height: Scale * 12, alignItems: 'center', padding: Scale * 2
                   }}
-                  onPress={() => props.navigation.navigate('AddTask', {ReturnedTaskData: {todo}})}
+                  onPress={() => props.navigation.navigate('New', {ReturnedTaskData: {todo}})}
                 >
                   <FontAwesome5 name={'pencil'} size={iconSize} color={colors[3]} />
                 </TouchableOpacity>
