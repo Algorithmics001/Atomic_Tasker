@@ -16,7 +16,7 @@ import DatePicker from 'react-native-date-picker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 
 // following line includes database functions
-import {addNewTask} from '../brain/testing';
+import {addNewTask, removeTaskByID } from '../brain/testing';
 import ViewTask from './ViewTask';
 
 //responsiveness
@@ -141,12 +141,14 @@ let minutes = 0;
 
 function AddTask(props) {
   //hooks for storing input values
-
+  const ReturnedTaskData = props.route.params.ReturnedTaskData;
+  console.log(ReturnedTaskData)
+  
   const [TaskData, setTaskData] = useState({
-    TITLE: '',
-    DESC: '',
-    DURATION: 0,
-    PRIORITY: '',
+    TITLE: ReturnedTaskData.todo.title,
+    DESC: ReturnedTaskData.todo.desc,
+    DURATION: ReturnedTaskData.todo.duration,
+    PRIORITY: ReturnedTaskData.todo.priority,
     DATE: new Date()
   })
 
@@ -155,6 +157,10 @@ function AddTask(props) {
     priorVisible: false,
     durationVisible: false
   })
+
+  if(ReturnedTaskData.todo.id != ''){
+    removeTaskByID(ReturnedTaskData.todo.id)
+  }
 
   return (
     <>
@@ -214,7 +220,7 @@ function AddTask(props) {
               setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
             }}
             onCancel={() => {
-              setTaskData(prevState => ({ ...prevState, DATE: date })),
+              // setTaskData(prevState => ({ ...prevState, DATE: date })),
               setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
 
             }}
