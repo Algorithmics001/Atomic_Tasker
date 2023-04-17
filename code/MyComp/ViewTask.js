@@ -73,7 +73,7 @@ const ViewTask = (props) => {
       <View style={styles.addBtnPos}>
         <TouchableOpacity
           style={styles.addBtn}
-          onPress={() => { props.navigation.navigate(AddTask) }}
+          onPress={() => { props.navigation.navigate('New') }}
         >
           <View
             style={{

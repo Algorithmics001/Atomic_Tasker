@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     marginBottom: 20,
-    color:'black',
   },
   info: {
     alignItems: 'center',
