@@ -68,7 +68,7 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
             const newTask = {
                 id: TaskID,
                 title: taskTitle,
-                desp: taskDesp,
+                desc: taskDesp,
                 deadline: taskDead,
                 priority: taskPrio,
                 duration: taskDurtn,
