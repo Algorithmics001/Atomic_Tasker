@@ -19,10 +19,12 @@ const Height = height * z
 
 const iconSize = Scale * 5;
 
+const fontSize = Scale * 6;
+
+
 const AppHeader = () => {
 
 
-  const fontSize = Scale * 6;
 
   const [menuVisible, setMenuVisible] = useState(false);
 
