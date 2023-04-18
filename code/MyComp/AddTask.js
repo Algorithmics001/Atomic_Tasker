@@ -247,7 +247,7 @@ function AddTask(props) {
             onConfirm={(date) => {
               // setDateVisible(false)
               setTaskData(prevState => ({ ...prevState, DATE: date })),
-              setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
+                setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
             }}
             onCancel={() => {
               setTaskData(prevState => ({ ...prevState, DATE: date })),

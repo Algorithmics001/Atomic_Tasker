@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import { Header, Icon } from 'react-native-elements';
-import { Dimensions, View, Text, Touchable, TouchableOpacity } from 'react-native';
+import { Dimensions, View, Text, Touchable, TouchableOpacity,StyleSheet } from 'react-native';
 
-const { width, height, scale } = Dimensions.get('window');
 var colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff', '#6D726E', '#fff'];
 
-const AppHeader = () => {
-  const xScale = 3.5 / scale;
-  const yScale = 411.42857142857144 / width;
-  const zScale = 804.5714285714286 / height;
-  
+const { width, height } = Dimensions.get("window");
+const { scale } = Dimensions.get("window");
 
-  const Scale = scale * xScale;
-  const Width = width * yScale;
-  const Height = height * zScale;
+let x = 3.5 / scale
+const Scale = scale * x
+
+let y = 411.42857142857144 / width
+const Width = width * y
+
+let z = 804.5714285714286 / height
+
+const Height = height * z
+
+const iconSize = Scale * 5;
+
+const AppHeader = () => {
+
 
   const fontSize = Scale * 6;
 
@@ -24,18 +31,11 @@ const AppHeader = () => {
       backgroundColor="#2d414e"
       leftComponent={{
         text: 'Atomic Tasker',
-        style: {
-          color: '#fff',
-          marginLeft: Width * 0.03,
-          marginVertical: Height * 0.01,
-          fontWeight: 'bold',
-          fontSize: fontSize,
-          width: Width * 0.5,
-        },
+        style: styles.leftComp
       }}
       rightComponent={
         <View
-            style={{marginTop: Height * 0.01}}
+            style={styles.rightComp}
         >
           <Icon
             name="menu"
@@ -53,17 +53,17 @@ const AppHeader = () => {
                 }}
             >
                 <TouchableOpacity
-                style={{paddingHorizontal: Width * 0.01}}
+                style={styles.menuItems}
                 ><Text
                     
                 >dsah</Text></TouchableOpacity>
                 <TouchableOpacity
-                style={{paddingHorizontal: Width * 0.01}}
+                style={styles.menuItems}
                 ><Text
                     
                 >dsah</Text></TouchableOpacity>
                 <TouchableOpacity
-                style={{paddingHorizontal: Width * 0.01}}
+                style={styles.menuItems}
                 ><Text
                     
                 >dsah</Text></TouchableOpacity>
@@ -76,5 +76,24 @@ const AppHeader = () => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  leftComp: {
+    color: '#fff',
+    marginLeft: Width * 0.03,
+    marginVertical: Height * 0.01,
+    fontWeight: 'bold',
+    fontSize: fontSize,
+    width: Width * 0.5,
+  },
+
+  rightComp: {
+    marginTop: Height * 0.01
+  },
+
+  menuItems: {
+    paddingHorizontal: Width * 0.01
+  }
+})
 
 export default AppHeader;
