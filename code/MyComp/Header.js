@@ -19,12 +19,13 @@ const Height = height * z
 
 const iconSize = Scale * 5;
 
-const AppHeader = () => {
+const fontSize = Scale * 6;
 
 
-  const fontSize = Scale * 6;
+const AppHeader = (props) => {
 
-  const [menuVisible, setMenuVisible] = useState(false);
+  const {setMenuVisible} = props
+
 
   return (
     <Header
@@ -44,33 +45,6 @@ const AppHeader = () => {
             size={Scale * 9}
             onPress={()=>{setMenuVisible(true)}}
           />
-          {menuVisible && (
-            <View
-                style={{
-                    position: 'absolute',
-                    backgroundColor:colors[5],
-
-                }}
-            >
-                <TouchableOpacity
-                style={styles.menuItems}
-                ><Text
-                    
-                >dsah</Text></TouchableOpacity>
-                <TouchableOpacity
-                style={styles.menuItems}
-                ><Text
-                    
-                >dsah</Text></TouchableOpacity>
-                <TouchableOpacity
-                style={styles.menuItems}
-                ><Text
-                    
-                >dsah</Text></TouchableOpacity>
-
-              {/* Your menu items here */}
-            </View>
-          )}
         </View>
       }
     />
@@ -91,9 +65,7 @@ const styles = StyleSheet.create({
     marginTop: Height * 0.01
   },
 
-  menuItems: {
-    paddingHorizontal: Width * 0.01
-  }
+
 })
 
 export default AppHeader;
