@@ -414,7 +414,7 @@ function AddTask(props) {
             style={styles.saveBtn}
             onPress={() => {
 
-              if (TaskData.TITLE.length === 0 || TaskData.DESC.length === 0) {
+              if (  TaskData?.TITLE?.length == 0 || TaskData?.DESC?.length == 0) {
                 ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
               }
               else {
