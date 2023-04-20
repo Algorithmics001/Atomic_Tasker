@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import React from 'react'
+import AddTask from './AddTask';
 
 const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3']
 const { width, height, scale } = Dimensions.get("window");
@@ -22,14 +23,13 @@ const fontSize = Scale * 5;
 const styles = StyleSheet.create({
     menuView: {
         backgroundColor: 'white',
-        marginTop: Height * 0.035,
         width: Width * 0.45,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: Scale * 5 },
         shadowOpacity: 0.5,
         shadowRadius: Scale * 5,
         elevation: 5
-      },
+    },
     menuItems: {
     },
     menuText: {
@@ -71,6 +71,7 @@ const Menu = (props) => {
             >Sign In</Text></TouchableOpacity>
 
             <TouchableOpacity
+            onPress={()=>{props.navigation.navigate('Settings') }}
                 style={styles.menuItems}
             ><Text
                 style={styles.menuText}

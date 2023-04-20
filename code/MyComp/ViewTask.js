@@ -1,15 +1,9 @@
 import React from 'react';
 import { ToastAndroid, TouchableOpacity, NativeModules, View, Text, StyleSheet, Dimensions, ScrollView, Image } from 'react-native';
-
 import { useState, useEffect } from 'react';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
-import AddTask from './AddTask.js';
 import { removeTaskByID, returnTaskList } from '../brain/testing';
-
-
-const packageName = NativeModules?.AppInfo?.packageName ?? '';
 
 //for handling responsiveness
 const { width, height } = Dimensions.get("window");
@@ -74,7 +68,7 @@ const ViewTask = (props) => {
         <TouchableOpacity
           style={styles.addBtn}
 
-          onPress={() => { props.navigation.navigate('New', {ReturnedTaskData: {todo: {id:'' ,title:'', desc:'', curDate:new Date(), deadline:'', duration:'', priority:'', weight:''}}}) }}
+          onPress={() => { props.navigation.navigate('Add Task', {ReturnedTaskData: {todo: {id:'' ,title:'', desc:'', curDate:new Date(), deadline:'', duration:'', priority:'', weight:''}}}) }}
         >
           <View
             style={{

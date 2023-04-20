@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
-const MyProfile = () => {
+const MyProfile = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.profileImage}>
@@ -13,7 +13,7 @@ const MyProfile = () => {
         />
       </View>
       <View style={styles.info}>
-        <TouchableOpacity onPress={() => console.log('Username clicked')}>
+        <TouchableOpacity onPress={() => {props.navigation.navigate('Add Task')}}>
           <Text style={styles.placeholderText}>Username</Text>
         </TouchableOpacity>
         <View style={styles.ruler} />
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    alignItems:'top',
+    alignItems:'center',
   },
   info: {
     width: '80%',
