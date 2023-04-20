@@ -46,10 +46,16 @@ exports.PutAvalibleID = (TaskID) => {
             const jsonData = JSON.parse(value);
 
             // Use the JSON data as needed
-            jsonData.AvalibleID.push(TaskID)
-            console.log(jsonData)
-            RNFS.writeFile(path, JSON.stringify(jsonData));
-
+            
+            if(TaskID in jsonData){
+                jsonData.AvalibleID.push(TaskID)
+                console.log(jsonData)
+                console.log("i am here")
+                RNFS.writeFile(path, JSON.stringify(jsonData));
+            }
+            else{
+                console.log("INVALID_DELETION")    
+            }
         })
 
         .catch(error => {

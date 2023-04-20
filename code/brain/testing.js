@@ -93,6 +93,8 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
         } else {
             TaskID = result
             let date1 = new Date()
+            taskDead = new Date(taskDead)
+            console.log(taskDead)
             let timeLeft = (taskDead.getTime() - date1.getTime()) / (86400000)
             if(taskPrio == 'HIGH'){
                 prioValue = 3
@@ -154,9 +156,8 @@ exports.removeTaskByID = TaskID => {
       if (TaskID != 0) {
         const updatedJsonData = removeObject(jsonData, TaskID);
         RNFS.writeFile(path, JSON.stringify(updatedJsonData));
+        
         Utility.PutAvalibleID(TaskID);
-
-        console.log(JSON.stringify(updatedJsonData));
 
         Utility.SetWallpaper();
       } else {
