@@ -40,7 +40,7 @@ const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff'];
 const input = {
   Bg: colors[4],
   marginTop: Height * 0.02,
-  marginHorizontal : Width * 0.02,
+  marginHorizontal: Width * 0.02,
   borderRadius: Scale * 5,
   fontSize: Scale * 6,
 
@@ -73,9 +73,9 @@ const styles = StyleSheet.create({
   inputBtnsOuterView: {
     flexDirection: 'row',
     marginHorizontal: Width * 0.02,
-    marginVertical : Height * 0.02 - 5,
+    marginVertical: Height * 0.02 - 5,
     alignContent: 'center',
-    alignItems: 'center',    
+    alignItems: 'center',
   },
   inputBtns: {
     backgroundColor: colors[3],
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: Height * 0.014,
   },
-  saveBtn:{
+  saveBtn: {
     backgroundColor: colors[3],
     borderRadius: Scale * 6,
     marginVertical: Height * 0.001,
@@ -162,6 +162,11 @@ let hour = 0;
 let minutes = 0;
 
 function AddTask(props) {
+
+  let titleVal = ''
+  let descVal = ''
+  const dateVal = new Date()
+
   //hooks for storing input values
   const [ReturnedData, setReturnedData] = useState({
     todo: {
@@ -176,34 +181,50 @@ function AddTask(props) {
     }
   })
 
-  const [TaskData, setTaskData] = useState({
-    TITLE: '',
-    DESC: '',
-    DURATION: '',
-    PRIORITY: '',
-    DATE: new Date()
-  })
+  // const [TaskData, setReturnedData] = useState({
+  //   TITLE: '',
+  //   DESC: '',
+  //   DURATION: '',
+  //   PRIORITY: '',
+  //   DATE: new Date()
+  // })
 
   useEffect(() => {
     if (props.route.params && props.route.params.ReturnedTaskData) {
-      setReturnedData(props.route.params.ReturnedTaskData)
-      console.log(ReturnedData)
-      console.log("passed")
-      setTaskData({
-        TaskData: {
-          TITLE: ReturnedData.title,
-          DESC: ReturnedData.desc,
-          DURATION: ReturnedData.duration,
-          PRIORITY: ReturnedData.priority,
-          DATE: ReturnedData.curDate
+      let temp = props.route.params.ReturnedTaskData
+      setReturnedData(prevState => ({
+        ...prevState, todo:
+        {
+          ...prevState.todo,
+          id: temp.todo.id,
+          title: temp.todo.title,
+          desc: temp.todo.desc,
+          curDate: temp.todo.curDate,
+          duration: temp.todo.duration,
+          deadline: temp.todo.deadline,
+          priority: temp.todo.priority,
+          weight: temp.todo.weight
         }
-      })
-    } else {
+      }))
+      console.log("passed")
+      // setReturnedData({
+      //   TaskData: {
+      //     TITLE: ReturnedData.title,
+      //     DESC: ReturnedData.desc,
+      //     DURATION: ReturnedData.duration,
+      //     PRIORITY: ReturnedData.priority,
+      //     DATE: ReturnedData.curDate
+      //   }
+      // })
+    }
+    else {
       console.log("failed")
     }
   }, [props.route.params?.ReturnedTaskData]);
-
-
+  removeTaskByID(ReturnedData.todo.id)
+  titleVal = ReturnedData.todo.title
+  descVal = ReturnedData.todo.desc
+  
   const [ModalCtrl, setModalCtrl] = useState({
     dateVisible: false,
     priorVisible: false,
@@ -219,16 +240,18 @@ function AddTask(props) {
           style={styles.title}
           maxLength={15}
           placeholder='Enter Title for your task'
-          onChangeText={(e) => { setTaskData(prevState => ({ ...prevState, TITLE: e })) }}
-        >{TaskData.TITLE}</TextInput>
-
+          // value={titleVal}
+          onChangeText={(e) => { setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, title: e } })) }}
+        >{titleVal}</TextInput>
+        
         <TextInput
           style={styles.desc}
           placeholder="Enter Description for your task"
           multiline={true}
-          onChangeText={(e) => { setTaskData(prevState => ({ ...prevState, DESC: e })) }}
+          // value={descVal}
+          onChangeText={(e) => { setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, desc: e } })) }}
 
-        >{TaskData.DESC}</TextInput>
+        >{descVal}</TextInput>
 
 
         <View style={styles.inputBtnsOuterView}>
@@ -239,39 +262,40 @@ function AddTask(props) {
             onPress={() => setModalCtrl(prevState => ({ ...prevState, dateVisible: true }))}
           >
 
-              <View style={styles.inputBtnsView}>
+            <View style={styles.inputBtnsView}>
 
-                <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]} />
+              <FontAwesome5 name={'calendar'} size={iconSize} color={colors[5]} />
 
-              </View>
+            </View>
           </TouchableOpacity>
           <DatePicker
             modal
 
             open={ModalCtrl.dateVisible}
-            date={TaskData.DATE = new Date()}
+
+            date={dateVal}
             onConfirm={(e) => {
               // setDateVisible(false)
-              setTaskData(prevState => ({ ...prevState, DATE: e })),
+              setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, deadline: e } })),
                 setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
             }}
             onCancel={(e) => {
-              setTaskData(prevState => ({ ...prevState, DATE: e })),
-              setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
+              setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, deadline: e } })),
+                setModalCtrl(prevState => ({ ...prevState, dateVisible: false }))
 
             }}
           />
           {/* priorityBtn */}
           <TouchableOpacity
-            style={[styles.inputBtns, {marginHorizontal: Width * 0.03, backgroundColor: priorBtnColor}]}
+            style={[styles.inputBtns, { marginHorizontal: Width * 0.03, backgroundColor: priorBtnColor }]}
 
             onPress={() => { setModalCtrl(prevState => ({ ...prevState, priorVisible: true })) }}
           >
 
-              <View style={styles.inputBtnsView}>
+            <View style={styles.inputBtnsView}>
 
-                <FontAwesome5 name={'star'} size={iconSize} color={colors[5]} />
-              </View>
+              <FontAwesome5 name={'star'} size={iconSize} color={colors[5]} />
+            </View>
             {/* priority modal  */}
             <Modal
               animationType="fade"
@@ -290,7 +314,7 @@ function AddTask(props) {
                     style={styles.modalOption1}
                     title="Option 1"
                     onPress={() => {
-                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'HIGH' }))
+                      setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, priority: 'HIGH' } }))
                       setModalCtrl(prevState => ({ ...prevState, priorVisible: false }))
                       setPriorBtnColor('purple')
                     }}
@@ -300,15 +324,15 @@ function AddTask(props) {
                     style={styles.modalOption2}
                     title="Option 2"
                     onPress={() => {
-                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'MEDIUM' }))
+                      setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, priority: 'MEDIUM' } }))
                       setModalCtrl(prevState => ({ ...prevState, priorVisible: false }))
-                      setPriorBtnColor(colors[3])
+                      setPriorBtnColor('green')
                     }}
                   ><Text style={styles.optionText}>Moderate</Text></TouchableOpacity>
                   <TouchableOpacity
                     style={styles.modalOption3}
                     onPress={() => {
-                      setTaskData(prevState => ({ ...prevState, PRIORITY: 'LOW' }))
+                      setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, priority: 'LOW' } }))
                       setModalCtrl(prevState => ({ ...prevState, priorVisible: false }))
                       setPriorBtnColor('#7B5800')
                     }}
@@ -323,12 +347,12 @@ function AddTask(props) {
           <TouchableOpacity
             style={styles.inputBtns}
             onPress={() => setModalCtrl(prevState => ({ ...prevState, durationVisible: true }))}>
-              <View style={styles.inputBtnsView}>
-                <FontAwesome5
-                  name={'hourglass'}
-                  size={iconSize}
-                  color={colors[5]}
-                />
+            <View style={styles.inputBtnsView}>
+              <FontAwesome5
+                name={'hourglass'}
+                size={iconSize}
+                color={colors[5]}
+              />
             </View>
             {/* duration modal  */}
             <Modal
@@ -378,7 +402,7 @@ function AddTask(props) {
                             fontSize: Scale * 6,
                           }}
                           onPress={() => {
-                            setTaskData(prevState => ({ ...prevState, DURATION: parseInt(hour * 60 + parseInt(minutes, 10), 10) }))
+                            setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, duration: parseInt(hour * 60 + parseInt(minutes, 10), 10) } }))
                             setModalCtrl(prevState => ({ ...prevState, durationVisible: false }))
                             // setDuration([
                             //   parseInt(hour * 60 + parseInt(minutes, 10), 10),
@@ -404,38 +428,42 @@ function AddTask(props) {
               </View>
             </Modal>
           </TouchableOpacity>
+        </View>
+
+
+
+
+        {/* save task btn */}
+        <TouchableOpacity
+          style={styles.saveBtn}
+          onPress={() => {
+            // ReturnedData.todo.title != '' || ReturnedData.todo.desc != ''
+            // titleVal != '' || descVal != ''
+            if (titleVal == '' || descVal == '') {
+              // console.log(ReturnedData.todo.title)
+              console.log(titleVal)
+              console.log(descVal)
+              ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
+            }
+            else {
+              addNewTask(ReturnedData.todo.title, ReturnedData.todo.desc, ReturnedData.todo.deadline, ReturnedData.todo.priority, ReturnedData.todo.duration)
+              ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
+              titleVal = ''
+              descVal = ''
+            }
+          }}
+        >
+          {/* <FontAwesome5 name={'check'} size={iconSize} color={colors[5]} /> */}
+          <View style={styles.saveBtnView}>
+
+            <Text
+              style={styles.saveText}
+            >Save</Text>
           </View>
 
 
 
-
-          {/* save task btn */}
-          <TouchableOpacity
-            style={styles.saveBtn}
-            onPress={() => {
-
-              if (  TaskData?.TITLE?.length == 0 || TaskData?.DESC?.length == 0) {
-                ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
-              }
-              else {
-                addNewTask(TaskData.TITLE, TaskData.DESC, TaskData.DATE, TaskData.PRIORITY, TaskData.DURATION)
-                ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
-                setTaskData(prevState => ({ ...prevState, TITLE: '' }))
-                setTaskData(prevState => ({ ...prevState, DESC: '' }))
-              }
-            }}
-          >
-                {/* <FontAwesome5 name={'check'} size={iconSize} color={colors[5]} /> */}
-                <View style={styles.saveBtnView}>
-              
-              <Text
-                style={styles.saveText}
-              >Save</Text>
-              </View>
-
-           
-            
-          </TouchableOpacity>
+        </TouchableOpacity>
       </View>
     </>
   );
