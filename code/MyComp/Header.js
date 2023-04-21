@@ -24,8 +24,7 @@ const fontSize = Scale * 6;
 
 const AppHeader = (props) => {
 
-  const {setMenuVisible} = props
-
+  const {setMenuVisible } = props
 
   return (
     <Header

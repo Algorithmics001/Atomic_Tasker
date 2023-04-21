@@ -46,22 +46,23 @@ const styles = StyleSheet.create({
 });
 
 function AppContainer(props) {
+    const {navigation} = props
 
     const [menuVisible, setMenuVisible] = useState(false);
 
     const handlePressOutsideMenu = () => {
         setMenuVisible(false)
+        
     }
-
 
     return (
         <TouchableWithoutFeedback onPress={() => handlePressOutsideMenu()}
         >
             <View style={styles.container}>
-            <AppHeader setMenuVisible={setMenuVisible} />
+            <AppHeader setMenuVisible={setMenuVisible}  />
                 {menuVisible && (
                     <View style={[styles.menuView]} >
-                        <Menu />
+                        <Menu setMenuVisible={setMenuVisible} navigation={navigation} />
                     </View>
                 )}
                 <Tab.Navigator initialRouteName="Tasks"

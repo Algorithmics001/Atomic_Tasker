@@ -6,28 +6,10 @@ import AppContainer from './MyComp/AppContainer'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Settings from "./MyComp/Settings";
-import AppHeader from "./MyComp/Header";
-import Menu from "./MyComp/Menu";
+import HowToUse from "./MyComp/HowToUse";
+import CompletedTasks from "./MyComp/CompletedTasks";
 
-const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3']
-const Tab = createMaterialTopTabNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-      flex: 1,
-  },
-  menuView: {
-      position: 'absolute',
-      top: 10,
-      right: 10,
-      zIndex: 1,
-      backgroundColor: 'green',
-      marginTop: Height * 0.055
-  },
-  tabBar: {
-      backgroundColor: '#fff',
-  },
-});
 
 const Stack = createNativeStackNavigator();
 
@@ -46,7 +28,8 @@ function Home(props) {
       />
       <Stack.Screen name="Add Task" component={AddTask} />
       <Stack.Screen name="Settings" component={Settings} />
-
+      <Stack.Screen name="How To Use" component={HowToUse} />
+      <Stack.Screen name="Completed Tasks" component={CompletedTasks} />
     </Stack.Navigator>
   </NavigationContainer>
     );
