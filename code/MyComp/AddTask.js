@@ -221,8 +221,7 @@ function AddTask(props) {
       console.log("failed")
     }
   }, [props.route.params?.ReturnedTaskData]);
-  removeTaskByID(ReturnedData.todo.id, 0)
-  console.log("THIS ID IS BEING REMOVED WITHOUT BACKUP!!!", ReturnedData.todo.id)
+
   debug()
   titleVal = ReturnedData.todo.title
   descVal = ReturnedData.todo.desc
@@ -245,7 +244,7 @@ function AddTask(props) {
           // value={titleVal}
           onChangeText={(e) => { setReturnedData(prevState => ({ ...prevState, todo: { ...prevState.todo, title: e } })) }}
         >{titleVal}</TextInput>
-        
+
         <TextInput
           style={styles.desc}
           placeholder="Enter Description for your task"
@@ -448,7 +447,28 @@ function AddTask(props) {
               ToastAndroid.show('Title and Description can not be empty', ToastAndroid.SHORT)
             }
             else {
-              addNewTask(ReturnedData.todo.title, ReturnedData.todo.desc, ReturnedData.todo.deadline, ReturnedData.todo.priority, ReturnedData.todo.duration)
+              addNewTask(ReturnedData.todo.title, ReturnedData.todo.desc, ReturnedData.todo.deadline, ReturnedData.todo.priority, ReturnedData.todo.duration) // adding new edited task
+              
+              console.log("THIS ID IS BEING REMOVED WITHOUT BACKUP!!!", ReturnedData.todo.id) // deleting original task 
+              removeTaskByID(ReturnedData.todo.id, 0)
+
+              setReturnedData(prevState => ({
+                ...prevState, todo:
+                {
+                  ...prevState.todo,
+
+                  title: '',
+                  desc: '',
+
+                  duration: '',
+                  deadline: '',
+                  priority: '',
+
+                }
+              }))
+
+              setPriorBtnColor(colors[3])
+
               ToastAndroid.show('Task saved successfully', ToastAndroid.SHORT);
               titleVal = ''
               descVal = ''
