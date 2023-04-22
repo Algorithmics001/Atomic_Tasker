@@ -10,8 +10,7 @@ import QuickTasker from "./QuickTasker";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Menu from "./Menu";
 import { Screen } from "react-native-screens";
-import {resetAIjson} from '../brain/testing'
-import {resetHIjson} from '../brain/testing'
+import {resetAIjson, resetHIjson, resetHistory} from '../brain/testing'
 import {resetJson} from '../brain/QuickTasker'
  
 const { width, height } = Dimensions.get("window");
@@ -35,6 +34,8 @@ const packageName = NativeModules?.AppInfo?.packageName ?? '';
 const filePath1 = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
 const filePath2 = `${RNFS.DocumentDirectoryPath}/${packageName}/Avalible_ID.json`;
 const filePath3 = `${RNFS.DocumentDirectoryPath}/${packageName}/QuickTasks.json`;
+const cmpPath = `${RNFS.DocumentDirectoryPath}/${packageName}/Complete.json`;
+
 const RNFS = require('react-native-fs')
 
 const styles = StyleSheet.create({
@@ -61,7 +62,7 @@ function AppContainer(props) {
     const handlePressOutsideMenu = () => {
         setMenuVisible(false)
     }
-
+    
     const requestStoragePermission = async () => {
         try {
           const granted = await PermissionsAndroid.request(
@@ -83,9 +84,13 @@ function AppContainer(props) {
               .then((exists) => {
                 if (exists) {
                   console.log('File exists');
+                  // resetHIjson()
+                  // resetAIjson()
+                  // resetHistory()
                 } else {
                   resetHIjson()
                   resetAIjson()
+                  resetHistory()
                 }
               })
               .catch((error) => {
@@ -99,6 +104,7 @@ function AppContainer(props) {
                 } else {
                   resetAIjson()
                   resetHIjson()
+                  resetHistory()
                 }
               })
               .catch((error) => {
@@ -109,7 +115,6 @@ function AppContainer(props) {
               .then((exists) => {
                 if (exists) {
                   console.log('File exists');
-                  resetJson()
                 } else {
                   resetJson()
                 }

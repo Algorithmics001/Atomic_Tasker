@@ -46,7 +46,8 @@ const ViewTask = (props) => {
   // function to delete a task by its ID
   const deleteTask = (taskId) => {
     try {
-      removeTaskByID(taskId)
+      removeTaskByID(taskId, 1) //delete with backup
+      console.log("THIS ID IS BEING REMOVED WITH BACKUP!!!", taskId)
       returnTaskList().then(tasklist => {setTodos(tasklist)})
 
       ToastAndroid.show('Task removed!', ToastAndroid.SHORT);

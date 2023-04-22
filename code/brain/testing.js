@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 const RNFS = require('react-native-fs');
-import {NativeModules} from 'react-native';
+import { NativeModules } from 'react-native';
 
 // const path = `${RNFS.ExternalStorageDirectoryPath}/Documents/hi.json`;
 // const idpath = `${RNFS.ExternalStorageDirectoryPath}/Documents/Avalible_ID.json`;
@@ -10,6 +10,7 @@ import {NativeModules} from 'react-native';
 const packageName = NativeModules?.AppInfo?.packageName ?? '';
 const path = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
 const idpath = `${RNFS.DocumentDirectoryPath}/${packageName}/Avalible_ID.json`;
+const cmpPath = `${RNFS.DocumentDirectoryPath}/${packageName}/Complete.json`;
 
 const Utility = require('./UtilityFuncs');
 
@@ -52,16 +53,35 @@ exports.resetAIjson = () => {
       454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468,
       469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483,
       484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498,
-      499, 500,
+      499, 500
     ],
   };
 
   RNFS.writeFile(idpath, JSON.stringify(Avalible_ID));
-  console.log(JSON.stringify(Avalible_ID));
+
 };
 
+function putCompletedTask(Task) {
+  RNFS.readFile(cmpPath)
+    .then(value => {
+      // Parse the JSON data
+      const jsonData = JSON.parse(value);
+
+      if (jsonData.Task_List.length == 21) {
+        jsonData.Task_List.splice(1, 1)
+      }
+
+      jsonData.Task_List.push(Task)
+      RNFS.writeFile(cmpPath, JSON.stringify(jsonData));
+    })
+
+    .catch(error => {
+      console.error(error);
+    });
+}
+
 exports.resetHIjson = () => {
-  console.log('resethijson called');
+
   let NewList = {
     Task_List: [
       {
@@ -78,48 +98,84 @@ exports.resetHIjson = () => {
   };
 
   RNFS.writeFile(path, JSON.stringify(NewList));
-  console.log(JSON.stringify(NewList));
+
 };
+
+exports.resetHistory = () => {
+
+  let NewList = {
+    Task_List: [
+      {
+        id: 'history',
+        title: 'history',
+        desc: 'history',
+        deadline: 'history',
+        priority: 'history',
+        duration: 'history',
+        curDate: 'history',
+        weight: 'history',
+      },
+    ],
+  };
+
+  RNFS.writeFile(cmpPath, JSON.stringify(NewList));
+
+}
+
+exports.returnCompletedTasks = () => {
+  return RNFS.readFile(cmpPath)
+    .then(value => {
+      // Parse the JSON data
+      const jsonData = JSON.parse(value);
+
+      // Use the JSON data as needed
+      let tasklist = jsonData.Task_List.slice(1);
+      return Promise.resolve(tasklist);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
 
 // add task
 
 exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
 
-    TaskID = 0;
-    let prioValue = 0
-    Utility.GetAvalibleID((result, error) => {
-        if (error) {
-            console.error(error);
-        } else {
-            TaskID = result
-            let date1 = new Date()
-            taskDead = new Date(taskDead)
-            console.log(taskDead)
-            let timeLeft = (taskDead.getTime() - date1.getTime()) / (86400000)
-            if(taskPrio == 'HIGH'){
-                prioValue = 3
-            }
-            else if(taskPrio == 'MEDIUM'){
-                prioValue = 2
-            }
-            else if(taskPrio == 'LOW'){
-                prioValue = 1
-            }
-            const newTask = {
-                id: TaskID,
-                title: taskTitle,
-                desc: taskDesp,
-                deadline: taskDead,
-                priority: taskPrio,
-                duration: taskDurtn,
-                curDate: date1,
-                weight: (parseFloat(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)
-            }
-            
-            RNFS.readFile(path)
-                .then(value => {
-                    // Parse the JSON data
-                    const jsonData = JSON.parse(value);
+  TaskID = 0;
+  let prioValue = 0
+  Utility.GetAvalibleID((result, error) => {
+    if (error) {
+      console.error(error);
+    } else {
+      TaskID = result
+      let date1 = new Date()
+      taskDead = new Date(taskDead)
+
+      let timeLeft = (taskDead.getTime() - date1.getTime()) / (86400000)
+      if (taskPrio == 'HIGH') {
+        prioValue = 3
+      }
+      else if (taskPrio == 'MEDIUM') {
+        prioValue = 2
+      }
+      else if (taskPrio == 'LOW') {
+        prioValue = 1
+      }
+      const newTask = {
+        id: TaskID,
+        title: taskTitle,
+        desc: taskDesp,
+        deadline: taskDead,
+        priority: taskPrio,
+        duration: taskDurtn,
+        curDate: date1,
+        weight: (parseFloat(prioValue) * parseFloat(taskDurtn)) / parseFloat(timeLeft)
+      }
+
+      RNFS.readFile(path)
+        .then(value => {
+          // Parse the JSON data
+          const jsonData = JSON.parse(value);
 
           // Use the JSON data as needed
           jsonData.Task_List.push(newTask);
@@ -127,7 +183,7 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
           RNFS.writeFile(path, JSON.stringify(jsonData));
 
           Utility.SetWallpaper();
-          console.log(JSON.stringify(jsonData));
+
         })
         .catch(error => {
           console.error(error);
@@ -138,36 +194,93 @@ exports.addNewTask = (taskTitle, taskDesp, taskDead, taskPrio, taskDurtn) => {
 
 // remove task
 
-exports.removeTaskByID = TaskID => {
+exports.removeTaskByID = (TaskID, flag) => {
   RNFS.readFile(path)
     .then(value => {
-      // Parse the JSON data
       const jsonData = JSON.parse(value);
 
-      // Use the JSON data as needed
-      function removeObject(data, id) {
-        let updatedData = data;
+      function getCompTask(data, id) {
+        let updatedData = Object.assign({}, data);;
         updatedData.Task_List = updatedData.Task_List.filter(
-          task => task.id !== id,
+          task => task.id == id,
         );
-        return updatedData;
+        return updatedData.Task_List[0];
       }
 
-      if (TaskID != 0) {
-        const updatedJsonData = removeObject(jsonData, TaskID);
-        RNFS.writeFile(path, JSON.stringify(updatedJsonData));
-        
-        Utility.PutAvalibleID(TaskID);
+      if (TaskID == 'sample' || TaskID == '' || TaskID == undefined) {
+        console.log("INVALID_ID")
+      }
+      else {
+        if (flag == 1) { // with backup flag        
+          const deletedTask = getCompTask(jsonData, TaskID)
+          putCompletedTask(deletedTask)
+        }
 
-        Utility.SetWallpaper();
-      } else {
-        console.log('INVALID ID');
+        let updatedData = jsonData
+        updatedData.Task_List = updatedData.Task_List.filter((task) => task.id !== TaskID);
+        Utility.PutAvalibleID(TaskID)
+        RNFS.writeFile(path, JSON.stringify(updatedData));
+
       }
     })
-    .catch(error => {
-      console.error(error);
-    });
-};
+}
+
+// exports.removeTaskByIDx = (TaskID, flag) => {
+//   RNFS.readFile(path)
+//     .then(value => {
+//       // Parse the JSON data
+//       const jsonData = JSON.parse(value);
+//       console.log("ORIGINAL DATA", jsonData)
+//       // Use the JSON data as needed
+//       function removeObject(data, id) {
+//         if (id == 'sample' || id == 0 || id == '' || id == undefined) {
+//           return data;
+//         }
+//         else {
+//           let updatedData = data;
+//           console.log("BEFORE FILTER", updatedData)
+//           updatedData.Task_List = updatedData.Task_List.filter(
+//             task => task.id != id,
+//           );
+//           console.log("this is filtered id", updatedData)
+//           return updatedData;
+//         }
+//       }
+
+//       function getCompTask(data, id) {
+//         if (id != '' || id != undefined) {
+//           let updatedData = data;
+//           updatedData.Task_List = updatedData.Task_List.filter(
+//             task => task.id == id,
+//           );
+//           console.log("this is being deleted", updatedData)
+//           return updatedData.Task_List[0];
+//         }
+//       }
+
+//       if (flag == 1) { //edit mode
+//         const completedTask = getCompTask(jsonData, TaskID);
+
+//         putCompletedTask(completedTask)
+//       }
+
+//       if (TaskID != 0) {
+//         console.log("PASSED TO FILTER", jsonData)
+//         const updatedJsonData = removeObject(jsonData, TaskID);
+//         RNFS.writeFile(path, JSON.stringify(updatedJsonData));
+
+//         Utility.PutAvalibleID(TaskID);
+
+//         Utility.SetWallpaper();
+
+//       } else {
+//         console.log('INVALID ID');
+//       }
+//     })
+//     .catch(error => {
+//       console.error(error);
+//     });
+// };
 
 // edit task
 
@@ -217,8 +330,6 @@ exports.organiseTask = () => {
 
       // Use the JSON data as needed
       jsonData.Task_List.sort((a, b) => b.weight - a.weight);
-
-      console.log(jsonData.Task_List);
     })
     .catch(error => {
       console.error(error);
@@ -254,7 +365,6 @@ exports.WallpaperTaskList = () => {
       }
 
       for (let i = 1; i < limit; i++) {
-        console.log(jsonData.Task_List[i]);
         TaskString = TaskString + jsonData.Task_List[i].title + '\n';
       }
 
@@ -268,3 +378,36 @@ exports.WallpaperTaskList = () => {
       console.error(error);
     });
 };
+
+exports.debug = () => {
+  RNFS.readFile(path)
+    .then(value => {
+      // Parse the JSON data
+      const jsonData = JSON.parse(value);
+      console.log("Task list")
+      console.log(jsonData)
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  RNFS.readFile(idpath)
+    .then(value => {
+      // Parse the JSON data
+      const jsonData = JSON.parse(value);
+      console.log("Avalible id")
+      console.log(jsonData)
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  RNFS.readFile(cmpPath)
+    .then(value => {
+      // Parse the JSON data
+      const jsonData = JSON.parse(value);
+      console.log("complete list")
+      console.log(jsonData)
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
