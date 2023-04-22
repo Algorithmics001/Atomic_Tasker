@@ -16,7 +16,7 @@ import DatePicker from 'react-native-date-picker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 
 // following line includes database functions
-import { addNewTask, removeTaskByID } from '../brain/testing';
+import { addNewTask, removeTaskByID, debug } from '../brain/testing';
 import ViewTask from './ViewTask';
 
 //responsiveness
@@ -221,10 +221,12 @@ function AddTask(props) {
       console.log("failed")
     }
   }, [props.route.params?.ReturnedTaskData]);
-  removeTaskByID(ReturnedData.todo.id)
+  removeTaskByID(ReturnedData.todo.id, 0)
+  console.log("THIS ID IS BEING REMOVED WITHOUT BACKUP!!!", ReturnedData.todo.id)
+  debug()
   titleVal = ReturnedData.todo.title
   descVal = ReturnedData.todo.desc
-  
+
   const [ModalCtrl, setModalCtrl] = useState({
     dateVisible: false,
     priorVisible: false,
