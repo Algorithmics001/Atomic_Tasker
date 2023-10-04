@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, Button, StyleSheet, TouchableWithoutFeedback, Dimensions, NativeModules, PermissionsAndroid,  } from "react-native";
+import { View, Text, Button, StyleSheet, TouchableWithoutFeedback, Dimensions, NativeModules, PermissionsAndroid, } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Home from "./HomeNotInUse";
 import AddTask from "./AddTask";
@@ -10,10 +10,10 @@ import QuickTasker from "./QuickTasker";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Menu from "./Menu";
 import { Screen } from "react-native-screens";
-import {resetAIjson} from '../brain/testing'
-import {resetHIjson} from '../brain/testing'
-import {resetJson} from '../brain/QuickTasker'
- 
+import { resetAIjson } from '../brain/testing'
+import { resetHIjson } from '../brain/testing'
+import { resetJson } from '../brain/QuickTasker'
+
 const { width, height } = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
 
@@ -38,122 +38,150 @@ const filePath3 = `${RNFS.DocumentDirectoryPath}/${packageName}/QuickTasks.json`
 const RNFS = require('react-native-fs')
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    menuView: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        zIndex: 1,
-        backgroundColor: 'green',
-        marginTop: Height * 0.055
-    },
-    tabBar: {
-        backgroundColor: '#fff',
-    },
+  container: {
+    flex: 1,
+  },
+  menuView: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
+    backgroundColor: 'green',
+    marginTop: Height * 0.055
+  },
+  tabBar: {
+    backgroundColor: '#fff',
+  },
 });
 
 function AppContainer(props) {
-    const {navigation} = props
+  const { navigation } = props
 
-    const [menuVisible, setMenuVisible] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
 
-    const handlePressOutsideMenu = () => {
-        setMenuVisible(false)
-        
+  const handlePressOutsideMenu = () => {
+    setMenuVisible(false)
+
+  }
+
+  const requestStoragePermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Atomic-Tasker App needs storage permission ',
+          message:
+            'Atomic-Tasker App needs access to your storage ' +
+            'to save the data',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the storage')
+
+        RNFS.exists(filePath1)
+          .then((exists) => {
+            if (exists) {
+              console.log('File exists');
+            } else {
+              resetHIjson()
+              resetAIjson()
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        RNFS.exists(filePath2)
+          .then((exists) => {
+            if (exists) {
+              console.log('File exists');
+            } else {
+              resetAIjson()
+              resetHIjson()
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        RNFS.exists(filePath3)
+          .then((exists) => {
+            if (exists) {
+              console.log('File exists');
+              resetJson()
+            } else {
+              resetJson()
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+      } else {
+        console.log('Storage permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
     }
+  };
 
-    const requestStoragePermission = async () => {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-            {
-              title: 'Atomic-Tasker App needs storage permission ',
-              message:
-                'Atomic-Tasker App needs access to your storage ' +
-                'to save the data',
-              buttonNeutral: 'Ask Me Later',
-              buttonNegative: 'Cancel',
-              buttonPositive: 'OK',
-            },
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('You can use the storage')
-    
-            RNFS.exists(filePath1)
-              .then((exists) => {
-                if (exists) {
-                  console.log('File exists');
-                } else {
-                  resetHIjson()
-                  resetAIjson()
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-            });
-    
-            RNFS.exists(filePath2)
-              .then((exists) => {
-                if (exists) {
-                  console.log('File exists');
-                } else {
-                  resetAIjson()
-                  resetHIjson()
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-            });
-    
-            RNFS.exists(filePath3)
-              .then((exists) => {
-                if (exists) {
-                  console.log('File exists');
-                  resetJson()
-                } else {
-                  resetJson()
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-            });
-    
-          } else {
-            console.log('Storage permission denied');
-          }
-        } catch (err) {
-          console.warn(err);
-        }
-      };
-    
-    useEffect(() => {
-    requestStoragePermission()    
-    }, [])
+  // testing
+  const requestGPSPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Atomic-Tasker App needs Location permission ',
+          message:
+            'Atomic-Tasker App needs access to your permission ' +
+            'to save the data',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the location')
 
-    return (
-        <TouchableWithoutFeedback onPress={() => handlePressOutsideMenu()}
-        >
-            <View style={styles.container}>
-            <AppHeader setMenuVisible={setMenuVisible}  />
-                {menuVisible && (
-                    <View style={[styles.menuView]} >
-                        <Menu setMenuVisible={setMenuVisible} navigation={navigation} />
-                    </View>
-                )}
-                <Tab.Navigator initialRouteName="Tasks"
-                    screenOptions={{
-                        style: styles.tabBar,
-                    }}>
-                    <Tab.Screen name="Zap" component={QuickTasker} />
-                    <Tab.Screen name="Tasks" component={ViewTask} />
-                    <Tab.Screen name="Profile" component={MyProfile} />
-                </Tab.Navigator>
+      } else {
+        console.log('Storage permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
-            </View>
-        </TouchableWithoutFeedback>
-    );
+
+  useEffect(() => {
+    // requestStoragePermission()
+    requestGPSPermission()
+  }, [])
+
+  return (
+    <TouchableWithoutFeedback onPress={() => handlePressOutsideMenu()}
+    >
+      <View style={styles.container}>
+        <AppHeader setMenuVisible={setMenuVisible} />
+        {menuVisible && (
+          <View style={[styles.menuView]} >
+            <Menu setMenuVisible={setMenuVisible} navigation={navigation} />
+          </View>
+        )}
+        <Tab.Navigator initialRouteName="Tasks"
+          screenOptions={{
+            style: styles.tabBar,
+          }}>
+          <Tab.Screen name="Zap" component={QuickTasker} />
+          <Tab.Screen name="Tasks" component={ViewTask} />
+          <Tab.Screen name="Profile" component={MyProfile} />
+        </Tab.Navigator>
+
+      </View>
+    </TouchableWithoutFeedback>
+  );
 }
 
 export default AppContainer;

@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow */
+/* eslint-disable */
 /* eslint-disable react-native/no-inline-styles */
 import {
   ToastAndroid,
@@ -181,13 +181,6 @@ function AddTask(props) {
     }
   })
 
-  // const [TaskData, setReturnedData] = useState({
-  //   TITLE: '',
-  //   DESC: '',
-  //   DURATION: '',
-  //   PRIORITY: '',
-  //   DATE: new Date()
-  // })
 
   useEffect(() => {
     if (props.route.params && props.route.params.ReturnedTaskData) {
@@ -207,15 +200,6 @@ function AddTask(props) {
         }
       }))
       console.log("passed")
-      // setReturnedData({
-      //   TaskData: {
-      //     TITLE: ReturnedData.title,
-      //     DESC: ReturnedData.desc,
-      //     DURATION: ReturnedData.duration,
-      //     PRIORITY: ReturnedData.priority,
-      //     DATE: ReturnedData.curDate
-      //   }
-      // })
     }
     else {
       console.log("failed")

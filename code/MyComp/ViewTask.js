@@ -115,7 +115,7 @@ const ViewTask = (props) => {
 
                 <Text style={styles.titleText}>{todo.title}</Text>
                 <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                  <Text style={styles.dateText}>{todo.deadline.substring(0, 10)}</Text>
+                  <Text style={styles.dateText}>{todo.deadline}</Text>
                 </View>
               </View>
               
@@ -138,7 +138,6 @@ const ViewTask = (props) => {
                   <View style={{ backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row' }}>
                     <View
                       style={{
-
                         backgroundColor: colors[1],
                         Width: Scale * 12,
                         Height: Scale * 12,
@@ -226,8 +225,16 @@ const styles = StyleSheet.create({
   addBtn: {
     width: Width * 0.16,
     height: Width * 0.16,
-    borderRadius: width * 2,
+    borderRadius: Scale*10,
+    borderColor: 'white',
     backgroundColor: colors[3],
+    // shadowColor: '#FFF',
+    // shadowOffset: {width: 10, height: 10},
+    // shadowOpacity: 1,
+    // shadowRadius: Scale * 25,
+    // elevation: 0.25,
+    
+
   },
   noTasksContainer: {
     width: '100%',
