@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, Button, StyleSheet, TouchableWithoutFeedback, Dimensions, NativeModules, PermissionsAndroid, } from "react-native";
+import { View, Text, Button, StyleSheet, TouchableWithoutFeedback, Dimensions, NativeModules, PermissionsAndroid,  } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Home from "./HomeNotInUse";
 import AddTask from "./AddTask";
@@ -10,32 +10,33 @@ import QuickTasker from "./QuickTasker";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Menu from "./Menu";
 import { Screen } from "react-native-screens";
-import { resetAIjson } from '../brain/testing'
-import { resetHIjson } from '../brain/testing'
+import { resetAIjson ,  resetHIjson, resetHistory } from '../brain/testing'
 import { resetJson } from '../brain/QuickTasker'
 
 const { width, height } = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
 
-let x = 3.5 / scale
-let Scale = scale * x
+let x = 3.5 / scale;
+let Scale = scale * x;
 
-let y = 411.42857142857144 / width
-let Width = width * y
+let y = 411.42857142857144 / width;
+let Width = width * y;
 
-let z = 804.5714285714286 / height
+let z = 804.5714285714286 / height;
 
-let Height = height * z
+let Height = height * z;
 
 const iconSize = Scale * 5;
-const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3']
+const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3'];
 const Tab = createMaterialTopTabNavigator();
 
 const packageName = NativeModules?.AppInfo?.packageName ?? '';
 const filePath1 = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
 const filePath2 = `${RNFS.DocumentDirectoryPath}/${packageName}/Avalible_ID.json`;
 const filePath3 = `${RNFS.DocumentDirectoryPath}/${packageName}/QuickTasks.json`;
-const RNFS = require('react-native-fs')
+const cmpPath = `${RNFS.DocumentDirectoryPath}/${packageName}/Complete.json`;
+
+const RNFS = require('react-native-fs');
 
 const styles = StyleSheet.create({
   container: {
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     right: 10,
     zIndex: 1,
     backgroundColor: 'green',
-    marginTop: Height * 0.055
+    marginTop: Height * 0.055,
   },
   tabBar: {
     backgroundColor: '#fff',
@@ -55,14 +56,13 @@ const styles = StyleSheet.create({
 });
 
 function AppContainer(props) {
-  const { navigation } = props
+  const {navigation} = props;
 
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handlePressOutsideMenu = () => {
-    setMenuVisible(false)
-
-  }
+    setMenuVisible(false);
+  };
 
   const requestStoragePermission = async () => {
     try {
@@ -79,47 +79,46 @@ function AppContainer(props) {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the storage')
+        console.log('You can use the storage');
 
         RNFS.exists(filePath1)
-          .then((exists) => {
+          .then(exists => {
             if (exists) {
               console.log('File exists');
             } else {
-              resetHIjson()
-              resetAIjson()
+              resetHIjson();
+              resetAIjson();
             }
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
 
         RNFS.exists(filePath2)
-          .then((exists) => {
+          .then(exists => {
             if (exists) {
               console.log('File exists');
             } else {
-              resetAIjson()
-              resetHIjson()
+              resetAIjson();
+              resetHIjson();
             }
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
 
         RNFS.exists(filePath3)
-          .then((exists) => {
+          .then(exists => {
             if (exists) {
               console.log('File exists');
-              resetJson()
+              resetJson();
             } else {
-              resetJson()
+              resetJson();
             }
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
-
       } else {
         console.log('Storage permission denied');
       }
@@ -144,8 +143,7 @@ function AppContainer(props) {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the location')
-
+        console.log('You can use the location');
       } else {
         console.log('Storage permission denied');
       }
@@ -154,23 +152,22 @@ function AppContainer(props) {
     }
   };
 
-
   useEffect(() => {
     // requestStoragePermission()
-    requestGPSPermission()
-  }, [])
+    requestGPSPermission();
+  }, []);
 
   return (
-    <TouchableWithoutFeedback onPress={() => handlePressOutsideMenu()}
-    >
+    <TouchableWithoutFeedback onPress={() => handlePressOutsideMenu()}>
       <View style={styles.container}>
         <AppHeader setMenuVisible={setMenuVisible} />
         {menuVisible && (
-          <View style={[styles.menuView]} >
+          <View style={[styles.menuView]}>
             <Menu setMenuVisible={setMenuVisible} navigation={navigation} />
           </View>
         )}
-        <Tab.Navigator initialRouteName="Tasks"
+        <Tab.Navigator
+          initialRouteName="Tasks"
           screenOptions={{
             style: styles.tabBar,
           }}>
@@ -178,7 +175,6 @@ function AppContainer(props) {
           <Tab.Screen name="Tasks" component={ViewTask} />
           <Tab.Screen name="Profile" component={MyProfile} />
         </Tab.Navigator>
-
       </View>
     </TouchableWithoutFeedback>
   );
