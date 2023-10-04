@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
 
 const Menu = (props) => {
 
+    const {navigation, setMenuVisible} = props;
 
     return (
         <View
@@ -52,6 +53,10 @@ const Menu = (props) => {
         >
 
             <TouchableOpacity
+            onPress={()=>{
+                navigation.navigate('Completed Tasks') 
+                setMenuVisible(false)
+                }}
                 style={styles.menuItems}
             ><Text
                 style={styles.menuText}
@@ -61,17 +66,25 @@ const Menu = (props) => {
             <TouchableOpacity
                 style={styles.menuItems}
             ><Text
+                onPress={()=>{
+                navigation.navigate('How To Use') 
+                setMenuVisible(false)
+                }}
                 style={styles.menuText}
             >How To Use</Text></TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.menuItems}
+                disabled={true}
             ><Text
                 style={styles.menuText}
             >Sign In</Text></TouchableOpacity>
 
             <TouchableOpacity
-            onPress={()=>{props.navigation.navigate('Settings') }}
+            onPress={()=>{
+                navigation.navigate('Settings') 
+                setMenuVisible(false)       
+            }}
                 style={styles.menuItems}
             ><Text
                 style={styles.menuText}

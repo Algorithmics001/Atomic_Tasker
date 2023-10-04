@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
 import { addQTask, getList } from '../brain/QuickTasker'
+
+const { width, height } = Dimensions.get("window");
+const { scale } = Dimensions.get("window");
+
+let x = 3.5 / scale
+Scale = scale * x
+
+let y = 411.42857142857144 / width
+Width = width * y
+
+let z = 804.5714285714286 / height
+
+Height = height * z
+
+const iconSize = Scale * 5;
+
+//for handling all the colors and dark mde
+var colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff', '#6D726E', '#fff'];
+
 
 export default function QuickTasker() {
   const [task, setTask] = useState('');
@@ -76,11 +95,11 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     height: 40,
-    borderColor: 'black',
     color: 'black',
-    borderWidth: 1,
+    borderRadius : Scale * 5,
     marginBottom: 20,
     padding: 10,
+    backgroundColor: colors[4]
   },
   btn: {
 
