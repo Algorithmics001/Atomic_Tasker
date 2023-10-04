@@ -72,7 +72,8 @@ export default function QuickTasker() {
         <Button style={styles.button} buttonStyle={{ backgroundColor: 'z#e4def2' }} title="Add Task" onPress={checkValidation} />
         <Button style={styles.undoButton} title="Undo" onPress={undo} />
       </View>
-      {taskList.map((task, index) => (
+      
+      { taskList && Array.isArray(taskList)? taskList.map((task, index) => (
         <View style={styles.taskContainer} key={index}>
           <Text style={styles.task}>{index + 1}. {task}</Text>
           <Button
@@ -81,7 +82,7 @@ export default function QuickTasker() {
             onPress={() => deleteTask(index)}
           />
         </View>
-      ))}
+      )):null}
     </View>
   );
 }
