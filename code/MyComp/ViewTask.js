@@ -190,8 +190,16 @@ const styles = StyleSheet.create({
   addBtn: {
     width: Width * 0.16,
     height: Width * 0.16,
-    borderRadius: width * 2,
+    borderRadius: Scale*10,
+    borderColor: 'white',
     backgroundColor: colors[3],
+    // shadowColor: '#FFF',
+    // shadowOffset: {width: 10, height: 10},
+    // shadowOpacity: 1,
+    // shadowRadius: Scale * 25,
+    // elevation: 0.25,
+    
+
   },
   noTasksContainer: {
     width: '100%',

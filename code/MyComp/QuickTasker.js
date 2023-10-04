@@ -6,18 +6,17 @@ const { width, height } = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
 
 let x = 3.5 / scale
-Scale = scale * x
+let Scale = scale * x
 
 let y = 411.42857142857144 / width
-Width = width * y
+let Width = width * y
 
 let z = 804.5714285714286 / height
 
-Height = height * z
+let Height = height * z
 
 const iconSize = Scale * 5;
 
-//for handling all the colors and dark mde
 var colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff', '#6D726E', '#fff'];
 
 
@@ -68,19 +67,28 @@ export default function QuickTasker() {
         onChangeText={text => setTask(text)}
         value={task}
       />
-      <View style={styles.btn}>
-        <Button style={styles.button} buttonStyle={{ backgroundColor: 'z#e4def2' }} title="Add Task" onPress={checkValidation} />
-        <Button style={styles.undoButton} title="Undo" onPress={undo} />
+      <View style={styles.btnView}>
+        <TouchableOpacity style={styles.Btn} buttonStyle={{ backgroundColor: colors[3] }} onPress={checkValidation}><Text  style={styles.btnText}>Add</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.Btn} onPress={undo} >
+          <Text
+          style={styles.btnText}
+          >Undo</Text>
+        </TouchableOpacity>
       </View>
       
       { taskList && Array.isArray(taskList)? taskList.map((task, index) => (
         <View style={styles.taskContainer} key={index}>
           <Text style={styles.task}>{index + 1}. {task}</Text>
-          <Button
-            style={styles.deleteButton}
-            title="Delete"
-            onPress={() => deleteTask(index)}
-          />
+          <TouchableOpacity
+            style={styles.Btn}
+            onPress={()=>{
+              deleteTask(index)
+            }}
+          >
+            <Text
+              style={styles.btnText}
+            >Delete</Text>
+          </TouchableOpacity>
         </View>
       )):null}
     </View>
@@ -91,46 +99,39 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    padding: 20,
+    padding : Scale * 4
   },
   input: {
-    width: '100%',
-    height: 40,
+    height: Height * 0.07,
+    width: Width * 0.93,
     color: 'black',
     borderRadius : Scale * 5,
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: colors[4]
+    backgroundColor: colors[4],
+    fontSize : Scale * 5,
+    padding: Scale * 4
   },
-  btn: {
-
+  btnView: {
+    marginVertical: Height * 0.01,
     display: 'flex',
     flexDirection: 'row',
-    gap: 80
-    , width: '75%',
+    gap : Width * 0.2
   },
-  button: {
-    backgroundColor: 'white',
-    color: 'white',
-    // display:'flex',
-    marginBottom: 20,
-    padding: 10,
+  Btn: {
+    backgroundColor: colors[3],
+    paddingHorizontal: Width * 0.05,
+    paddingVertical: Height * 0.009,
+    borderRadius: Scale * 6,
   },
-  undoButton: {
-    backgroundColor: 'black',
-    background: 'yellow',
-    // display:'flex',
-    marginBottom: 20,
-    padding: 107,
-    width: '100%'
+  btnText: {
+    color: colors[5],
+    fontSize: Scale * 4.5
+  },
 
-  },
   taskContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    marginBottom: 20,
     padding: 10,
   },
   task: {

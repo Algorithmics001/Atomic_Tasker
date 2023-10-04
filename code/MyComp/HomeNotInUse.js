@@ -39,8 +39,7 @@ const filePath3 = `${RNFS.DocumentDirectoryPath}/${packageName}/QuickTasks.json`
 const Home = ({navigation}) => {
 
 
-  //this functions asks for file permissions when app is opened for very first time
-  //also writes file hijson and availableidjson
+z
   const requestStoragePermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
