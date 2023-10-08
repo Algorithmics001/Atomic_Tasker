@@ -107,7 +107,7 @@ const CompletedTasks = (props) => {
 
                                 <Text style={styles.titleText}>{todo.title}</Text>
                                 <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                                    <Text style={styles.dateText}>{todo.deadline.substring(0, 10)}</Text>
+                                    <Text style={styles.dateText}>{todo?.deadline?.substring(0, 10)}</Text>
                                 </View>
                             </View>
 

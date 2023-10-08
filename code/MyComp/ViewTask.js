@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
 import { removeTaskByID, returnTaskList } from '../brain/testing';
+import Carder from './Carder'
 
 //for handling responsiveness
 const { width, height } = Dimensions.get("window");
@@ -82,7 +83,7 @@ const ViewTask = (props) => {
           </View>
         </TouchableOpacity>
       </View>
-      {todos.length === 0 ? (
+      {todos?.length === 0 ? (
         <View style={styles.noTasksContainer}>
           <View>
             <Image
@@ -95,7 +96,8 @@ const ViewTask = (props) => {
         </View>
       ) : (<>
         <ScrollView style={{ backgroundColor: colors[7] }}>
-          {todos.map((todo) => (
+        <Carder/>
+          {todos?.map((todo) => (
             <View key={todo.id} style={styles.viewStyle}>
               <View style={{ backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row' }}>
                 <TouchableOpacity
@@ -116,7 +118,7 @@ const ViewTask = (props) => {
 
                 <Text style={styles.titleText}>{todo.title}</Text>
                 <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                  <Text style={styles.dateText}>{todo.deadline.substring(0, 10)}</Text>
+                  <Text style={styles.dateText}>{todo?.deadline?.substring(0, 10)}</Text>
                 </View>
               </View>
               
