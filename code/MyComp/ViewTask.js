@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
 import { removeTaskByID, returnTaskList } from '../brain/testing';
+import Carder from './Carder'
 
 //for handling responsiveness
 const { width, height } = Dimensions.get("window");
@@ -94,26 +95,63 @@ const ViewTask = (props) => {
         </View>
       ) : (
         <ScrollView style={{ backgroundColor: colors[7] }}>
-          {todos && Array.isArray(todos) ? (
-            todos.map((todo) => (
-              <View key={todo.id} style={styles.viewStyle}>
-                <View style={{ backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row' }}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: colors[1], Width: Scale * 12, Height: Scale * 12, alignItems: 'center', padding: Scale * 2
+        <Carder/>
+          {todos?.map((todo) => (
+            <View key={todo.id} style={styles.viewStyle}>
+              <View style={{ backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row' }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: colors[1], Width: Scale * 12, Height: Scale * 12, alignItems: 'center', padding: Scale * 2
+                  }}
+                  onPress={
+                
+                    () =>
+                    { 
+                      console.log(todo)
+                      props.navigation.navigate('Add Task', {ReturnedTaskData: {todo}})
+                    
                     }}
-                    onPress={() =>
-                      { 
-                        console.log(todo)
-                        props.navigation.navigate('Add Task', { ReturnedTaskData: { todo } })
+                >
+                  <FontAwesome5 name={'pencil'} size={iconSize} color={colors[3]} />
+                </TouchableOpacity>
+
+                <Text style={styles.titleText}>{todo.title}</Text>
+                <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                  <Text style={styles.dateText}>{todo?.deadline?.substring(0, 10)}</Text>
+                </View>
+              </View>
+              
+              <Text style={styles.descText}>Description: {todo.desc}</Text>
+              <Text style={styles.priorText}>Priority: {todo.priority}</Text>
+              <Text style={styles.durationText}>Duration: {timeConvertion(todo.duration)}</Text>
+
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  marginTop: height * 0.02
+                }}
+                onPress={() => deleteTask(todo.id)}
+              >
+                <View
+                  style={{
+                    backgroundColor: colors[3],
+                  }}
+                >
+                  <View style={{ backgroundColor: colors[3], borderTopEndRadius: Scale * 5, flex: 1, flexDirection: 'row' }}>
+                    <View
+                      style={{
+
+                        backgroundColor: colors[1],
+                        Width: Scale * 12,
+                        Height: Scale * 12,
+                        alignItems: 'center',
+                        padding: Scale * 2
                       }}
-                  >
-                    <FontAwesome5 name={'pencil'} size={iconSize} color={colors[3]} />
-                  </TouchableOpacity>
-  
-                  <Text style={styles.titleText}>{todo.title}</Text>
-                  <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                    <Text style={styles.dateText}>{todo?.deadline?.substring(0, 10)}</Text>
+                    >
+                      <FontAwesome5 name={'check'} size={iconSize} color={colors[3]} />
+                    </View>
+
+                    <Text style={styles.doneText}>Mark as done</Text>
                   </View>
                 </View>
   
