@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
 import { removeTaskByID, returnTaskList } from '../brain/testing';
-import Carder from './Carder'
+import Carder from './ViewTask.js.backup'
 
 //for handling responsiveness
 const { width, height } = Dimensions.get("window");
