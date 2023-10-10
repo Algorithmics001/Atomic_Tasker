@@ -80,7 +80,7 @@ const AddIcon = (props) => (
 );
 
 
-function Carder(props) {
+function ViewTasks(props) {
   // hook for storing the data after getting from file stored locally
   const [todos, setTodos] = useState([]);
 
@@ -111,7 +111,6 @@ function Carder(props) {
 
   return (
     <>
-
       <View style={styles.addBtnPos}>
         <Button
           accessoryLeft={AddIcon}
@@ -142,7 +141,9 @@ function Carder(props) {
                   ? 'danger'
                   : todo.priority.toLowerCase() === 'low'
                     ? 'warning'
-                    : 'warning'
+                    : todo.priority.toLowerCase() === 'medium'
+                    ? 'success'
+                    :'warning'
               } header={() => <Header todo={todo} />}
               footer={<>
                 <ButtonGroup style={styles.buttonGroup}>
@@ -254,12 +255,11 @@ const styles = StyleSheet.create({
   },
   addBtnPos: {
     position: 'absolute',
-    bottom: 20,
-    right: 20,
-    zIndex: 999,
+    right: width * 0.04,
+    bottom: height * 0.269
   },
   addBtn: {
-    
+    borderRadius:'50%'
   },
   noTasksContainer: {
     width: '100%',
@@ -268,4 +268,4 @@ const styles = StyleSheet.create({
     alignContent: 'center'
   }
 })
-export default Carder
+export default ViewTasks

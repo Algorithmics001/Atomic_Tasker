@@ -7,11 +7,12 @@ import ViewTask from "./ViewTask";
 import AppHeader from "./Header";
 import MyProfile from "./MyProfile";
 import QuickTasker from "./QuickTasker";
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Menu from "./Menu";
 import { Screen } from "react-native-screens";
 import {resetAIjson, resetHIjson, resetHistory} from '../brain/testing'
 import {resetJson} from '../brain/QuickTasker'
+import TabNavigator from "./Tab";
  
 const { width, height } = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
@@ -28,7 +29,7 @@ let Height = height * z
 
 const iconSize = Scale * 5;
 const colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3']
-const Tab = createMaterialTopTabNavigator();
+// const Tab = createMaterialTopTabNavigator();
 
 const packageName = NativeModules?.AppInfo?.packageName ?? '';
 const filePath1 = `${RNFS.DocumentDirectoryPath}/${packageName}/hi.json`;
@@ -147,15 +148,15 @@ function AppContainer(props) {
                         <Menu setMenuVisible={setMenuVisible} navigation={navigation} />
                     </View>
                 )}
-                <Tab.Navigator initialRouteName="Tasks"
+                <TabNavigator/>
+                {/* <Tab.Navigator initialRouteName="Tasks"
                     screenOptions={{
                         style: styles.tabBar,
                     }}>
                     <Tab.Screen name="Zap" component={QuickTasker} />
                     <Tab.Screen name="Tasks" component={ViewTask} />
                     <Tab.Screen name="Profile" component={MyProfile} />
-                </Tab.Navigator>
-
+                </Tab.Navigator> */}
             </View>
         </TouchableWithoutFeedback>
     );
