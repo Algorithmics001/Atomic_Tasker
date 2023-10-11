@@ -1,9 +1,12 @@
 import React from 'react';
 import { Icon, IconElement, Tab, TabBar, TabView, Layout, Text } from '@ui-kitten/components';
 import QuickTasker from './QuickTasker';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useAnimatedValue } from 'react-native';
 import ViewTasks from './ViewTask'
 import MyProfile from './MyProfile';
+import AddTask from './AddTask';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-elements';
 
 const PlayIcon = (props) => (
   <Icon
@@ -25,10 +28,9 @@ const PersonIcon = (props) => (
     name='person-outline'
   />
 );
-export const TabNavigator = () => {
+export const TabNavigator = (props) => {
 
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
-  
+    const [selectedIndex, setSelectedIndex] = React.useState(0);    
     return (
       <TabView
         selectedIndex={selectedIndex}
@@ -36,21 +38,22 @@ export const TabNavigator = () => {
       >
         <Tab title='Zap' icon={PlayIcon}>
           <Layout >
-            <QuickTasker/>
+            <QuickTasker />
           </Layout>
         </Tab>
 
         <Tab title='Tasks' icon={ListICon}>
           <Layout>
-            <ViewTasks/>
+            <ViewTasks />
           </Layout>
         </Tab>
-        <Tab title='Profile'>
+        <Tab title='Profile' icon={PersonIcon}>
           <Layout>
-            <MyProfile/>
+            <MyProfile />
           </Layout>
         </Tab>
       </TabView>
+
     );
   };
   

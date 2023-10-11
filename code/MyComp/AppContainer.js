@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, Button, StyleSheet, TouchableWithoutFeedback, Dimensions, NativeModules, PermissionsAndroid,  } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import Home from "./HomeNotInUse";
 import AddTask from "./AddTask";
 import ViewTask from "./ViewTask";
@@ -12,7 +12,7 @@ import Menu from "./Menu";
 import { Screen } from "react-native-screens";
 import {resetAIjson, resetHIjson, resetHistory} from '../brain/testing'
 import {resetJson} from '../brain/QuickTasker'
-import TabNavigator from "./Tab";
+import Tab from "./Tab";
  
 const { width, height } = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 });
 
 function AppContainer(props) {
-    const {navigation} = props
+    const navigation = useNavigation()
 
     const [menuVisible, setMenuVisible] = useState(false);
 
@@ -142,21 +142,15 @@ function AppContainer(props) {
         <TouchableWithoutFeedback onPress={() => handlePressOutsideMenu()}
         >
             <View style={styles.container}>
-            <AppHeader setMenuVisible={setMenuVisible}  />
+            {/* <AppHeader setMenuVisible={setMenuVisible}  />
                 {menuVisible && (
                     <View style={[styles.menuView]} >
                         <Menu setMenuVisible={setMenuVisible} navigation={navigation} />
                     </View>
-                )}
-                <TabNavigator/>
-                {/* <Tab.Navigator initialRouteName="Tasks"
-                    screenOptions={{
-                        style: styles.tabBar,
-                    }}>
-                    <Tab.Screen name="Zap" component={QuickTasker} />
-                    <Tab.Screen name="Tasks" component={ViewTask} />
-                    <Tab.Screen name="Profile" component={MyProfile} />
-                </Tab.Navigator> */}
+                )} */}
+                {/* <Button onPress={()=>navigation.navigate('Add Task')} title="new"></Button> */}
+
+                <Tab navigation={navigation}/>
             </View>
         </TouchableWithoutFeedback>
     );
