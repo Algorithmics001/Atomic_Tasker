@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Divider, Icon, Text, Button, ButtonGroup } from '@ui-kitten/components';
-import { ToastAndroid, TouchableOpacity, NativeModules, View, StyleSheet, Dimensions, ScrollView, Image } from 'react-native';
+import { Card, Divider, Icon, Text, ButtonGroup, Button, Layout } from '@ui-kitten/components';
+import { ToastAndroid, TouchableOpacity, NativeModules, StyleSheet,Dimensions, View, Image, ScrollView } from 'react-native';
 import { useState, useEffect, useMemo } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import { Appearance } from 'react-native';
@@ -8,6 +8,7 @@ import { removeTaskByID, returnTaskList } from '../brain/testing';
 const { width, height } = Dimensions.get("window");
 const { scale } = Dimensions.get("window");
 import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 let x = 3.5 / scale
 let Scale = scale * x
@@ -34,7 +35,7 @@ const timeConvertion = (time) => {
 
 const Header = (props) => (
 
-  <View {...props} style={styles.header}>
+  <Layout {...props} style={styles.header}>
     <Text category='h6'>
       {props.todo.title}
     </Text>
@@ -44,7 +45,7 @@ const Header = (props) => (
     <Text category='s1'>
       Date : {props.todo?.deadline?.substring(0, 10)}
     </Text>
-  </View>
+  </Layout>
 );
 
 
@@ -80,8 +81,9 @@ const AddIcon = (props) => (
 );
 
 
-function ViewTasks(props) {
-  // hook for storing the data after getting from file stored locally
+function LayoutTasks(props) {
+  const navigator = useNavigation()
+   // hook for storing the data after getting from file stored locally
   const [todos, setTodos] = useState([]);
 
   // returnTaskList().then(tasklist => { setTodos(tasklist) })
@@ -111,14 +113,28 @@ function ViewTasks(props) {
 
   return (
     <>
-      <View style={styles.addBtnPos}>
-        <Button
+    <Button
           accessoryLeft={AddIcon}
           size='large'
           status='danger'
-          onPress={() => { props.navigation.navigate('Add Task', {ReturnedTaskData: {todo: {id:'' ,title:'', desc:'', curDate:'', deadline:'', duration:'', priority:'', weight:''}}}) }}
+          style={[props.style, styles.addBtn]}
+          onPress={() => {
+            navigator.navigate('Add Task', {
+              ReturnedTaskData: {
+                todo: {
+                  id: '',
+                  title: '',
+                  desc: '',
+                  curDate: '',
+                  deadline: '',
+                  duration: '',
+                  priority: '',
+                  weight: '',
+                },
+              },
+            });
+          }}
         />
-      </View>
       {todos?.length === 0 ? (
         <View style={styles.noTasksContainer}>
           <View>
@@ -131,7 +147,7 @@ function ViewTasks(props) {
           </View>
         </View>
       ) : (
-        <ScrollView style={{ backgroundColor: colors[7] }}>
+        <ScrollView >
           {todos.map((todo) => (
             <Card
               key={todo.id}
@@ -147,7 +163,7 @@ function ViewTasks(props) {
               } header={() => <Header todo={todo} />}
               footer={<>
                 <ButtonGroup style={styles.buttonGroup}>
-                  <View>
+                  <Layout {...props}>
                     <Button
                       accessoryLeft={DurationIcon}
                       accessoryRight={
@@ -158,8 +174,8 @@ function ViewTasks(props) {
                         </>
                       }
                     />
-                  </View>
-                  <View style={styles.operationButton}>
+                  </Layout>
+                  <Layout style={styles.operationButton}>
                     <Button accessoryLeft={PencilIcon} appearance='outline'
                       onPress={
 
@@ -173,7 +189,7 @@ function ViewTasks(props) {
                       console.log('Done button pressed for task ID:', todo.id);
                       deleteTask(todo.id);
                     }} />
-                  </View>
+                  </Layout>
                 </ButtonGroup>
               </>}
             >
@@ -206,7 +222,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexWrap: 'wrap',
   },
-  viewStyle: {
+  LayoutStyle: {
     marginTop: Height * 0.004 * 3,
     marginHorizontal: Width * 0.009 * 5,
     marginBottom: Scale * 3,
@@ -253,14 +269,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingRight: '4%',
   },
-  addBtnPos: {
-    position: 'absolute',
-    right: width * 0.04,
-    bottom: height * 0.269
-  },
-  addBtn: {
-    borderRadius:'50%'
-  },
+  // addBtn: {
+  //   position: 'absolute',
+  //   top:5,
+  //   right:5
+  // },
   noTasksContainer: {
     width: '100%',
     height: '100%',
@@ -268,4 +281,4 @@ const styles = StyleSheet.create({
     alignContent: 'center'
   }
 })
-export default ViewTasks
+export default LayoutTasks
