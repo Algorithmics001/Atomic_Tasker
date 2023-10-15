@@ -181,7 +181,7 @@ function LayoutTasks(props) {
 
                         () => {
                           console.log(todo)
-                          props.navigation.navigate('Add Task', { ReturnedTaskData: { todo } })
+                          navigator.navigate('Add Task', { ReturnedTaskData: { todo } })
 
                         }}
                     />
