@@ -75,7 +75,7 @@ const DurationIcon = (props) => (
 const AddIcon = (props) => (
   <Icon
     {...props}
-    name='plus'
+    name='edit'
 
   />
 );
@@ -181,7 +181,7 @@ function LayoutTasks(props) {
 
                         () => {
                           console.log(todo)
-                          props.navigation.navigate('Add Task', { ReturnedTaskData: { todo } })
+                          navigator.navigate('Add Task', { ReturnedTaskData: { todo } })
 
                         }}
                     />
