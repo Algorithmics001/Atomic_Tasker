@@ -1,144 +1,148 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
-import { addQTask, getList } from '../brain/QuickTasker'
-
-const { width, height } = Dimensions.get("window");
-const { scale } = Dimensions.get("window");
-
-let x = 3.5 / scale
-Scale = scale * x
-
-let y = 411.42857142857144 / width
-Width = width * y
-
-let z = 804.5714285714286 / height
-
-Height = height * z
-
-const iconSize = Scale * 5;
-
-//for handling all the colors and dark mde
-var colors = ['#e4def2', '#e2ddd8', '#eef8ef', '#2d414e', '#E0DFE3', '#fff', '#6D726E', '#fff'];
-
+import { StyleSheet, View, TextInput, Alert } from 'react-native';
+import { Button, Text, Layout, List, ListItem } from '@ui-kitten/components'; // Import Eva Design System components
+import { addQTask, getList } from '../brain/QuickTasker';
 
 export default function QuickTasker() {
-  const [task, setTask] = useState('');
+  const [itemName, setItemName] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [price, setPrice] = useState('');
   const [taskList, setTaskList] = useState([]);
-  const [prevTaskList, setPrevTaskList] = useState([]);
+  const [undoItems, setUndoItems] = useState([]); // State for undoing actions
+
+  const calculateTotalPrice = () => {
+    const totalPrice = taskList.reduce((total, item) => total + (item.quantity * item.price), 0);
+    return totalPrice;
+  };
 
   const checkValidation = () => {
-    if (task === '') {
-      Alert.alert('Error', 'Please Enter a valid Task');
+    if (itemName === '' || quantity === '' || price === '') {
+      Alert.alert('Error', 'Please fill in all fields');
     } else {
       addTask();
     }
   };
 
   useEffect(() => {
+    // Load data from the 'getList' function when the component mounts.
     getList().then(data => {
       setTaskList(data);
-      console.log(data)
-    })
+    });
   }, []);
 
   const addTask = () => {
-    setPrevTaskList(taskList);
-    setTaskList([...taskList, task]);
-    setTask('');
-    addQTask([...taskList, task])
+    const newItem = {
+      itemName,
+      quantity: parseFloat(quantity),
+      price: parseFloat(price),
+    };
+    const updatedTaskList = [...taskList, newItem];
+
+    // Save the updated list to the 'addQTask' function and also update the state.
+    addQTask(updatedTaskList);
+    setTaskList(updatedTaskList);
+
+    // Clear input fields
+    setItemName('');
+    setQuantity('');
+    setPrice('');
   };
 
   const deleteTask = (index) => {
-    setPrevTaskList(taskList);
-    const newTaskList = [...taskList];
-    newTaskList.splice(index, 1);
-    setTaskList(newTaskList);
-    addQTask(newTaskList)
+    if (taskList.length > 0) {
+      const newTaskList = [...taskList];
+      newTaskList.splice(index, 1);
+      addQTask(newTaskList); // Update the data in addQTask function.
+      setTaskList(newTaskList); // Update the state.
+    }
   };
 
-  const undo = () => {
-    setTaskList(prevTaskList);
+  const undoItemsAction = () => {
+    if (undoItems.length > 0) {
+      const lastUndoItem = undoItems[undoItems.length - 1];
+      setUndoItems(undoItems.slice(0, -1));
+      setTaskList([...taskList, lastUndoItem]);
+      addQTask([...taskList, lastUndoItem]);
+    }
   };
 
   return (
-    <View style={styles.container}>
+    <Layout style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Add task"
-        onChangeText={text => setTask(text)}
-        value={task}
+        placeholder="Item Name"
+        onChangeText={text => setItemName(text)}
+        value={itemName}
       />
-      <View style={styles.btn}>
-        <Button style={styles.button} buttonStyle={{ backgroundColor: 'z#e4def2' }} title="Add Task" onPress={checkValidation} />
-        <Button style={styles.undoButton} title="Undo" onPress={undo} />
-      </View>
-      {taskList.map((task, index) => (
-        <View style={styles.taskContainer} key={index}>
-          <Text style={styles.task}>{index + 1}. {task}</Text>
-          <Button
-            style={styles.deleteButton}
-            title="Delete"
-            onPress={() => deleteTask(index)}
+      <TextInput
+        style={styles.input}
+        placeholder="Quantity"
+        onChangeText={text => setQuantity(text)}
+        value={quantity}
+        keyboardType="numeric"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Price"
+        onChangeText={text => setPrice(text)}
+        value={price}
+        keyboardType="numeric"
+      />
+      <Button style={styles.button} onPress={checkValidation}>
+        Add Item
+      </Button>
+      <Text style={styles.totalPrice}>Total Price: {calculateTotalPrice()}</Text>
+
+      {/* Display Items in a List */}
+      <List
+        style={styles.table}
+        data={taskList}
+        renderItem={({ item }) => (
+          <ListItem
+            title={`${item.itemName}`}
+            description={`Quantity: ${item.quantity}, Price: ${item.price}, Total: ${item.quantity * item.price}`}
           />
-        </View>
-      ))}
-    </View>
+        )}
+      />
+
+      {/* Delete Last Item Button */}
+      <Button style={styles.button} onPress={() => deleteTask(taskList.length - 1)}>
+        Delete Last Item
+      </Button>
+
+      {/* Undo Items Button */}
+      <Button style={styles.button} onPress={undoItemsAction}>
+        Undo Items
+      </Button>
+    </Layout>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     padding: 20,
+    backgroundColor: 'white',
   },
   input: {
     width: '100%',
     height: 40,
     color: 'black',
-    borderRadius : Scale * 5,
+    borderRadius: 10,
     marginBottom: 20,
     padding: 10,
-    backgroundColor: colors[4]
-  },
-  btn: {
-
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 80
-    , width: '75%',
+    backgroundColor: 'lightgray',
   },
   button: {
-    backgroundColor: 'white',
-    color: 'white',
-    // display:'flex',
-    marginBottom: 20,
-    padding: 10,
+    marginBottom: 10,
+    paddingBottom: 5,
   },
-  undoButton: {
-    backgroundColor: 'black',
-    background: 'yellow',
-    // display:'flex',
-    marginBottom: 20,
-    padding: 107,
-    width: '100%'
-
+  totalPrice: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'grey',
   },
-  taskContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: 20,
-    padding: 10,
-  },
-  task: {
-    color: 'black',
-    fontSize: 18,
-    flex: 1,
-  },
-  deleteButton: {
-    marginLeft: 10,
-    padding: 10,
+  table: {
+    marginBottom: 10,
   },
 });

@@ -152,15 +152,16 @@ function LayoutTasks(props) {
             <Card
               key={todo.id}
               style={styles.Card}
-              status={
-                todo.priority.toLowerCase() === 'high'
-                  ? 'danger'
-                  : todo.priority.toLowerCase() === 'low'
-                    ? 'warning'
-                    : todo.priority.toLowerCase() === 'medium'
-                    ? 'success'
-                    :'warning'
-              } header={() => <Header todo={todo} />}
+              // status={
+              //   todo.priority.toLowerCase() === 'high'
+              //     ? 'danger'
+              //     : todo.priority.toLowerCase() === 'low'
+              //       ? 'warning'
+              //       : todo.priority.toLowerCase() === 'medium'
+              //       ? 'success'
+              //       :'warning'
+              // }
+               header={() => <Header todo={todo} />}
               footer={<>
                 <ButtonGroup style={styles.buttonGroup}>
                   <Layout {...props}>
