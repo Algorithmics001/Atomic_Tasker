@@ -13,7 +13,7 @@
 
 <p align="center">
 <a href="https://github.com/RaghavJit">@RaghavJit</a>
-<a href="https://github.com/whogurdeil">@whogurdevil</a>
+<a href="https://github.com/whogurdevil">@whogurdevil</a>
 </p>
 
 <p align="center">
